@@ -1,8 +1,8 @@
 {
   "id": "959545fb-7b25-4075-8fb7-4bc8b2ae071e",
   "revision": 0,
-  "last_node_id": 259,
-  "last_link_id": 715,
+  "last_node_id": 271,
+  "last_link_id": 726,
   "nodes": [
     {
       "id": 97,
@@ -43,7 +43,7 @@
         "Node name for S&R": "LoadImage"
       },
       "widgets_values": [
-        "AQMVnz7l__yek4Cj5C_SABWhMbvWkVuZwF9rFpS3Du_4hVxAeSBe-0zPsmD9W7sGHGNFoLedeDlgk4IeVc_lsx8oD7wlDWhgeD-ndmf5_TLFaqAT8I_jELxwQBA7cvA71-I8U4WDntbSMQNB07ct_qJfCGXy.jpeg",
+        "585043727_913859561801979_4750666832254012152_n.jpg",
         "image"
       ]
     },
@@ -61,7 +61,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 17,
+      "order": 28,
       "mode": 0,
       "inputs": [
         {
@@ -117,7 +117,8 @@
         "0, 0, 0",
         "center",
         2,
-        "cpu"
+        "cpu",
+        "<tr><td>Output: </td><td><b>1</b> x <b>640</b> x <b>640 | 4.69MB</b></td></tr>"
       ]
     },
     {
@@ -134,7 +135,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 20,
+      "order": 31,
       "mode": 0,
       "inputs": [
         {
@@ -304,7 +305,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 13,
+      "order": 24,
       "mode": 0,
       "inputs": [
         {
@@ -346,7 +347,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 11,
+      "order": 22,
       "mode": 0,
       "inputs": [
         {
@@ -389,7 +390,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 32,
+      "order": 43,
       "mode": 0,
       "inputs": [
         {
@@ -434,7 +435,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 36,
+      "order": 47,
       "mode": 0,
       "inputs": [
         {
@@ -486,7 +487,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 34,
+      "order": 45,
       "mode": 0,
       "inputs": [
         {
@@ -529,7 +530,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 37,
+      "order": 48,
       "mode": 0,
       "inputs": [
         {
@@ -585,13 +586,13 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "wan22_rife_00079.mp4",
+            "filename": "wan22_rife_00088.mp4",
             "subfolder": "",
             "type": "output",
             "format": "video/h264-mp4",
             "frame_rate": 32,
-            "workflow": "wan22_rife_00079.png",
-            "fullpath": "N:\\ComfyUI\\output\\wan22_rife_00079.mp4"
+            "workflow": "wan22_rife_00088.png",
+            "fullpath": "N:\\ComfyUI\\output\\wan22_rife_00088.mp4"
           }
         }
       }
@@ -610,7 +611,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 39,
+      "order": 50,
       "mode": 0,
       "inputs": [
         {
@@ -650,7 +651,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 38,
+      "order": 49,
       "mode": 4,
       "inputs": [
         {
@@ -680,51 +681,6 @@
       ]
     },
     {
-      "id": 254,
-      "type": "LoraLoaderModelOnly",
-      "pos": [
-        -3565.020223080153,
-        26.53141748140892
-      ],
-      "size": [
-        383.1590573988651,
-        82.33333129882806
-      ],
-      "flags": {},
-      "order": 4,
-      "mode": 4,
-      "inputs": [
-        {
-          "name": "model",
-          "type": "MODEL",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "MODEL",
-          "type": "MODEL",
-          "links": []
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.49",
-        "Node name for S&R": "LoraLoaderModelOnly",
-        "models": [
-          {
-            "name": "wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors",
-            "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/loras/wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors",
-            "directory": "loras"
-          }
-        ]
-      },
-      "widgets_values": [
-        "dance_hip_bump_i2v-high.safetensors",
-        1
-      ]
-    },
-    {
       "id": 103,
       "type": "ModelSamplingSD3",
       "pos": [
@@ -739,7 +695,7 @@
         "collapsed": false,
         "pinned": true
       },
-      "order": 15,
+      "order": 26,
       "mode": 0,
       "inputs": [
         {
@@ -781,7 +737,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 19,
+      "order": 30,
       "mode": 0,
       "inputs": [
         {
@@ -824,7 +780,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 18,
+      "order": 29,
       "mode": 0,
       "inputs": [
         {
@@ -867,7 +823,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 22,
+      "order": 33,
       "mode": 0,
       "inputs": [
         {
@@ -912,7 +868,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 21,
+      "order": 32,
       "mode": 0,
       "inputs": [
         {
@@ -957,7 +913,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 25,
+      "order": 36,
       "mode": 0,
       "inputs": [
         {
@@ -999,7 +955,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 35,
+      "order": 46,
       "mode": 0,
       "inputs": [
         {
@@ -1053,13 +1009,13 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "wan22_00014.mp4",
+            "filename": "wan22_00023.mp4",
             "subfolder": "",
             "type": "temp",
             "format": "video/h264-mp4",
             "frame_rate": 20,
-            "workflow": "wan22_00014.png",
-            "fullpath": "N:\\ComfyUI\\temp\\wan22_00014.mp4"
+            "workflow": "wan22_00023.png",
+            "fullpath": "N:\\ComfyUI\\temp\\wan22_00023.mp4"
           }
         }
       }
@@ -1078,7 +1034,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 5,
+      "order": 4,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -1114,7 +1070,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 6,
+      "order": 5,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -1162,7 +1118,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 7,
+      "order": 6,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -1197,7 +1153,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 16,
+      "order": 27,
       "mode": 0,
       "inputs": [
         {
@@ -1250,12 +1206,12 @@
         {
           "name": "start_step",
           "type": "INT",
-          "links": null
+          "links": []
         },
         {
           "name": "end_step",
           "type": "INT",
-          "links": null
+          "links": []
         }
       ],
       "properties": {
@@ -1286,7 +1242,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 8,
+      "order": 7,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -1295,7 +1251,7 @@
           "type": "INT",
           "links": [
             320,
-            685
+            720
           ]
         }
       ],
@@ -1323,7 +1279,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 23,
+      "order": 34,
       "mode": 0,
       "inputs": [
         {
@@ -1412,34 +1368,9 @@
       "widgets_values": [
         832,
         480,
-        97,
+        81,
         1
       ]
-    },
-    {
-      "id": 255,
-      "type": "MarkdownNote",
-      "pos": [
-        -3552.299476537023,
-        -476.19778181983514
-      ],
-      "size": [
-        537.6892008139034,
-        171.86951305538014
-      ],
-      "flags": {
-        "pinned": true
-      },
-      "order": 9,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "properties": {},
-      "widgets_values": [
-        "WARNING: For GGFU, install the custom node:\ngit clone https://github.com/city96/ComfyUI-GGUF.git\n\n\nexecute the `git clone` command in the custom node folder of comfyui\n\nOBLIGATORY"
-      ],
-      "color": "#322",
-      "bgcolor": "#533"
     },
     {
       "id": 104,
@@ -1455,7 +1386,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 14,
+      "order": 25,
       "mode": 0,
       "inputs": [
         {
@@ -1497,7 +1428,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 29,
+      "order": 40,
       "mode": 4,
       "inputs": [
         {
@@ -1590,7 +1521,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 27,
+      "order": 38,
       "mode": 4,
       "inputs": [
         {
@@ -1634,14 +1565,6 @@
           "shape": 7,
           "type": "OPTIONS",
           "link": null
-        },
-        {
-          "name": "steps",
-          "type": "INT",
-          "widget": {
-            "name": "steps"
-          },
-          "link": 685
         }
       ],
       "outputs": [
@@ -1676,7 +1599,7 @@
         1,
         1,
         2.5,
-        948605290395306,
+        307629771212931,
         "randomize",
         "standard",
         true
@@ -1696,7 +1619,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 31,
+      "order": 42,
       "mode": 4,
       "inputs": [
         {
@@ -1774,48 +1697,6 @@
       ]
     },
     {
-      "id": 200,
-      "type": "Wan_Text_OneShot_Cache",
-      "pos": [
-        -4254.1687665316485,
-        -490.1978688700632
-      ],
-      "size": [
-        682.7143214253579,
-        989.841994920859
-      ],
-      "flags": {
-        "pinned": true
-      },
-      "order": 12,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "clip",
-          "type": "CLIP",
-          "link": 486
-        }
-      ],
-      "outputs": [
-        {
-          "name": "CONDITIONING",
-          "type": "CONDITIONING",
-          "links": [
-            487
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "XT-404/ComfyUI_Wan_Architect",
-        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e",
-        "Node name for S&R": "Wan_Text_OneShot_Cache"
-      },
-      "widgets_values": [
-        "(Amazing masterpiece), 8k, 7-second, HDR, cinematic lighting, Amazing details, Amazing fine details, Amazing Color, Vivid color.\n\n(Realistic, Hyperrealistic, Living person, Alive, Real, a person standing still, realistic body proportions, detailed skin texture), (The person's identity and face must remain perfectly consistent throughout the entire video),(detailed hair).\n\n(at 1-2: A medium shot. A person with a natural, makeup-free face and simple, wet hair looks on with wide-eyed awe as a floating, intricate, metallic cube ignites before them, bathing them in a dramatic purple light).\n\n(at 3-5: A very fast 360-degree orbital track begins. As the camera whips around, ethereal energy particles from the cube swarm them. In a seamless, overlapping sequence, their wet hair instantly dries into a futuristic braided updo, shimmering cyberpunk makeup materializes on their face, and a wave of liquid chrome transforms their clothes into a high-fashion armored suit).\n\n(at 6-7: The orbit completes, revealing the full transformation. Their expression has now shifted from awe to one of immense power and cold confidence. They raise their open palm and a miniature, photorealistic raincloud with crackling lightning instantly forms above it).\n\n(at 8-10: A rapid dolly zoom pushes in on their powerful face. The flashes from the tiny lightning storm illuminate their features. They look directly into the camera lens and give a slow, deliberate wink just before the final cut to black).",
-        true
-      ]
-    },
-    {
       "id": 213,
       "type": "Wan_Hybrid_VRAM_Guard",
       "pos": [
@@ -1827,7 +1708,7 @@
         150
       ],
       "flags": {},
-      "order": 33,
+      "order": 44,
       "mode": 0,
       "inputs": [
         {
@@ -1863,18 +1744,109 @@
       ]
     },
     {
-      "id": 102,
+      "id": 195,
+      "type": "Wan_Attention_Slicer",
+      "pos": [
+        -2121.0991706391833,
+        -379.3980244471545
+      ],
+      "size": [
+        244.16578700776483,
+        58
+      ],
+      "flags": {},
+      "order": 35,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 482
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            702,
+            711,
+            714,
+            715
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "XT-404/ComfyUI_Wan_Architect",
+        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e",
+        "Node name for S&R": "Wan_Attention_Slicer"
+      },
+      "widgets_values": [
+        0
+      ]
+    },
+    {
+      "id": 254,
       "type": "LoraLoaderModelOnly",
       "pos": [
-        -3567.481883279737,
-        154.83472234067702
+        -3472.0053101775275,
+        0.6037243739321879
       ],
       "size": [
         383.1590573988651,
         82.33333129882806
       ],
-      "flags": {},
-      "order": 10,
+      "flags": {
+        "pinned": true
+      },
+      "order": 8,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": []
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.49",
+        "Node name for S&R": "LoraLoaderModelOnly",
+        "models": [
+          {
+            "name": "wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/loras/wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors",
+            "directory": "loras"
+          }
+        ]
+      },
+      "widgets_values": [
+        "dance_hip_bump_i2v-high.safetensors",
+        1
+      ]
+    },
+    {
+      "id": 102,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        -3471.1750319424764,
+        126.86840532776894
+      ],
+      "size": [
+        383.1590573988651,
+        82.33333129882806
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 9,
       "mode": 4,
       "inputs": [
         {
@@ -1908,18 +1880,104 @@
       ]
     },
     {
+      "id": 249,
+      "type": "XT404_Skynet_3",
+      "pos": [
+        -1298.0552155327803,
+        330.9963452204873
+      ],
+      "size": [
+        263.88409095515954,
+        417.8505032634158
+      ],
+      "flags": {
+        "collapsed": false,
+        "pinned": true
+      },
+      "order": 41,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 710
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 706
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 705
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 669
+        },
+        {
+          "name": "seed_input",
+          "type": "INT",
+          "link": 670
+        },
+        {
+          "name": "guides",
+          "shape": 7,
+          "type": "GUIDES",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "LATENT",
+          "links": [
+            712,
+            713
+          ]
+        },
+        {
+          "name": "denoised",
+          "type": "LATENT",
+          "links": null
+        },
+        {
+          "name": "options",
+          "type": "DICT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "aux_id": "XT-404/Ksampler_XT404_Skynet",
+        "ver": "6482495c8a726f23e169f854861a21af9c5c4d58",
+        "Node name for S&R": "XT404_Skynet_3"
+      },
+      "widgets_values": [
+        0.5,
+        "linear/euler",
+        -1,
+        1,
+        "resample",
+        true
+      ]
+    },
+    {
       "id": 248,
       "type": "XT404_Skynet_2",
       "pos": [
-        -1531.4680331626691,
-        331.90888525442773
+        -1699.7955936733892,
+        331.9709713410941
       ],
       "size": [
         269.5922976160416,
         418.25820564737415
       ],
-      "flags": {},
-      "order": 28,
+      "flags": {
+        "pinned": true
+      },
+      "order": 39,
       "mode": 0,
       "inputs": [
         {
@@ -1995,99 +2053,20 @@
       ]
     },
     {
-      "id": 249,
-      "type": "XT404_Skynet_3",
-      "pos": [
-        -1222.263939519668,
-        329.9723341141001
-      ],
-      "size": [
-        263.88409095515954,
-        417.8505032634158
-      ],
-      "flags": {},
-      "order": 30,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "model",
-          "type": "MODEL",
-          "link": 710
-        },
-        {
-          "name": "positive",
-          "type": "CONDITIONING",
-          "link": 706
-        },
-        {
-          "name": "negative",
-          "type": "CONDITIONING",
-          "link": 705
-        },
-        {
-          "name": "latent_image",
-          "type": "LATENT",
-          "link": 669
-        },
-        {
-          "name": "seed_input",
-          "type": "INT",
-          "link": 670
-        },
-        {
-          "name": "guides",
-          "shape": 7,
-          "type": "GUIDES",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "LATENT",
-          "links": [
-            712,
-            713
-          ]
-        },
-        {
-          "name": "denoised",
-          "type": "LATENT",
-          "links": null
-        },
-        {
-          "name": "options",
-          "type": "DICT",
-          "links": null
-        }
-      ],
-      "properties": {
-        "aux_id": "XT-404/Ksampler_XT404_Skynet",
-        "ver": "6482495c8a726f23e169f854861a21af9c5c4d58",
-        "Node name for S&R": "XT404_Skynet_3"
-      },
-      "widgets_values": [
-        0.5,
-        "linear/euler",
-        -1,
-        1,
-        "resample",
-        true
-      ]
-    },
-    {
       "id": 247,
       "type": "XT404_Skynet_1",
       "pos": [
-        -1859.727008418801,
-        331.77156318284614
+        -2098.6874204445376,
+        331.8980338296944
       ],
       "size": [
         284.75,
         422
       ],
-      "flags": {},
-      "order": 26,
+      "flags": {
+        "pinned": true
+      },
+      "order": 37,
       "mode": 0,
       "inputs": [
         {
@@ -2121,6 +2100,14 @@
           "shape": 7,
           "type": "GUIDES",
           "link": null
+        },
+        {
+          "name": "steps",
+          "type": "INT",
+          "widget": {
+            "name": "steps"
+          },
+          "link": 720
         }
       ],
       "outputs": [
@@ -2160,9 +2147,9 @@
         "beta",
         20,
         1,
-        1,
+        0.99,
         2.5,
-        248443801676051,
+        511427400111151,
         "randomize",
         "randomize",
         "standard",
@@ -2170,46 +2157,346 @@
       ]
     },
     {
-      "id": 195,
-      "type": "Wan_Attention_Slicer",
+      "id": 263,
+      "type": "Note",
       "pos": [
-        -2121.0991706391833,
-        -379.3980244471545
+        -2097.790676806472,
+        784.7312646315339
       ],
       "size": [
-        244.16578700776483,
-        58
+        287.2637109061841,
+        88
       ],
-      "flags": {},
-      "order": 24,
+      "flags": {
+        "pinned": true
+      },
+      "order": 10,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "Connect : \nHigh model\nPositif/Negative/Latent_img/sigmas/steps"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 261,
+      "type": "Note",
+      "pos": [
+        -1699.516973747388,
+        780.9744564904126
+      ],
+      "size": [
+        269.21764505178544,
+        88
+      ],
+      "flags": {
+        "collapsed": false,
+        "pinned": true
+      },
+      "order": 11,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "Connect : \nHigh model\nPostive/Negative/Latente_img/seed_input"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 262,
+      "type": "Note",
+      "pos": [
+        -1298.183508518972,
+        779.6254499480962
+      ],
+      "size": [
+        265.5800239397522,
+        88
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 12,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "Connect : \nLow model\nPositive/Negative/Latent_img/seed_input"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 265,
+      "type": "Note",
+      "pos": [
+        -3066.0743663269154,
+        127.55180891919558
+      ],
+      "size": [
+        210,
+        88
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 13,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "Lora : Low"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 264,
+      "type": "Note",
+      "pos": [
+        -3067.776413993113,
+        1.2879068836757086
+      ],
+      "size": [
+        210,
+        88
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 14,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "Lora : High\n"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 266,
+      "type": "Note",
+      "pos": [
+        -2343.3345546599635,
+        2.1777899694433356
+      ],
+      "size": [
+        210,
+        100.15872282036355
+      ],
+      "flags": {
+        "collapsed": false,
+        "pinned": true
+      },
+      "order": 15,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "Rel_L1_Threshold : 0.15 >Normal / 0.2 > Speed ! "
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 267,
+      "type": "Note",
+      "pos": [
+        -2115.506801844235,
+        -87.72929913954508
+      ],
+      "size": [
+        246.9436606662748,
+        88.23013736696532
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 16,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "CG : 16 - 24 GO : 0 (auto select)\nCG : 12 - 8 GO  : 0 or 2 or 4 or 8\n"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 268,
+      "type": "Note",
+      "pos": [
+        -552.297856628164,
+        -513.229208857797
+      ],
+      "size": [
+        268.04652478547473,
+        149.3042629666379
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 17,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "Anti Crash OOM Low CG.\n\nPrecision : FP16 > Low CG\nPrecision : FP32 > High CG"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 269,
+      "type": "Note",
+      "pos": [
+        -2642.1136182790706,
+        -41.157768737630064
+      ],
+      "size": [
+        281.8890898402942,
+        88
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 18,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "TF32 > Speed gen\nCudnn_benchmark > analys system Vram for the Best perf\nHigh_precision_norm : Off for Low Vram."
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 255,
+      "type": "MarkdownNote",
+      "pos": [
+        -3552.299476537023,
+        -476.19778181983514
+      ],
+      "size": [
+        537.6892008139034,
+        171.86951305538014
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 19,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "WARNING: For GGFU, install the custom node:\ngit clone https://github.com/city96/ComfyUI-GGUF.git\n\n\nexecute the `git clone` command in the custom node folder of comfyui\n\nOBLIGATORY\n\nEnabble Checksum > Scan Model (antivirus and corruption model)."
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 270,
+      "type": "Note",
+      "pos": [
+        -1189.482868376521,
+        -1516.5240661775108
+      ],
+      "size": [
+        319.6829657113667,
+        88
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 20,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "Target RAM and VRAM at the end of video generation."
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 200,
+      "type": "Wan_Text_OneShot_Cache",
+      "pos": [
+        -4254.1687665316485,
+        -490.1978688700632
+      ],
+      "size": [
+        682.7143214253579,
+        989.841994920859
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 23,
       "mode": 0,
       "inputs": [
         {
-          "name": "model",
-          "type": "MODEL",
-          "link": 482
+          "name": "clip",
+          "type": "CLIP",
+          "link": 486
         }
       ],
       "outputs": [
         {
-          "name": "MODEL",
-          "type": "MODEL",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
           "links": [
-            702,
-            711,
-            714,
-            715
+            487
           ]
         }
       ],
       "properties": {
         "aux_id": "XT-404/ComfyUI_Wan_Architect",
         "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e",
-        "Node name for S&R": "Wan_Attention_Slicer"
+        "Node name for S&R": "Wan_Text_OneShot_Cache"
       },
       "widgets_values": [
-        0
+        "--SUBJECT ANCHOR (PRIORITY 1)--\nA solid, opaque, photorealistic portrait of the Nun from the input image. She is the central anchor. Pale skin, blue-grey eyes, white wimple, black habit.\nShe MUST remain fully visible, distinct, and present throughout the entire video. She does NOT fade, she does NOT disappear.\n\n--TEXT LAYER (PRIORITY 2)--\nFloating in front of her black chest habit (NOT on her face) is the single title: \"LIBIDINOUS INSIDIOUS DRAFT V3\".\nThe text is made of dripping, viscous, neon-green/red slime. The font is melting but readable. \n\n--SCENE & ATMOSPHERE (PRIORITY 3)--\nThe background BEHIND the nun is a disgusting wall of living organic meat and pulsating viscera.\nThe horror is strictly in the background. The Nun acts as a barrier between the viewer and the horror. \nLighting highlights her face to keep her visible.\n\n--TEMPORAL MOTION (AT : SECONDS)--\n(0s-1s): [Anchor Check] The Nun is perfectly visible and sharp. The text \"LIBIDINOUS INSIDIOUS DRAFT V3\" appears on her chest. The background throbs.\n\n(1s-4s): [Viscous Motion] While the Nun remains solid and unmoving (like a statue), the text drips heavy slime down her dark habit. The organic background writhes violently behind her. She does NOT fade.\n\n(4s-5s): [Stability] The text remains legible. The slime flows. The Nun is still there, staring intensely at the camera. High contrast between the solid woman and the liquid horror.\n\n--TECHNICAL MODIFIERS--\nhigh subject fidelity, persistent character, non-fading subject, solid opacity, sharp focus on face, distinct layers, depth of field (subject sharp, background organic), raytraced slime, body horror.",
+        true
       ]
+    },
+    {
+      "id": 271,
+      "type": "Note",
+      "pos": [
+        -1585.7243472002901,
+        -1547.8908419633192
+      ],
+      "size": [
+        344.5922765817479,
+        136.84164963209446
+      ],
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "Functionality:\n\nCurrently requires significant optimization to reduce VRAM/RAM usage."
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
     }
   ],
   "links": [
@@ -2518,14 +2805,6 @@
       "SIGMAS"
     ],
     [
-      685,
-      162,
-      0,
-      259,
-      7,
-      "INT"
-    ],
-    [
       686,
       168,
       2,
@@ -2708,16 +2987,24 @@
       257,
       0,
       "MODEL"
+    ],
+    [
+      720,
+      162,
+      0,
+      247,
+      6,
+      "INT"
     ]
   ],
   "groups": [],
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.9229599817708041,
+      "scale": 1.1167815779426933,
       "offset": [
-        3424.045121678336,
-        1655.1759977324994
+        4734.187115130818,
+        1581.2363477624608
       ]
     },
     "frontendVersion": "1.28.8",
