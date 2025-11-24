@@ -1,8 +1,8 @@
 {
   "id": "959545fb-7b25-4075-8fb7-4bc8b2ae071e",
   "revision": 0,
-  "last_node_id": 255,
-  "last_link_id": 680,
+  "last_node_id": 256,
+  "last_link_id": 681,
   "nodes": [
     {
       "id": 97,
@@ -166,8 +166,8 @@
       ],
       "properties": {
         "aux_id": "XT-404/ComfyUI_Wan_Architect",
-        "Node name for S&R": "Wan_Vision_OneShot_Cache",
-        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e"
+        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e",
+        "Node name for S&R": "Wan_Vision_OneShot_Cache"
       },
       "widgets_values": [
         true
@@ -291,106 +291,6 @@
       ]
     },
     {
-      "id": 168,
-      "type": "WanImageToVideo",
-      "pos": [
-        -3185.3950111693507,
-        -1095.930304366028
-      ],
-      "size": [
-        328.95512727227197,
-        217.34088054823872
-      ],
-      "flags": {
-        "pinned": true
-      },
-      "order": 23,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "positive",
-          "type": "CONDITIONING",
-          "link": 487
-        },
-        {
-          "name": "negative",
-          "type": "CONDITIONING",
-          "link": 489
-        },
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": 447
-        },
-        {
-          "name": "clip_vision_output",
-          "shape": 7,
-          "type": "CLIP_VISION_OUTPUT",
-          "link": 503
-        },
-        {
-          "name": "start_image",
-          "shape": 7,
-          "type": "IMAGE",
-          "link": 502
-        },
-        {
-          "name": "width",
-          "type": "INT",
-          "widget": {
-            "name": "width"
-          },
-          "link": 445
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "widget": {
-            "name": "height"
-          },
-          "link": 446
-        }
-      ],
-      "outputs": [
-        {
-          "name": "positive",
-          "type": "CONDITIONING",
-          "links": [
-            658,
-            667,
-            672
-          ]
-        },
-        {
-          "name": "negative",
-          "type": "CONDITIONING",
-          "links": [
-            662,
-            668,
-            675
-          ]
-        },
-        {
-          "name": "latent",
-          "type": "LATENT",
-          "links": [
-            661
-          ]
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.60",
-        "Node name for S&R": "WanImageToVideo"
-      },
-      "widgets_values": [
-        832,
-        480,
-        81,
-        1
-      ]
-    },
-    {
       "id": 201,
       "type": "Wan_Text_OneShot_Cache",
       "pos": [
@@ -424,8 +324,8 @@
       ],
       "properties": {
         "aux_id": "XT-404/ComfyUI_Wan_Architect",
-        "Node name for S&R": "Wan_Text_OneShot_Cache",
-        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e"
+        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e",
+        "Node name for S&R": "Wan_Text_OneShot_Cache"
       },
       "widgets_values": [
         "闪烁, 画面抖动, 屏幕震动, 故障艺术, 过曝, 模糊, JPEG压缩残留, 画面发灰, 低质量, 最差质量, 水印, 文字, 用户名, 签名, 字幕, 颗粒感\n卡通, 动漫, 3D渲染, CGI, 插画, 绘画, 艺术品, 电子游戏, 和平的, 平静的, 宁静的, 美丽的, 可爱的, 干净的, 无菌的, 全年龄段\n(糟糕的人体结构:1.3), 画得不好的手, 手指融合, 多余的手指, 多余的肢体, 缺少的肢体, 画得不好的脸, 扭曲的面部, 畸形的四肢, 悬浮的肢体, 断开的肢体\n(快速移动, 大幅度移动, 不稳定的动作, 卡顿的动作:1.4), 无法控制的颤抖, 瞬间移动, 滑动, 太空步, 倒着走, 跳舞, 奔跑, 跳跃, 大笑, 微笑, 平稳的呼吸, 流畅的动作, 静态图像, 画面静止, 模糊, 噪点, 颗粒感, 低分辨率, 色彩暗淡, 纹理平淡, JPEG伪影, 塑料感, 卡通, 面部扭曲, 身份丢失, 过渡混乱, 金属融化, 材质简单, 光影平淡, 身份丢失, 换脸, 变成另一个人, 面部结构改变, 五官变形, 五官不象, 面具, 头盔, 遮挡面部, 通用机器人脸, 恐怖谷, 模糊, 扭曲, 丑陋, 脸部崩坏.",
@@ -466,8 +366,8 @@
       ],
       "properties": {
         "aux_id": "XT-404/ComfyUI_Wan_Architect",
-        "Node name for S&R": "Wan_Resolution_Savant",
-        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e"
+        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e",
+        "Node name for S&R": "Wan_Resolution_Savant"
       },
       "widgets_values": [
         1024,
@@ -728,8 +628,8 @@
       ],
       "properties": {
         "aux_id": "XT-404/ComfyUI_Wan_Architect",
-        "Node name for S&R": "Wan_Cycle_Terminator",
-        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e"
+        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e",
+        "Node name for S&R": "Wan_Cycle_Terminator"
       },
       "widgets_values": [
         true,
@@ -770,8 +670,8 @@
       ],
       "properties": {
         "aux_id": "XT-404/ComfyUI_Wan_Architect",
-        "Node name for S&R": "Wan_Video_Compressor",
-        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e"
+        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e",
+        "Node name for S&R": "Wan_Video_Compressor"
       },
       "widgets_values": [
         "Web/Discord (Cible < 5MB)",
@@ -813,8 +713,8 @@
       ],
       "properties": {
         "aux_id": "XT-404/ComfyUI_Wan_Architect",
-        "Node name for S&R": "Wan_Text_OneShot_Cache",
-        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e"
+        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e",
+        "Node name for S&R": "Wan_Text_OneShot_Cache"
       },
       "widgets_values": [
         " An elf princess eating an apple, accompanied by animals: little rabbits watch her eat her apple, a bear sleeps against a tree in the background, the elf princess eats her apple on a rock, surrounded by a sumptuous forest where the grass is a perfect green.",
@@ -881,7 +781,7 @@
         "collapsed": false,
         "pinned": true
       },
-      "order": 16,
+      "order": 15,
       "mode": 0,
       "inputs": [
         {
@@ -923,7 +823,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 15,
+      "order": 14,
       "mode": 0,
       "inputs": [
         {
@@ -985,8 +885,8 @@
       ],
       "properties": {
         "aux_id": "XT-404/ComfyUI_Wan_Architect",
-        "Node name for S&R": "Wan_Hardware_Accelerator",
-        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e"
+        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e",
+        "Node name for S&R": "Wan_Hardware_Accelerator"
       },
       "widgets_values": [
         true,
@@ -1028,8 +928,8 @@
       ],
       "properties": {
         "aux_id": "XT-404/ComfyUI_Wan_Architect",
-        "Node name for S&R": "Wan_Hardware_Accelerator",
-        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e"
+        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e",
+        "Node name for S&R": "Wan_Hardware_Accelerator"
       },
       "widgets_values": [
         true,
@@ -1071,8 +971,8 @@
       ],
       "properties": {
         "aux_id": "XT-404/ComfyUI_Wan_Architect",
-        "Node name for S&R": "Wan_TeaCache_Patch",
-        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e"
+        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e",
+        "Node name for S&R": "Wan_TeaCache_Patch"
       },
       "widgets_values": [
         true,
@@ -1117,8 +1017,8 @@
       ],
       "properties": {
         "aux_id": "XT-404/ComfyUI_Wan_Architect",
-        "Node name for S&R": "Wan_TeaCache_Patch",
-        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e"
+        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e",
+        "Node name for S&R": "Wan_TeaCache_Patch"
       },
       "widgets_values": [
         true,
@@ -1160,8 +1060,8 @@
       ],
       "properties": {
         "aux_id": "XT-404/ComfyUI_Wan_Architect",
-        "Node name for S&R": "Wan_Attention_Slicer",
-        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e"
+        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e",
+        "Node name for S&R": "Wan_Attention_Slicer"
       },
       "widgets_values": [
         0
@@ -1201,8 +1101,8 @@
       ],
       "properties": {
         "aux_id": "XT-404/ComfyUI_Wan_Architect",
-        "Node name for S&R": "Wan_Attention_Slicer",
-        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e"
+        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e",
+        "Node name for S&R": "Wan_Attention_Slicer"
       },
       "widgets_values": [
         0
@@ -1339,8 +1239,8 @@
       ],
       "properties": {
         "aux_id": "XT-404/Ksampler_XT404_Skynet",
-        "Node name for S&R": "XT404_Skynet_1",
-        "ver": "6482495c8a726f23e169f854861a21af9c5c4d58"
+        "ver": "6482495c8a726f23e169f854861a21af9c5c4d58",
+        "Node name for S&R": "XT404_Skynet_1"
       },
       "widgets_values": [
         0.5,
@@ -1434,8 +1334,8 @@
       ],
       "properties": {
         "aux_id": "XT-404/Ksampler_XT404_Skynet",
-        "Node name for S&R": "XT404_Skynet_2",
-        "ver": "6482495c8a726f23e169f854861a21af9c5c4d58"
+        "ver": "6482495c8a726f23e169f854861a21af9c5c4d58",
+        "Node name for S&R": "XT404_Skynet_2"
       },
       "widgets_values": [
         0,
@@ -1517,8 +1417,8 @@
       ],
       "properties": {
         "aux_id": "XT-404/Ksampler_XT404_Skynet",
-        "Node name for S&R": "XT404_Skynet_3",
-        "ver": "6482495c8a726f23e169f854861a21af9c5c4d58"
+        "ver": "6482495c8a726f23e169f854861a21af9c5c4d58",
+        "Node name for S&R": "XT404_Skynet_3"
       },
       "widgets_values": [
         0.5,
@@ -1566,8 +1466,8 @@
       ],
       "properties": {
         "aux_id": "XT-404/ComfyUI_Wan_Architect",
-        "Node name for S&R": "Wan_Hybrid_VRAM_Guard",
-        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e"
+        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e",
+        "Node name for S&R": "Wan_Hybrid_VRAM_Guard"
       },
       "widgets_values": [
         512,
@@ -1585,7 +1485,7 @@
       ],
       "size": [
         334.61463442158356,
-        662.6146344215836
+        334
       ],
       "flags": {
         "pinned": true
@@ -1656,18 +1556,139 @@
       }
     },
     {
+      "id": 163,
+      "type": "WanVideoSigmaToStep",
+      "pos": [
+        -3339.5634646616304,
+        -689.1546122349962
+      ],
+      "size": [
+        385.9519417820409,
+        60.24342166187765
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "step",
+          "type": "INT",
+          "links": [
+            321
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI-WanVideoWrapper",
+        "ver": "37365817e82c3d6057fcb0a5d7f952f7376f096a",
+        "Node name for S&R": "WanVideoSigmaToStep",
+        "aux_id": "kijai/ComfyUI-WanVideoWrapper"
+      },
+      "widgets_values": [
+        0.9
+      ]
+    },
+    {
+      "id": 252,
+      "type": "CyberdyneModelHub",
+      "pos": [
+        -3559.5632196342103,
+        -265.60184054918057
+      ],
+      "size": [
+        564.8353113897979,
+        222
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "model_high",
+          "type": "MODEL",
+          "links": [
+            676
+          ]
+        },
+        {
+          "name": "model_low",
+          "type": "MODEL",
+          "links": [
+            680
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "XT-404/XT-404_SKYNET",
+        "ver": "ae3dacc12622116035919c5bf94e6e237dc5278b",
+        "Node name for S&R": "CyberdyneModelHub"
+      },
+      "widgets_values": [
+        "Libidinous Infernalis V3 (Insidious Draft) - Final Version.H.safetensors",
+        "default",
+        "Libidinous Infernalis V3 (Insidious-Draft) - Final Version.L.safetensors",
+        "default",
+        "",
+        false,
+        true
+      ]
+    },
+    {
+      "id": 214,
+      "type": "VAELoader",
+      "pos": [
+        -1202.8630656802272,
+        -640.9874320521565
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 8,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            514
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.69",
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "wan_2.1_vae.safetensors"
+      ]
+    },
+    {
       "id": 164,
       "type": "WanVideoScheduler",
       "pos": [
-        -2937.688883083062,
-        -827.001072810377
+        -2936.651552913859,
+        -840.3974239656133
       ],
       "size": [
-        280.3009711810615,
-        503.7315224806016
+        288.19454100990845,
+        521.4921223468185
       ],
-      "flags": {},
-      "order": 14,
+      "flags": {
+        "pinned": true
+      },
+      "order": 16,
       "mode": 0,
       "inputs": [
         {
@@ -1752,8 +1773,10 @@
         387.0217289027645,
         58
       ],
-      "flags": {},
-      "order": 6,
+      "flags": {
+        "pinned": true
+      },
+      "order": 9,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -1777,37 +1800,103 @@
       ]
     },
     {
-      "id": 163,
-      "type": "WanVideoSigmaToStep",
+      "id": 168,
+      "type": "WanImageToVideo",
       "pos": [
-        -3339.5634646616304,
-        -689.1546122349962
+        -3200.1955110578656,
+        -1123.5579116858441
       ],
       "size": [
-        385.9519417820409,
-        60.24342166187765
+        391.1172268040309,
+        223.7544455557752
       ],
-      "flags": {},
-      "order": 7,
+      "flags": {
+        "pinned": true
+      },
+      "order": 23,
       "mode": 0,
-      "inputs": [],
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 487
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 489
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 447
+        },
+        {
+          "name": "clip_vision_output",
+          "shape": 7,
+          "type": "CLIP_VISION_OUTPUT",
+          "link": 503
+        },
+        {
+          "name": "start_image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 502
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 445
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 446
+        }
+      ],
       "outputs": [
         {
-          "name": "step",
-          "type": "INT",
+          "name": "positive",
+          "type": "CONDITIONING",
           "links": [
-            321
+            658,
+            667,
+            672
+          ]
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [
+            662,
+            668,
+            675
+          ]
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "links": [
+            661
           ]
         }
       ],
       "properties": {
-        "cnr_id": "ComfyUI-WanVideoWrapper",
-        "ver": "37365817e82c3d6057fcb0a5d7f952f7376f096a",
-        "Node name for S&R": "WanVideoSigmaToStep",
-        "aux_id": "kijai/ComfyUI-WanVideoWrapper"
+        "cnr_id": "comfy-core",
+        "ver": "0.3.60",
+        "Node name for S&R": "WanImageToVideo"
       },
       "widgets_values": [
-        0.9
+        832,
+        480,
+        81,
+        1
       ]
     },
     {
@@ -1824,97 +1913,16 @@
       "flags": {
         "pinned": true
       },
-      "order": 8,
+      "order": 10,
       "mode": 0,
       "inputs": [],
       "outputs": [],
       "properties": {},
       "widgets_values": [
-        "WARNING: For GFU, install the custom node:\ngit clone https://github.com/city96/ComfyUI-GGUF.git\n\n\nexecute the `git clone` command in the custom node folder of comfyui\n\nOBLIGATORY"
+        "WARNING: For GGFU, install the custom node:\ngit clone https://github.com/city96/ComfyUI-GGUF.git\n\n\nexecute the `git clone` command in the custom node folder of comfyui\n\nOBLIGATORY"
       ],
       "color": "#322",
       "bgcolor": "#533"
-    },
-    {
-      "id": 252,
-      "type": "CyberdyneModelHub",
-      "pos": [
-        -3559.5632196342103,
-        -265.60184054918057
-      ],
-      "size": [
-        564.8353113897979,
-        222
-      ],
-      "flags": {
-        "pinned": true
-      },
-      "order": 9,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "model_high",
-          "type": "MODEL",
-          "links": [
-            676
-          ]
-        },
-        {
-          "name": "model_low",
-          "type": "MODEL",
-          "links": [
-            680
-          ]
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "CyberdyneModelHub"
-      },
-      "widgets_values": [
-        "Libidinous Infernalis V3 (Insidious Draft) - Final Version.H.safetensors",
-        "default",
-        "Libidinous Infernalis V3 (Insidious-Draft) - Final Version.L.safetensors",
-        "default",
-        "",
-        false,
-        true
-      ]
-    },
-    {
-      "id": 214,
-      "type": "VAELoader",
-      "pos": [
-        -1202.8630656802272,
-        -640.9874320521565
-      ],
-      "size": [
-        270,
-        58
-      ],
-      "flags": {
-        "pinned": true
-      },
-      "order": 10,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "VAE",
-          "type": "VAE",
-          "links": [
-            514
-          ]
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.69",
-        "Node name for S&R": "VAELoader"
-      },
-      "widgets_values": [
-        "wan_2.1_vae.safetensors"
-      ]
     }
   ],
   "links": [
@@ -2315,10 +2323,10 @@
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.6303940863129441,
+      "scale": 1.3513057093106056,
       "offset": [
-        4452.464536648187,
-        1255.0087682860938
+        3773.0521828245714,
+        644.4662150791048
       ]
     },
     "frontendVersion": "1.28.8",
