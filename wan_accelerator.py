@@ -3,7 +3,11 @@ import comfy.model_management as mm
 import torch.nn.functional as F
 
 class Wan_Hardware_Accelerator:
-    """V6: TF32 Global Activation"""
+    """
+    V6.1: TF32 Global Activation (With State Warning).
+    Note: Activating TF32 changes the global PyTorch state for Matrix Multiplications.
+    This benefits Ampere+ GPUs significantly but affects all nodes in the process.
+    """
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -21,8 +25,14 @@ class Wan_Hardware_Accelerator:
 
     def apply_acceleration(self, model, enable_tf32, cudnn_benchmark, high_precision_norm):
         if enable_tf32 and torch.cuda.is_available():
+            # Vérification de l'état précédent pour log
+            prev_status = torch.backends.cuda.matmul.allow_tf32
+            
             torch.backends.cuda.matmul.allow_tf32 = True
             torch.backends.cudnn.allow_tf32 = True
+            
+            if not prev_status:
+                print(f">> [Wan Accel] \033[93mGLOBAL STATE CHANGE:\033[0m TF32 Enabled for PyTorch Matrix Multiplications.")
         
         if cudnn_benchmark and torch.cuda.is_available():
             torch.backends.cudnn.benchmark = True
