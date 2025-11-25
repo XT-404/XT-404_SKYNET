@@ -21,11 +21,11 @@ def create_combo_list():
 
 SKAYNET_COMBOS = create_combo_list()
 
-# --- PROTOCOLE SENTINEL (ORIGINAL) ---
+# --- PROTOCOLE SENTINEL (CORRIGÉ v3.4 - PASSIVE MONITORING) ---
 
 class XT404_Sentinel:
     """ 
-    Module d'affichage tactique v15
+    Module d'affichage tactique v15.2 [Passive Mode]
     """
     PREFIX = "\033[35m[XT-404 SENTINEL]\033[0m"
     RESET = "\033[0m"
@@ -54,12 +54,19 @@ class XT404_Sentinel:
             XT404_Sentinel.log("INPUT SCAN", f"Checking {label} Signal... [Encrypted/Latent]")
 
     @staticmethod
-    def check_authority(cfg, is_chain):
+    def check_authority(cfg, is_chain) -> float:
+        """
+        LOGIC UPDATE v3.4: 
+        Suppression de l'amplification forcée. 
+        Le Sentinel observe mais ne touche plus aux valeurs.
+        """
         if is_chain and cfg <= 1.5:
-            XT404_Sentinel.log("INJECTION", f"Low CFG ({cfg}) detected. INJECTING SIGNAL BOOST: x1.50", XT404_Sentinel.YELLOW)
-            XT404_Sentinel.log("STATUS", "Prompt Assimilation forced to 100% via Vector Amplification.", XT404_Sentinel.YELLOW)
+            # Mode passif : On signale juste que le CFG est bas (ce qui est normal pour un Chain/Refiner)
+            XT404_Sentinel.log("SIGNAL ANALYSIS", f"Low CFG ({cfg}) detected on Chain Node. Preserving original signal.", XT404_Sentinel.CYAN)
+            return cfg
         else:
-            XT404_Sentinel.log("AUTHORITY CHECK", f"CFG {cfg} is sufficient. Signal passed native.", XT404_Sentinel.CYAN)
+            XT404_Sentinel.log("SIGNAL ANALYSIS", f"CFG {cfg} nominal.", XT404_Sentinel.CYAN)
+            return cfg
 
     @staticmethod
     def texture_engine_status(active):
@@ -97,11 +104,11 @@ class GlobalAutocastSuppressor:
         if self.active and self.original_autocast:
             torch.autocast = self.original_autocast
 
-# --- MOTEUR CORE (ORIGINAL ROBUSTE) ---
+# --- MOTEUR CORE ---
 
 class Skynet_Core:
     """
-    Moteur XT-404 v15.0 [Sentinel Restore]
+    Moteur XT-404 v15.2 [No Injection]
     """
     @staticmethod
     def detect_gguf(model):
@@ -160,7 +167,9 @@ class Skynet_Core:
         XT404_Sentinel.model_detection(is_gguf)
         XT404_Sentinel.scan_conditioning(positive, "POSITIVE")
         XT404_Sentinel.scan_conditioning(negative, "NEGATIVE")
-        XT404_Sentinel.check_authority(cfg, is_chain)
+        
+        # CHECK AUTHORITY (PASSIVE NOW)
+        active_cfg = XT404_Sentinel.check_authority(cfg, is_chain)
         
         # --- PHASE 1 : VRAM RESET ---
         self.clean_vram(force_unload=should_force_unload)
@@ -227,7 +236,7 @@ class Skynet_Core:
                 samples = comfy.sample.sample_custom(
                     model, 
                     noise, 
-                    cfg, 
+                    active_cfg, 
                     sampler_obj, 
                     calculated_sigmas, 
                     positive, 
