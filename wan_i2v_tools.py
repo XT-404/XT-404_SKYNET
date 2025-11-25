@@ -14,7 +14,7 @@ def safe_to(data, device):
     return data
 
 class Wan_Vision_OneShot_Cache:
-    """V8: Cache optimized for Vision models with Hash checks."""
+    """V8.1: Cache Vision Secured (Robust Hash)."""
     _cache = OrderedDict()
     CACHE_LIMIT = 5 
 
@@ -33,27 +33,31 @@ class Wan_Vision_OneShot_Cache:
     CATEGORY = "ComfyWan_Architect/I2V"
 
     def encode_vision_oneshot(self, clip_vision, image, aggressive_offload):
-        # Calcul du hash unique pour l'image
+        # CORRECTIF HASH V8.1 : Réduction du stride (32->16) et utilisation de bytes bruts
+        # pour éviter les collisions sur les images similaires (ex: variations subtiles).
+        # On inclut aussi la shape dans le hash pour distinguer les résolutions.
+        
+        # Stride 16 est un bon compromis pour 1080p/4K
+        stride = 16
         if image.device.type == 'cuda':
-            # Optimisation : on ne ramène pas toute l'image sur CPU pour le hash si elle est grosse
-            # On prend un échantillon (stride) pour aller vite
-            signature = torch.sum(image[:, ::32, ::32, :], dim=(0, 1, 2))
-            sig_cpu = signature.cpu().numpy().tobytes()
+            # Extraction d'un sous-ensemble significatif
+            subset = image[:, ::stride, ::stride, :]
+            sig_cpu = subset.flatten().cpu().numpy().tobytes()
         else:
-            sig_cpu = image[:, ::32, ::32, :].flatten().numpy().tobytes()
+            sig_cpu = image[:, ::stride, ::stride, :].flatten().numpy().tobytes()
 
-        img_hash = hashlib.md5(sig_cpu).hexdigest() + f"_{id(clip_vision)}"
+        # Construction clé unique : Hash du contenu + Shape + ID modèle
+        base_hash = hashlib.md5(sig_cpu).hexdigest()
+        img_hash = f"{base_hash}_{image.shape}_{id(clip_vision)}"
         
         if img_hash in self._cache:
             print(f">> [Wan I2V] Cache Hit (Vision Encodings).")
             self._cache.move_to_end(img_hash)
             data = self._cache[img_hash]
-            # On renvoie sur le GPU actif
             return (safe_to(data, mm.get_torch_device()), image)
         
         print(f">> [Wan I2V] Encoding Vision...")
         output = clip_vision.encode_image(image)
-        # Stockage en RAM (CPU) pour économiser la VRAM
         cpu_output = safe_to(output, "cpu")
         
         self._cache[img_hash] = cpu_output
