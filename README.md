@@ -2,9 +2,9 @@
 ### Cyberdyne Systems Corp. | Series T-800 | Model 101
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Version-v3.4_Sentinel-red?style=for-the-badge" alt="Version">
+  <img src="https://img.shields.io/badge/Version-v3.5_Omega-red?style=for-the-badge" alt="Version">
   <img src="https://img.shields.io/badge/Architecture-Wan_2.2-blue?style=for-the-badge" alt="Architecture">
-  <img src="https://img.shields.io/badge/GGUF-Native_Support-green?style=for-the-badge" alt="GGUF Support">
+  <img src="https://img.shields.io/badge/Engine-Tesseract_V6-purple?style=for-the-badge" alt="Engine">
   <img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge" alt="License">
 </p>
 
@@ -27,32 +27,37 @@
 ## 🌍 NEURAL NET NAVIGATION / NAVIGATION DU RÉSEAU
 
 ### 🇺🇸 [ENGLISH DOCUMENTATION](#-english-documentation)
-1. [Latest Intel (Changelog)](#-latest-intel-v34--v152-sentinel)
+1. [Latest Intel (Omega Changelog)](#-latest-intel-omega-v35-changelog)
 2. [Phase 1: Infiltration (Loaders)](#%EF%B8%8F-phase-1-infiltration-loaders)
 3. [Phase 2: Neural Net Core (Samplers)](#-phase-2-neural-net-core-samplers-xt-404)
-4. [Phase 3: Hardware Optimization](#-phase-3-hardware-optimization)
+4. [Phase 3: Hardware Optimization (The Omega Engine)](#-phase-3-hardware-optimization-omega-engine)
 5. [Phase 4: Post-Processing & Tools](#%EF%B8%8F-phase-4-post-processing--tools)
 
 ### 🇫🇷 [DOCUMENTATION FRANÇAISE](#-documentation-française)
-1. [Dernières Infos (Mise à jour)](#-dernières-infos-v34--v152-sentinel)
+1. [Dernières Infos (Mise à jour Omega)](#-dernières-infos-omega-v35-mise-à-jour)
 2. [Phase 1 : Infiltration (Chargement)](#%EF%B8%8F-phase-1--infiltration-chargement)
 3. [Phase 2 : Cœur Neuronal (Samplers)](#-phase-2--cœur-neuronal-samplers-xt-404)
-4. [Phase 3 : Optimisation Matérielle](#-phase-3--optimisation-matérielle)
+4. [Phase 3 : Optimisation Matérielle (Moteur Omega)](#-phase-3--optimisation-matérielle-moteur-omega)
 5. [Phase 4 : Post-Production & Outils](#%EF%B8%8F-phase-4--post-production--outils)
 
 ---
 
 # 🇺🇸 ENGLISH DOCUMENTATION
 
-## 📡 Latest Intel (v3.4 / v15.2 Sentinel)
+## 📡 Latest Intel (Omega v3.5 Changelog)
 
-XT-404 Skynet is an elite engineering suite for ComfyUI, specifically architected for the Wan 2.2 video generation model.
+XT-404 Skynet is an elite engineering suite for ComfyUI, specifically architected for the Wan 2.2 video generation model. The **v3.5 Omega** update introduces "Self-Healing" capabilities and Asynchronous pipelines.
 
-### 🆕 System Status Update (v3.4):
-*   **Protocol Update (Passive Sentinel):** The "Vector Amplification" (Signal Boost) has been **decommissioned**. The Sentinel now operates in **Passive Monitoring Mode** only. It analyzes CFG levels but no longer interferes with the signal, resolving "burn" issues in Chained/Refined workflows.
-*   **Atomic Guard v14.2 (Stability):** Fixed a critical backend crash (`record_stream`) when decoding on CPU/Hybrid modes. Added robust async synchronization to prevent memory corruption.
-*   **Vision Cache v8.1:** Enhanced hashing algorithm (Stride 16 + Byte Exactness) to eliminate collision risks on similar frames.
-*   **Adaptive Bongmath v3:** The "Anti-Plastic" texture engine remains active, respecting dark scenes while expanding dynamic range.
+### 🆕 System Status Update (v3.5 Omega):
+
+*   **TeaCache "Chronos Sentinel" (V5):**
+    *   **Step-Counter Hard Lock:** Forces the calculation of the first 2 steps regardless of similarity. Essential for Turbo workflows (6 steps) to prevent image collapse.
+    *   **Dual-Flow Engine:** Separates Positive and Negative prompt caching to prevent CFG collisions.
+    *   **Quantum Safe (FP8):** Automatically detects FP8 quantization conflicts and disables `Autocast` on the fly to prevent crashes.
+*   **VRAM Guard "Tesseract Engine" (V6):**
+    *   **Async Transfer:** Decodes the next frame chunk while the previous one is being copied to RAM. Eliminates UI lag.
+    *   **Zero-Lag GC:** Removed aggressive garbage collection from critical loops.
+*   **Samplers (Passive Mode):** The "Vector Amplification" has been decommissioned. The Sentinel now operates in Passive Monitoring Mode, fixing "burn" issues in Refined workflows.
 
 ---
 
@@ -69,7 +74,7 @@ A unified, intelligent loader that bridges the gap between Analog (Safetensors) 
 | `dtype_high` | Precision override (`fp16`, `bf16`, `fp8_e4m3fn`, etc.). |
 | `model_low_name` | The secondary UNet model (Wan 2.2 requirement). |
 | `enable_checksum` | Performs a SHA256 integrity scan (Security Protocol). |
-| `offload_inactive` | **"Skynet Protocol":** Aggressively purges VRAM of unused models before loading new ones to prevent OOM. |
+| `offload_inactive` | **"Skynet Protocol":** Aggressively purges VRAM of unused models before loading new ones. |
 
 ---
 
@@ -79,7 +84,6 @@ The "Sentinel" engine powers three specialized sampling nodes designed for chain
 
 ### 🔴 XT-404 Skynet 1 (Master)
 **The Commander node.** Initializes generation and defines the global noise schedule.
-*   **Prompt Authority:** Active signal monitoring (Passive Mode).
 *   **Outputs:** Latent, Denoised Latent, Options (for chaining), Seed.
 
 | Parameter | Description |
@@ -92,38 +96,35 @@ The "Sentinel" engine powers three specialized sampling nodes designed for chain
 ### 🟡 XT-404 Skynet 2 (Chain)
 **The Relay node.** Designed for split-sampling (e.g., first 50% on Master, next 30% on Chain).
 *   **Logic:** Hides the Seed widget (uses internal deterministic inheritance).
-*   **VRAM:** Dynamic unloading based on model type (Keep GGUF loaded / Unload FP16).
+*   **VRAM:** Dynamic unloading based on model type.
 
 ### 🟢 XT-404 Skynet 3 (Refiner)
 **The Terminator node.** Finalizes the image structure.
 *   **Configuration:** `steps_to_run` defaults to `-1` (finish the schedule).
-*   **Focus:** High-frequency detail recovery.
 
 ---
 
-## ⚡ Phase 3: Hardware Optimization
+## ⚡ Phase 3: Hardware Optimization (Omega Engine)
 
 ### 🚀 Wan Hardware Accelerator
 **Class:** `Wan_Hardware_Accelerator`
-Enables low-level PyTorch optimizations (TF32) for NVIDIA Ampere+ GPUs. Increases matrix multiplication speed.
+Enables low-level PyTorch optimizations (**TF32**) for NVIDIA Ampere+ GPUs.
+*   **TF32:** Increases speed by ~20% on compatible GPUs with negligible precision loss.
 
-### ✂️ Wan Attention Slicer (SDPA)
-**Class:** `Wan_Attention_Slicer`
-Manages the Attention mechanism.
-*   **0 (Auto):** Activates Flash Attention (SDPA) for maximum speed.
-*   **1-4:** Forces slicing to drastically reduce VRAM peaks (slower, but safer for <12GB cards).
-
-### 🧩 Wan Hybrid VRAM Guard
+### 🧩 Wan Hybrid VRAM Guard (Omega V6)
 **Class:** `Wan_Hybrid_VRAM_Guard`
-Essential for VAE Decoding. Replaces the standard VAE Decode.
-*   **Atomic Decoding:** Decodes 1 frame at a time.
-*   **Tiling:** Forces spatial tiling (512px chunks).
-*   **Async Offload:** Streams decoded data to CPU RAM immediately. **Zero VRAM Spikes.**
+**The Tesseract Engine.** Replaces standard VAE Decode for Wan 2.2.
+*   **Async Stream:** Pipeline architecture (Decode -> Transfer -> Save) happens simultaneously.
+*   **Pin Memory:** Uses pinned CPU RAM for DMA transfers (Direct Memory Access).
+*   **Tiling:** Forces spatial tiling (512px chunks) to fit 8K video in 12GB VRAM.
 
-### 🍵 Wan TeaCache (Obsidian Engine)
+### 🍵 Wan TeaCache (Omega V5)
 **Class:** `Wan_TeaCache_Patch`
-Implements caching to skip U-Net calculations if frame difference is minimal.
-*   `rel_l1_threshold`: **0.15** (Recommended). Higher = Faster generation, lower quality.
+**The Chronos Sentinel.** Caches U-Net outputs to speed up generation (1.5x - 2x).
+*   **Quantum Safe:** Set `force_autocast` to `False` for GGUF/FP8 models to avoid "ScalarType" errors. The node will auto-correct if you forget.
+*   `rel_l1_threshold`:
+    *   **0.05 - 0.1**: Safe zone for high quality.
+    *   **0.02**: Required for Turbo/Lightning (6 steps) workflows.
 
 ---
 
@@ -133,31 +134,35 @@ Implements caching to skip U-Net calculations if frame difference is minimal.
 **Class:** `Wan_Video_Compressor`
 Encodes output to H.265 10-bit.
 *   **Modes:** Web/Discord (<5MB target), Master (High Fidelity), Archival.
-*   **Psy-RD:** Preserves grain texture without bloating file size.
 
 ### 🧹 Wan Cycle Terminator
 **Class:** `Wan_Cycle_Terminator`
-Surgical memory cleaning. Uses Windows API `EmptyWorkingSet` to flush Physical RAM + VRAM.
-*   **Fun:** Displays Skynet/Terminator quotes in the console on activation.
+Surgical memory cleaning using Windows API `EmptyWorkingSet`. Use only when switching heavy workflows.
 
-### 📐 Resolution Savant & OneShot Cache
-*   **Resolution Savant:** Resizes images ensuring dimensions are strictly divisible by 16 (Wan Requirement), using Lanczos (CPU) or Area (GPU).
-*   **OneShot Cache:** Caches Text (CLIP) and Vision (I2V) encodings in Pinned Memory to prevent re-calculation.
+### 📐 Resolution Savant
+**Class:** `Wan_Resolution_Savant`
+Resizes images ensuring dimensions are strictly divisible by 16 (Wan Requirement).
+*   **Modes:** `lanczos` (CPU/High Quality) or `bicubic/area` (GPU/Fast).
 
 ---
 ---
 
 # 🇫🇷 DOCUMENTATION FRANÇAISE
 
-## 📡 Dernières Infos (v3.4 / v15.2 Sentinel)
+## 📡 Dernières Infos (Omega v3.5 Mise à jour)
 
-XT-404 Skynet est une suite d'ingénierie d'élite pour ComfyUI, architecturée spécifiquement pour le modèle de génération vidéo Wan 2.2.
+XT-404 Skynet est une suite d'ingénierie d'élite pour ComfyUI. La mise à jour **v3.5 Omega** introduit des capacités d'auto-réparation et des pipelines asynchrones.
 
-### 🆕 Mise à jour État Système (v3.4) :
-*   **Mise à jour Protocole (Sentinel Passif) :** L'amplification vectorielle (Signal Boost) a été **désactivée**. Le Sentinel opère désormais en **Mode Monitoring Passif**. Il analyse le CFG mais n'intervient plus sur le signal, résolvant les problèmes de sur-saturation dans les chaînes (Chain/Refiner).
-*   **Atomic Guard v14.2 (Stabilité) :** Correction d'un crash critique de backend (`record_stream`) lors du décodage CPU/Hybride. Synchronisation asynchrone renforcée pour éviter la corruption mémoire.
-*   **Cache Vision v8.1 :** Algorithme de hachage renforcé (Stride 16) pour éliminer les risques de collisions sur des frames similaires.
-*   **Bongmath Adaptatif v3 :** Le moteur de texture reste actif, respectant les scènes sombres tout en optimisant le grain argentique.
+### 🆕 Mise à jour État Système (v3.5 Omega) :
+
+*   **TeaCache "Chronos Sentinel" (V5) :**
+    *   **Verrouillage Physique (Hard Lock) :** Force le calcul des 2 premières étapes quoi qu'il arrive. Vital pour les workflows Turbo (6 steps).
+    *   **Moteur Double Flux (Dual-Flow) :** Sépare le cache du prompt Positif et Négatif pour éviter les collisions de CFG.
+    *   **Sécurité Quantique (FP8) :** Détecte automatiquement les conflits de quantification FP8 et désactive `Autocast` à la volée pour éviter les crashs.
+*   **VRAM Guard "Moteur Tesseract" (V6) :**
+    *   **Transfert Asynchrone :** Décode le morceau (chunk) suivant pendant que le précédent est copié en RAM. Élimine le lag de l'interface.
+    *   **Zero-Lag GC :** Suppression du nettoyage mémoire agressif dans les boucles critiques.
+*   **Samplers (Mode Passif) :** L'amplification vectorielle a été désactivée pour éviter la sur-saturation.
 
 ---
 
@@ -166,88 +171,66 @@ XT-404 Skynet est une suite d'ingénierie d'élite pour ComfyUI, architecturée 
 ### 🤖 Cyberdyne Model Hub
 **Classe :** `CyberdyneModelHub`
 
-Un chargeur unifié et intelligent qui fait le pont entre les architectures Analogiques (Safetensors) et Quantifiées (GGUF). Il gère spécifiquement l'exigence Wan 2.2 Dual-Model (Contexte Haut + Contexte Bas).
+Un chargeur unifié qui gère l'exigence Wan 2.2 Dual-Model (High + Low Context) et supporte nativement les fichiers GGUF.
 
 | Paramètre | Description |
 | :--- | :--- |
-| `model_high_name` | Le modèle UNet principal. Supporte `.safetensors` ET `.gguf`. |
-| `dtype_high` | Forçage de la précision (`fp16`, `bf16`, `fp8_e4m3fn`, etc.). |
-| `model_low_name` | Le modèle UNet secondaire (Requis par Wan 2.2). |
-| `enable_checksum` | Effectue un scan d'intégrité SHA256 (Protocole de Sécurité). |
-| `offload_inactive` | **"Protocole Skynet" :** Purge agressivement la VRAM des modèles inutilisés avant d'en charger de nouveaux pour éviter les erreurs OOM. |
+| `model_high_name` | Modèle principal. Supporte `.safetensors` ET `.gguf`. |
+| `dtype_high` | Forçage précision (`fp16`, `bf16`, `fp8_e4m3fn`, etc.). |
+| `model_low_name` | Modèle secondaire (Requis par Wan 2.2). |
+| `enable_checksum` | Scan d'intégrité SHA256. |
+| `offload_inactive` | **"Protocole Skynet" :** Purge la VRAM avant chargement. |
 
 ---
 
 ## 🧠 Phase 2 : Cœur Neuronal (Samplers XT-404)
 
-Le moteur "Sentinel" propulse trois nœuds d'échantillonnage spécialisés conçus pour les workflows en chaîne.
-
 ### 🔴 XT-404 Skynet 1 (Master)
-**Le Commandant.** Initialise la génération et définit le planning de bruit global.
-*   **Autorité de Prompt :** Surveillance active du signal (Mode Passif).
-*   **Sorties :** Latent, Latent Débruité, Options (pour le chaînage), Seed.
-
-| Paramètre | Description |
-| :--- | :--- |
-| `sampler_name` | Sélection combinée (ex: `linear/euler`, `beta/dpmpp_2m`). |
-| `cfg` | Échelle de guidage. Surveillé par Sentinel. |
-| `bongmath` | Moteur de Texture. `True` = Look Film/Analogique. `False` = Numérique/Lisse. |
-| `sampler_mode` | Standard ou Resample (injecte du bruit frais). |
+**Le Commandant.** Initialise la génération.
+*   **Bongmath :** Moteur de Texture. `True` = Grain Film. `False` = Lisse.
 
 ### 🟡 XT-404 Skynet 2 (Chain)
-**Le Relais.** Conçu pour l'échantillonnage fractionné (ex: 50% sur Master, 30% sur Chain).
-*   **Logique :** Masque le widget Seed (utilise l'héritage déterministe interne).
-*   **VRAM :** Déchargement dynamique basé sur le type de modèle (Garde GGUF / Décharge FP16).
+**Le Relais.** Conçu pour l'échantillonnage fractionné. Masque le Seed pour héritage déterministe.
 
 ### 🟢 XT-404 Skynet 3 (Refiner)
-**Le Terminator.** Finalise la structure de l'image.
-*   **Configuration :** `steps_to_run` par défaut à `-1` (termine le planning).
-*   **Focus :** Récupération des détails haute fréquence.
+**Le Terminator.** Finalise les détails haute fréquence.
 
 ---
 
-## ⚡ Phase 3 : Optimisation Matérielle
+## ⚡ Phase 3 : Optimisation Matérielle (Moteur Omega)
 
 ### 🚀 Wan Hardware Accelerator
 **Classe :** `Wan_Hardware_Accelerator`
-Active les optimisations bas niveau PyTorch (TF32) pour les GPU NVIDIA Ampere+. Accélère les multiplications matricielles.
+Active **TF32** sur les GPU NVIDIA Ampere+. Gain de vitesse ~20%.
 
-### ✂️ Wan Attention Slicer (SDPA)
-**Classe :** `Wan_Attention_Slicer`
-Gère le mécanisme d'Attention.
-*   **0 (Auto) :** Active Flash Attention (SDPA) pour une vitesse maximale.
-*   **1-4 :** Force le découpage (slicing) pour réduire drastiquement les pics de VRAM (plus lent, mais plus sûr pour les cartes <12Go).
-
-### 🧩 Wan Hybrid VRAM Guard
+### 🧩 Wan Hybrid VRAM Guard (Omega V6)
 **Classe :** `Wan_Hybrid_VRAM_Guard`
-Essentiel pour le Décodage VAE. Remplace le Decode VAE standard.
-*   **Décodage Atomique :** Décode 1 frame à la fois.
-*   **Tuilage (Tiling) :** Force le tuilage spatial (blocs de 512px).
-*   **Déchargement Async :** Transfère les données décodées vers la RAM CPU immédiatement. **Zéro Pic de VRAM.**
+**Le Moteur Tesseract.** Remplace le Decode VAE standard.
+*   **Flux Asynchrone :** Architecture Pipeline (Décodage -> Transfert -> Sauvegarde) simultanée.
+*   **Pin Memory :** Utilise la RAM CPU verrouillée pour des transferts DMA ultra-rapides.
+*   **Tuilage :** Découpe l'image en blocs de 512px.
 
-### 🍵 Wan TeaCache (Obsidian Engine)
+### 🍵 Wan TeaCache (Omega V5)
 **Classe :** `Wan_TeaCache_Patch`
-Implémente un cache pour sauter les calculs U-Net si la différence entre les frames est minime.
-*   `rel_l1_threshold` : **0.15** (Recommandé). Plus haut = Génération plus rapide, qualité moindre.
+**La Sentinelle Chronos.** Cache les sorties U-Net pour accélérer la génération.
+*   **Sécurité Quantique :** Mettre `force_autocast` sur `False` pour les modèles GGUF/FP8. Le nœud se corrige tout seul si vous oubliez.
+*   `rel_l1_threshold` :
+    *   **0.05 - 0.1** : Qualité standard.
+    *   **0.02** : Requis pour les workflows Turbo (6 steps).
 
 ---
 
 ## 🛠️ Phase 4 : Post-Production & Outils
 
-### 💾 Wan Video Compressor (H.265)
-**Classe :** `Wan_Video_Compressor`
-Encode la sortie en H.265 10-bits.
-*   **Modes :** Web/Discord (Cible <5Mo), Master (Haute Fidélité), Archival.
-*   **Psy-RD :** Préserve la texture du grain sans gonfler la taille du fichier.
+### 💾 Wan Video Compressor
+Encode la sortie en H.265 10-bits (Web, Master, Archival).
 
 ### 🧹 Wan Cycle Terminator
-**Classe :** `Wan_Cycle_Terminator`
-Nettoyage chirurgical de la mémoire. Utilise l'API Windows `EmptyWorkingSet` pour vider la RAM Physique + VRAM.
-*   **Fun :** Affiche des citations Skynet/Terminator dans la console lors de l'activation.
+Nettoyage chirurgical de la mémoire via API Windows.
 
-### 📐 Resolution Savant & OneShot Cache
-*   **Resolution Savant :** Redimensionne les images en assurant que les dimensions sont strictement divisibles par 16 (Exigence Wan), utilisant Lanczos (CPU) ou Area (GPU).
-*   **OneShot Cache :** Met en cache les encodages Texte (CLIP) et Vision (I2V) en mémoire "Pinned" pour éviter le re-calcul.
+### 📐 Resolution Savant
+Redimensionne les images pour qu'elles soient divisibles par 16.
+*   **Modes :** `lanczos` (CPU/Qualité) ou `bicubic/area` (GPU/Vitesse).
 
 ---
 
