@@ -1,8 +1,8 @@
 {
-  "id": "a9743fd7-e2dd-4997-b7e3-c25707279493",
+  "id": "46a50374-02a3-4ed4-ae3a-710fdfc15522",
   "revision": 0,
-  "last_node_id": 258,
-  "last_link_id": 647,
+  "last_node_id": 260,
+  "last_link_id": 658,
   "nodes": [
     {
       "id": 97,
@@ -61,7 +61,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 14,
+      "order": 12,
       "mode": 0,
       "inputs": [
         {
@@ -104,7 +104,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 20,
+      "order": 18,
       "mode": 0,
       "inputs": [
         {
@@ -160,8 +160,7 @@
         "0, 0, 0",
         "center",
         2,
-        "cpu",
-        "<tr><td>Output: </td><td><b>1</b> x <b>640</b> x <b>640 | 4.69MB</b></td></tr>"
+        "cpu"
       ]
     },
     {
@@ -213,7 +212,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 23,
+      "order": 21,
       "mode": 0,
       "inputs": [
         {
@@ -310,7 +309,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 34,
+      "order": 32,
       "mode": 0,
       "inputs": [
         {
@@ -355,7 +354,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 36,
+      "order": 34,
       "mode": 0,
       "inputs": [
         {
@@ -398,7 +397,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 38,
+      "order": 36,
       "mode": 0,
       "inputs": [
         {
@@ -450,7 +449,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 26,
+      "order": 24,
       "mode": 0,
       "inputs": [
         {
@@ -588,7 +587,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 16,
+      "order": 14,
       "mode": 0,
       "inputs": [
         {
@@ -656,9 +655,9 @@
         "Node name for S&R": "CyberdyneModelHub"
       },
       "widgets_values": [
-        "Libidinous Infernalis V2 (Experimental) - Final Version.H.safetensors",
+        "Insidious.V2.High_00001_.safetensors",
         "default",
-        "Libidinous Infernalis V2 (Experimental) - Final Version.L.safetensors",
+        "Insidious.V2.Low_00001_.safetensors",
         "default",
         "",
         false,
@@ -679,7 +678,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 17,
+      "order": 15,
       "mode": 0,
       "inputs": [
         {
@@ -721,7 +720,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 21,
+      "order": 19,
       "mode": 4,
       "inputs": [
         {
@@ -771,7 +770,7 @@
         "collapsed": false,
         "pinned": true
       },
-      "order": 24,
+      "order": 22,
       "mode": 0,
       "inputs": [
         {
@@ -785,7 +784,7 @@
           "name": "accelerated_model",
           "type": "MODEL",
           "links": [
-            476
+            654
           ]
         }
       ],
@@ -797,51 +796,6 @@
       "widgets_values": [
         true,
         true
-      ]
-    },
-    {
-      "id": 189,
-      "type": "Wan_TeaCache_Patch",
-      "pos": [
-        -2597.5807883805187,
-        -169.5413079994049
-      ],
-      "size": [
-        297.65641665543296,
-        130
-      ],
-      "flags": {
-        "pinned": true
-      },
-      "order": 27,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "model",
-          "type": "MODEL",
-          "link": 476
-        }
-      ],
-      "outputs": [
-        {
-          "name": "turbo_model",
-          "type": "MODEL",
-          "links": [
-            482,
-            631
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "XT-404/ComfyUI_Wan_Architect",
-        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e",
-        "Node name for S&R": "Wan_TeaCache_Patch"
-      },
-      "widgets_values": [
-        true,
-        0.02,
-        0.3,
-        false
       ]
     },
     {
@@ -879,7 +833,7 @@
         "Node name for S&R": "Int"
       },
       "widgets_values": [
-        "6"
+        "8"
       ]
     },
     {
@@ -919,94 +873,6 @@
       ]
     },
     {
-      "id": 164,
-      "type": "WanVideoScheduler",
-      "pos": [
-        -3697.82158884032,
-        -769.1841968342292
-      ],
-      "size": [
-        296.80830436205326,
-        268.81024996
-      ],
-      "flags": {
-        "pinned": true
-      },
-      "order": 19,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "sigmas",
-          "shape": 7,
-          "type": "SIGMAS",
-          "link": null
-        },
-        {
-          "name": "steps",
-          "type": "INT",
-          "widget": {
-            "name": "steps"
-          },
-          "link": 320
-        },
-        {
-          "name": "end_step",
-          "type": "INT",
-          "widget": {
-            "name": "end_step"
-          },
-          "link": 321
-        }
-      ],
-      "outputs": [
-        {
-          "name": "sigmas",
-          "type": "SIGMAS",
-          "links": [
-            623
-          ]
-        },
-        {
-          "name": "steps",
-          "type": "INT",
-          "links": null
-        },
-        {
-          "name": "shift",
-          "type": "FLOAT",
-          "links": null
-        },
-        {
-          "name": "scheduler",
-          "type": "COMBO",
-          "links": []
-        },
-        {
-          "name": "start_step",
-          "type": "INT",
-          "links": null
-        },
-        {
-          "name": "end_step",
-          "type": "INT",
-          "links": null
-        }
-      ],
-      "properties": {
-        "cnr_id": "ComfyUI-WanVideoWrapper",
-        "ver": "37365817e82c3d6057fcb0a5d7f952f7376f096a",
-        "Node name for S&R": "WanVideoScheduler",
-        "aux_id": "kijai/ComfyUI-WanVideoWrapper"
-      },
-      "widgets_values": [
-        "euler",
-        10,
-        5,
-        0,
-        -1
-      ]
-    },
-    {
       "id": 103,
       "type": "ModelSamplingSD3",
       "pos": [
@@ -1021,7 +887,7 @@
         "collapsed": false,
         "pinned": true
       },
-      "order": 18,
+      "order": 16,
       "mode": 0,
       "inputs": [
         {
@@ -1063,7 +929,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 22,
+      "order": 20,
       "mode": 4,
       "inputs": [
         {
@@ -1112,7 +978,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 25,
+      "order": 23,
       "mode": 0,
       "inputs": [
         {
@@ -1126,7 +992,7 @@
           "name": "accelerated_model",
           "type": "MODEL",
           "links": [
-            479
+            657
           ]
         }
       ],
@@ -1138,50 +1004,6 @@
       "widgets_values": [
         true,
         true
-      ]
-    },
-    {
-      "id": 191,
-      "type": "Wan_TeaCache_Patch",
-      "pos": [
-        -2598.4835124586457,
-        231.4697954168465
-      ],
-      "size": [
-        298.55789405000075,
-        130
-      ],
-      "flags": {
-        "pinned": true
-      },
-      "order": 28,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "model",
-          "type": "MODEL",
-          "link": 479
-        }
-      ],
-      "outputs": [
-        {
-          "name": "turbo_model",
-          "type": "MODEL",
-          "links": [
-            484
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "XT-404/ComfyUI_Wan_Architect",
-        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e",
-        "Node name for S&R": "Wan_TeaCache_Patch"
-      },
-      "widgets_values": [
-        true,
-        0.02,
-        0.3,
-        false
       ]
     },
     {
@@ -1198,13 +1020,13 @@
       "flags": {
         "pinned": true
       },
-      "order": 30,
+      "order": 28,
       "mode": 0,
       "inputs": [
         {
           "name": "model",
           "type": "MODEL",
-          "link": 484
+          "link": 658
         }
       ],
       "outputs": [
@@ -1239,13 +1061,13 @@
       "flags": {
         "pinned": true
       },
-      "order": 29,
+      "order": 27,
       "mode": 0,
       "inputs": [
         {
           "name": "model",
           "type": "MODEL",
-          "link": 482
+          "link": 655
         }
       ],
       "outputs": [
@@ -1280,7 +1102,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 31,
+      "order": 29,
       "mode": 0,
       "inputs": [
         {
@@ -1365,7 +1187,7 @@
         1,
         1,
         2.5,
-        237138396131521,
+        806159075936538,
         "randomize",
         "standard",
         true,
@@ -1386,13 +1208,13 @@
       "flags": {
         "pinned": true
       },
-      "order": 32,
+      "order": 30,
       "mode": 0,
       "inputs": [
         {
           "name": "model",
           "type": "MODEL",
-          "link": 631
+          "link": 656
         },
         {
           "name": "positive",
@@ -1484,7 +1306,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 33,
+      "order": 31,
       "mode": 0,
       "inputs": [
         {
@@ -1531,7 +1353,7 @@
           "type": "LATENT",
           "links": [
             640,
-            641
+            652
           ]
         },
         {
@@ -1583,7 +1405,7 @@
           "name": "VAE",
           "type": "VAE",
           "links": [
-            619
+            651
           ]
         }
       ],
@@ -1610,18 +1432,18 @@
       "flags": {
         "pinned": true
       },
-      "order": 35,
+      "order": 33,
       "mode": 0,
       "inputs": [
         {
           "name": "samples",
           "type": "LATENT",
-          "link": 641
+          "link": 652
         },
         {
           "name": "vae",
           "type": "VAE",
-          "link": 619
+          "link": 651
         }
       ],
       "outputs": [
@@ -1630,7 +1452,7 @@
           "type": "IMAGE",
           "slot_index": 0,
           "links": [
-            621
+            653
           ]
         }
       ],
@@ -1640,52 +1462,6 @@
         "Node name for S&R": "VAEDecode"
       },
       "widgets_values": []
-    },
-    {
-      "id": 213,
-      "type": "Wan_Hybrid_VRAM_Guard",
-      "pos": [
-        -418.8300008760723,
-        96.43773600301034
-      ],
-      "size": [
-        341.112890625,
-        150
-      ],
-      "flags": {
-        "pinned": true
-      },
-      "order": 8,
-      "mode": 4,
-      "inputs": [
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": null
-        },
-        {
-          "name": "samples",
-          "type": "LATENT",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "links": []
-        }
-      ],
-      "properties": {
-        "aux_id": "XT-404/ComfyUI_Wan_Architect",
-        "ver": "d7061e4baafc1aa49b45727e8fdb32fb859bdf9e",
-        "Node name for S&R": "Wan_Hybrid_VRAM_Guard"
-      },
-      "widgets_values": [
-        512,
-        1,
-        true
-      ]
     },
     {
       "id": 171,
@@ -1701,13 +1477,13 @@
       "flags": {
         "pinned": true
       },
-      "order": 37,
+      "order": 35,
       "mode": 0,
       "inputs": [
         {
           "name": "images",
           "type": "IMAGE",
-          "link": 621
+          "link": 653
         },
         {
           "name": "audio",
@@ -1755,13 +1531,13 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "wan22_00003.mp4",
+            "filename": "wan22_00035.mp4",
             "subfolder": "",
             "type": "output",
             "format": "video/h264-mp4",
             "frame_rate": 32.666748046875,
-            "workflow": "wan22_00003.png",
-            "fullpath": "N:\\ComfyUI\\output\\wan22_00003.mp4"
+            "workflow": "wan22_00035.png",
+            "fullpath": "N:\\ComfyUI\\output\\wan22_00035.mp4"
           }
         }
       }
@@ -1780,7 +1556,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 39,
+      "order": 37,
       "mode": 0,
       "inputs": [
         {
@@ -1836,13 +1612,13 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "wan22_rife_00003.mp4",
+            "filename": "wan22_rife_00034.mp4",
             "subfolder": "",
             "type": "output",
             "format": "video/h264-mp4",
             "frame_rate": 32,
-            "workflow": "wan22_rife_00003.png",
-            "fullpath": "N:\\ComfyUI\\output\\wan22_rife_00003.mp4"
+            "workflow": "wan22_rife_00034.png",
+            "fullpath": "N:\\ComfyUI\\output\\wan22_rife_00034.mp4"
           }
         }
       }
@@ -1861,7 +1637,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 40,
+      "order": 38,
       "mode": 0,
       "inputs": [
         {
@@ -1886,7 +1662,7 @@
       },
       "widgets_values": [
         "Web/Discord (Balanced - CRF 26)",
-        true,
+        false,
         true
       ]
     },
@@ -1904,7 +1680,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 41,
+      "order": 39,
       "mode": 0,
       "inputs": [
         {
@@ -1931,31 +1707,6 @@
       ]
     },
     {
-      "id": 254,
-      "type": "Note",
-      "pos": [
-        -437.10912877881395,
-        131.6211351369897
-      ],
-      "size": [
-        376.85247755476837,
-        160.07851164285987
-      ],
-      "flags": {
-        "pinned": true
-      },
-      "order": 9,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "properties": {},
-      "widgets_values": [
-        "ERROR DOWN\nNEXT MAJ\n"
-      ],
-      "color": "#432",
-      "bgcolor": "#653"
-    },
-    {
       "id": 256,
       "type": "Note",
       "pos": [
@@ -1969,7 +1720,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 10,
+      "order": 8,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -1994,7 +1745,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 11,
+      "order": 9,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -2019,7 +1770,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 12,
+      "order": 10,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -2031,26 +1782,112 @@
       "bgcolor": "#653"
     },
     {
-      "id": 255,
-      "type": "Note",
+      "id": 164,
+      "type": "WanVideoScheduler",
       "pos": [
-        -2598.0789858083062,
-        391.9509695924594
+        -3697.82158884032,
+        -769.1841968342292
       ],
       "size": [
-        297.7251936870098,
-        88.47158953820008
+        295.58568195248984,
+        472.4460296585543
       ],
       "flags": {
         "pinned": true
       },
-      "order": 13,
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "sigmas",
+          "shape": 7,
+          "type": "SIGMAS",
+          "link": null
+        },
+        {
+          "name": "steps",
+          "type": "INT",
+          "widget": {
+            "name": "steps"
+          },
+          "link": 320
+        },
+        {
+          "name": "end_step",
+          "type": "INT",
+          "widget": {
+            "name": "end_step"
+          },
+          "link": 321
+        }
+      ],
+      "outputs": [
+        {
+          "name": "sigmas",
+          "type": "SIGMAS",
+          "links": [
+            623
+          ]
+        },
+        {
+          "name": "steps",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "shift",
+          "type": "FLOAT",
+          "links": null
+        },
+        {
+          "name": "scheduler",
+          "type": "COMBO",
+          "links": []
+        },
+        {
+          "name": "start_step",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "end_step",
+          "type": "INT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI-WanVideoWrapper",
+        "ver": "37365817e82c3d6057fcb0a5d7f952f7376f096a",
+        "Node name for S&R": "WanVideoScheduler",
+        "aux_id": "kijai/ComfyUI-WanVideoWrapper"
+      },
+      "widgets_values": [
+        "euler",
+        10,
+        5,
+        0,
+        -1
+      ]
+    },
+    {
+      "id": 254,
+      "type": "Note",
+      "pos": [
+        -440.6908497518347,
+        284.73970673362777
+      ],
+      "size": [
+        376.85247755476837,
+        160.07851164285987
+      ],
+      "flags": {},
+      "order": 11,
       "mode": 0,
       "inputs": [],
       "outputs": [],
       "properties": {},
       "widgets_values": [
-        "Next Dev : MAG-CACHE SWTICH TEA-CACHE."
+        "ERROR DOWN\nNEXT MAJ\n"
       ],
       "color": "#432",
       "bgcolor": "#653"
@@ -2069,7 +1906,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 15,
+      "order": 13,
       "mode": 0,
       "inputs": [
         {
@@ -2094,7 +1931,96 @@
         "Node name for S&R": "Wan_Text_OneShot_Cache"
       },
       "widgets_values": [
-        "(2D), (Dark Fantasy), (Dynamic Text \"XT404\"), (Dynamic Background).\n\n(At 1-5 seconds: a Elf woman Kissing Gobelin.)\n",
+        "(2D), (Dark Fantasy), (Dynamic Text \"XT404\"), (Dynamic Background).\n(Permanent facial consistency), (mandatory persistent style).\n\n(At 1-5 An elf observes the goblin, whose arm is around her waist.\n\nThe elf swiftly strikes the goblin in the face with her fist, sending him flying into the background.\n\nThe TEXT \"XT-404\" lights up, and the word \"FATALITY\" appears in blood-red letters. The elf smiles with satisfaction.\n",
+        true
+      ]
+    },
+    {
+      "id": 260,
+      "type": "Wan_MagCache_Patch",
+      "pos": [
+        -2598.513592280727,
+        229.7988560595022
+      ],
+      "size": [
+        298.5337818521019,
+        130
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 26,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 657
+        }
+      ],
+      "outputs": [
+        {
+          "name": "certified_model",
+          "type": "MODEL",
+          "links": [
+            658
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "XT-404/XT-404_SKYNET",
+        "ver": "9b89dbadcd9f31220fbc89db56ca3ec655957d7e",
+        "Node name for S&R": "Wan_MagCache_Patch"
+      },
+      "widgets_values": [
+        true,
+        0.02,
+        0.3,
+        true
+      ]
+    },
+    {
+      "id": 259,
+      "type": "Wan_MagCache_Patch",
+      "pos": [
+        -2598.5852672228343,
+        -168.99842637586352
+      ],
+      "size": [
+        299.44124627379995,
+        130
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 25,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 654
+        }
+      ],
+      "outputs": [
+        {
+          "name": "certified_model",
+          "type": "MODEL",
+          "links": [
+            655,
+            656
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "XT-404/XT-404_SKYNET",
+        "ver": "9b89dbadcd9f31220fbc89db56ca3ec655957d7e",
+        "Node name for S&R": "Wan_MagCache_Patch"
+      },
+      "widgets_values": [
+        true,
+        0.02,
+        0.3,
         true
       ]
     }
@@ -2181,42 +2107,10 @@
       "VAE"
     ],
     [
-      476,
-      196,
-      0,
-      189,
-      0,
-      "MODEL"
-    ],
-    [
-      479,
-      197,
-      0,
-      191,
-      0,
-      "MODEL"
-    ],
-    [
       481,
       101,
       0,
       196,
-      0,
-      "MODEL"
-    ],
-    [
-      482,
-      189,
-      0,
-      195,
-      0,
-      "MODEL"
-    ],
-    [
-      484,
-      191,
-      0,
-      199,
       0,
       "MODEL"
     ],
@@ -2317,22 +2211,6 @@
       "*"
     ],
     [
-      619,
-      214,
-      0,
-      251,
-      1,
-      "VAE"
-    ],
-    [
-      621,
-      251,
-      0,
-      171,
-      0,
-      "IMAGE"
-    ],
-    [
       622,
       162,
       0,
@@ -2403,14 +2281,6 @@
       248,
       4,
       "INT"
-    ],
-    [
-      631,
-      189,
-      0,
-      248,
-      0,
-      "MODEL"
     ],
     [
       632,
@@ -2485,14 +2355,6 @@
       "LATENT"
     ],
     [
-      641,
-      249,
-      0,
-      251,
-      0,
-      "LATENT"
-    ],
-    [
       642,
       252,
       0,
@@ -2523,16 +2385,80 @@
       197,
       0,
       "MODEL"
+    ],
+    [
+      651,
+      214,
+      0,
+      251,
+      1,
+      "VAE"
+    ],
+    [
+      652,
+      249,
+      0,
+      251,
+      0,
+      "LATENT"
+    ],
+    [
+      653,
+      251,
+      0,
+      171,
+      0,
+      "IMAGE"
+    ],
+    [
+      654,
+      196,
+      0,
+      259,
+      0,
+      "MODEL"
+    ],
+    [
+      655,
+      259,
+      0,
+      195,
+      0,
+      "MODEL"
+    ],
+    [
+      656,
+      259,
+      0,
+      248,
+      0,
+      "MODEL"
+    ],
+    [
+      657,
+      197,
+      0,
+      260,
+      0,
+      "MODEL"
+    ],
+    [
+      658,
+      260,
+      0,
+      199,
+      0,
+      "MODEL"
     ]
   ],
   "groups": [],
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.29408349370552017,
+      "scale": 2.1762913579016345,
       "offset": [
-        5961.299936505981,
-        2813.041851681299
+        3134.97273263069,
+        284.7691638302876
       ]
     },
     "frontendVersion": "1.28.8",
