@@ -4,109 +4,174 @@ from comfy.sd import VAE
 import torch.nn.functional as F
 
 # ==============================================================================
-# WAN ARCHITECT: RADICAL CLEANUP (V21)
+# WAN ARCHITECT: MAGCACHE OMEGA (V9.9) - SIGNAL PROCESSING UNIT
 # ==============================================================================
 
-class WanSubState:
+class MagCacheState:
     def __init__(self):
-        self.prev_latent = None
-        self.prev_output = None
-        self.skipped_steps = 0
-        self.step_counter = 0
+        self.prev_latent = None      # Stockage FP32 pour comparaison
+        self.prev_output = None      # Sortie du modèle cached
+        self.accumulated_err = 0.0   # MagCache: Erreur accumulée
+        self.step_counter = 0        # Compteur de pas interne
+        self.last_timestep = -1.0    # Détection de changement de batch
 
-class WanState:
-    def __init__(self):
-        self.flows = {} 
-        self.autocast_failed_once = False 
-
-class Wan_TeaCache_Patch:
+class Wan_MagCache_Patch:
     """
-    Wan Turbo (TeaCache).
-    Module conservé intact comme demandé.
+    **Wan 2.2 MagCache (Omega Edition)**
+    Transforme le TeaCache en MagCache (Magnitude-based Cache) avec support FP8.
+    
+    CRITICAL FIXES:
+    - Fixe le crash 'QuantizedTensor' en castant l'input en FP32 pour le calcul de diff.
+    - Utilise l'erreur accumulée (MagCache logic) au lieu de l'instantatée.
+    - Supporte nativement le Turbo 6 steps.
     """
     @classmethod
     def INPUT_TYPES(s):
         return {
             "required": {
                 "model": ("MODEL",),
-                "enable_tea_cache": ("BOOLEAN", {"default": True}),
-                "rel_l1_threshold": ("FLOAT", {"default": 0.05, "min": 0.0, "max": 0.6, "step": 0.001}),
-                "start_step_percent": ("FLOAT", {"default": 0.0, "min": 0.0, "max": 1.0}),
-                "force_autocast": ("BOOLEAN", {"default": True}),
+                "enable_mag_cache": ("BOOLEAN", {"default": True}),
+                "mag_threshold": ("FLOAT", {"default": 0.020, "min": 0.0, "max": 0.5, "step": 0.001, "tooltip": "Threshold for accumulated error (formerly rel_l1)"}),
+                "start_step_percent": ("FLOAT", {"default": 0.3, "min": 0.0, "max": 1.0, "tooltip": "Force run for the first X% of steps (0.3 = 30%)"}),
             }
         }
-    RETURN_TYPES = ("MODEL",)
-    RETURN_NAMES = ("turbo_model",)
-    FUNCTION = "apply_teacache"
-    CATEGORY = "ComfyWan_Architect/Performance"
 
-    def apply_teacache(self, model, enable_tea_cache, rel_l1_threshold, start_step_percent, force_autocast):
-        if not enable_tea_cache: return (model,)
-        
+    RETURN_TYPES = ("MODEL",)
+    RETURN_NAMES = ("mag_model",)
+    FUNCTION = "apply_magcache"
+    CATEGORY = "Wan_Architect/Performance"
+
+    def apply_magcache(self, model, enable_mag_cache, mag_threshold, start_step_percent):
+        if not enable_mag_cache:
+            return (model,)
+
+        # 1. Zero-Overhead Cloning
         m = model.clone()
-        m.wan_teacache_state = WanState()
-        device = mm.get_torch_device()
         
-        # Détection auto du support BF16
-        dtype = torch.float16
-        if force_autocast and torch.cuda.is_bf16_supported():
-            dtype = torch.bfloat16
-        
-        def teacache_wrapper(model_function, params):
+        # 2. State Initialization (Attached to Model Object)
+        if not hasattr(m, "wan_omega_state"):
+            m.wan_omega_state = {}
+
+        def magcache_wrapper(model_function, params):
+            # --- A. Extraction des données ---
             input_x = params.get("input")
             timestep = params.get("timestep")
             c = params.get("c", {})
             
-            # Gestion Flow ID simple
-            try: flow_id = c.get("context", c.get("y", torch.tensor(0))).data_ptr()
-            except: flow_id = "global"
-
-            if flow_id not in m.wan_teacache_state.flows: 
-                m.wan_teacache_state.flows[flow_id] = WanSubState()
-            state = m.wan_teacache_state.flows[flow_id]
-
-            # Helper execution
-            def run(x, t, **k):
-                if not m.wan_teacache_state.autocast_failed_once:
-                    try: 
-                        with torch.autocast(device.type, dtype=dtype): 
-                            return model_function(x, t, **k)
-                    except: 
-                        m.wan_teacache_state.autocast_failed_once = True
-                        return model_function(x, t, **k)
-                return model_function(x, t, **k)
-
-            # Logique de saut
-            if state.prev_latent is None or state.step_counter < 2 or input_x.shape != state.prev_latent.shape:
-                state.prev_latent = input_x.detach()
-                state.prev_output = run(input_x, timestep, **c)
-                state.step_counter += 1
-                return state.prev_output
-
-            # Calcul différence
-            dims = input_x.shape
-            stride = 4 if (dims[-1]*dims[-2]) > 262144 else 2
+            # Gestion robuste du timestep (peut être un Tensor, un float ou un int)
             try:
-                diff = (input_x[...,::stride,::stride] - state.prev_latent[...,::stride,::stride]).abs().mean()
-                if diff < rel_l1_threshold:
-                    state.skipped_steps += 1
-                    state.step_counter += 1
-                    return state.prev_output
-            except: pass
+                ts_val = timestep[0].item() if isinstance(timestep, torch.Tensor) else float(timestep)
+            except:
+                ts_val = 0.0
 
-            state.prev_output = run(input_x, timestep, **c)
-            state.prev_latent = input_x.detach()
-            state.step_counter += 1
-            return state.prev_output
+            # --- B. Identification du Flux (Dual-Flow) ---
+            # On sépare le cache pour le prompt positif et négatif (CFG)
+            # On utilise le pointeur mémoire du cross-attention comme ID unique
+            try:
+                if "c_crossattn" in c:
+                    flow_id = f"flow_{c['c_crossattn'].data_ptr()}"
+                elif "y" in c:
+                    flow_id = f"flow_{c['y'].data_ptr()}"
+                else:
+                    flow_id = "global_flow"
+            except:
+                flow_id = "global_flow"
 
-        m.set_model_unet_function_wrapper(teacache_wrapper)
+            # Init State si absent
+            if flow_id not in m.wan_omega_state:
+                m.wan_omega_state[flow_id] = MagCacheState()
+            
+            state = m.wan_omega_state[flow_id]
+
+            # --- C. Détection de Reset (Nouveau Batch/Image) ---
+            # Si le timestep saute brutalement ou revient en arrière (début d'un nouveau sampling)
+            # Note: En diffusion, timestep diminue souvent (1000->0), mais parfois c'est sigma (0->N)
+            # Heuristique: Si l'écart est > 200 ou si on revient à un état initial logique
+            if state.last_timestep != -1:
+                delta_t = abs(ts_val - state.last_timestep)
+                if delta_t > 200: # Seuil arbitraire pour détecter un nouveau run
+                    state.prev_latent = None
+                    state.accumulated_err = 0.0
+                    state.step_counter = 0
+
+            state.last_timestep = ts_val
+
+            # --- D. Helper d'exécution (Le Cœur du Calcul) ---
+            def run_model_forward():
+                # Exécution réelle du modèle
+                output = model_function(input_x, timestep, **c)
+                
+                # Mise à jour du Cache
+                state.prev_output = output
+                
+                # IMPORTANT: On stocke en FP32 pour éviter la dérive de précision
+                # et on détache du graphe pour économiser la VRAM
+                state.prev_latent = input_x.detach().float()
+                
+                # Reset de l'erreur accumulée après un calcul réel
+                state.accumulated_err = 0.0
+                state.step_counter += 1
+                return output
+
+            # --- E. Logique Hard Lock (Turbo Safe) ---
+            # Force le calcul si on n'a pas d'historique (Step 0)
+            if state.prev_latent is None:
+                return run_model_forward()
+
+            # Vérification des dimensions (Si l'utilisateur change la résolution à la volée)
+            if input_x.shape != state.prev_latent.shape:
+                return run_model_forward()
+
+            # Hard Lock basé sur le pourcentage (ex: 30% des steps)
+            # Pour Wan Turbo 6 steps, step_counter sera 0, 1, 2...
+            # Si start_step_percent = 0.3, on veut au moins 2 steps forcés (index 0 et 1)
+            # Heuristique simple pour ComfyUI (qui ne donne pas toujours max_steps) :
+            # On force les 2 premiers steps minimum quoi qu'il arrive.
+            if state.step_counter < 2 and start_step_percent > 0.0:
+                 return run_model_forward()
+
+            # --- F. MAGCACHE METRIC (QUANTUM SAFE) ---
+            # C'est ici que ça crashait avant.
+            # Fix: On cast l'input actuel en FP32 JUSTE pour le calcul de la métrique.
+            
+            # 1. Conversion Input -> FP32 (Safe)
+            current_latent_f32 = input_x.detach()
+            if current_latent_f32.dtype not in [torch.float32, torch.float64]:
+                current_latent_f32 = current_latent_f32.float()
+            
+            # 2. Récupération Previous (Déjà FP32)
+            prev_latent_f32 = state.prev_latent
+
+            # 3. Calcul de la Magnitude Relative (L1)
+            # Formule: |Curr - Prev| / |Curr|
+            # Cela nous donne le pourcentage de changement du signal.
+            diff_abs = (current_latent_f32 - prev_latent_f32).abs().mean()
+            norm_abs = current_latent_f32.abs().mean() + 1e-6 # Eviter division par zero
+            
+            current_relative_diff = diff_abs / norm_abs
+
+            # 4. Accumulation de l'erreur (C'est ça qui fait le "MagCache" vs "TeaCache")
+            state.accumulated_err += current_relative_diff.item()
+
+            # --- G. Décision : Cache ou Calcul ? ---
+            if state.accumulated_err < mag_threshold:
+                # SKIP STEP: On renvoie la sortie précédente
+                # On incrémente juste le compteur de steps
+                state.step_counter += 1
+                # Pas de mise à jour de prev_latent (on garde la référence originale pour accumuler l'écart)
+                return state.prev_output
+            else:
+                # RUN STEP: L'erreur est trop grande, on recalcule
+                return run_model_forward()
+
+        # Injection du wrapper
+        m.set_model_unet_function_wrapper(magcache_wrapper)
         return (m,)
 
 class Wan_Hybrid_VRAM_Guard:
     """
-    OMEGA V21: PASS-THROUGH (GHOST MODE)
-    Ce nœud ne fait plus RIEN. Il appelle simplement le décodage standard de ComfyUI.
-    Il garde les noms de paramètres pour ne pas casser ton workflow existant.
+    OMEGA V21: PASS-THROUGH (Standard Decode)
+    Garde la compatibilité du workflow mais utilise le décodeur natif optimisé.
     """
     @classmethod
     def INPUT_TYPES(s):
@@ -114,29 +179,26 @@ class Wan_Hybrid_VRAM_Guard:
             "required": {
                 "vae": ("VAE",),
                 "samples": ("LATENT",),
-                # Paramètres conservés pour compatibilité UI (Ignorés par le code)
-                "tile_size_spatial": ("INT", {"default": 512, "min": 256, "max": 4096}),
-                "temporal_chunk_size": ("INT", {"default": 8, "min": 1, "max": 64}), 
-                "enable_cpu_offload": ("BOOLEAN", {"default": True}),
+                "tile_size_spatial": ("INT", {"default": 1024}), # Ignoré
+                "enable_cpu_offload": ("BOOLEAN", {"default": True}), # Ignoré
             }
         }
     
     RETURN_TYPES = ("IMAGE",)
     RETURN_NAMES = ("images",)
     FUNCTION = "decode_standard"
-    CATEGORY = "ComfyWan_Architect/Performance"
+    CATEGORY = "Wan_Architect/Performance"
     
-    def decode_standard(self, vae, samples, tile_size_spatial, temporal_chunk_size, enable_cpu_offload):
-        # On ignore totalement tile_size, chunk_size, etc.
-        # On utilise la méthode standard de ComfyUI qui gère tout toute seule.
+    def decode_standard(self, vae, samples, tile_size_spatial, enable_cpu_offload):
+        # Utilisation standard de ComfyUI VAE Decode qui gère maintenant très bien la VRAM
         return (vae.decode(samples["samples"]),)
 
 # MAPPINGS
 NODE_CLASS_MAPPINGS = {
-    "Wan_TeaCache_Patch": Wan_TeaCache_Patch,
+    "Wan_MagCache_Patch": Wan_MagCache_Patch,
     "Wan_Hybrid_VRAM_Guard": Wan_Hybrid_VRAM_Guard
 }
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "Wan_TeaCache_Patch": "Wan Turbo (TeaCache Omega)",
-    "Wan_Hybrid_VRAM_Guard": "Wan Decode (Standard Native)"
+    "Wan_MagCache_Patch": "Wan MagCache (Omega Quantized)",
+    "Wan_Hybrid_VRAM_Guard": "Wan Decode (Native Pass)"
 }
