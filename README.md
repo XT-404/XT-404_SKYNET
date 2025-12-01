@@ -2,9 +2,9 @@
 ### Cyberdyne Systems Corp. | Series T-800 | Model 101
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Version-v3.5_Omega-red?style=for-the-badge" alt="Version">
+  <img src="https://img.shields.io/badge/Version-v4.0_Omega_MagCache-red?style=for-the-badge" alt="Version">
   <img src="https://img.shields.io/badge/Architecture-Wan_2.2-blue?style=for-the-badge" alt="Architecture">
-  <img src="https://img.shields.io/badge/Engine-Tesseract_V6-purple?style=for-the-badge" alt="Engine">
+  <img src="https://img.shields.io/badge/Engine-T_1000_Sentinel-purple?style=for-the-badge" alt="Engine">
   <img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge" alt="License">
 </p>
 
@@ -27,37 +27,37 @@
 ## 🌍 NEURAL NET NAVIGATION / NAVIGATION DU RÉSEAU
 
 ### 🇺🇸 [ENGLISH DOCUMENTATION](#-english-documentation)
-1. [Latest Intel (Omega Changelog)](#-latest-intel-omega-v35-changelog)
+1. [Latest Intel (MagCache & T-1000)](#-latest-intel-omega-v40-magcache--t-1000)
 2. [Phase 1: Infiltration (Loaders)](#%EF%B8%8F-phase-1-infiltration-loaders)
 3. [Phase 2: Neural Net Core (Samplers)](#-phase-2-neural-net-core-samplers-xt-404)
-4. [Phase 3: Hardware Optimization (The Omega Engine)](#-phase-3-hardware-optimization-omega-engine)
+4. [Phase 3: Hardware Optimization (MagCache Omega)](#-phase-3-hardware-optimization-omega-engine)
 5. [Phase 4: Post-Processing & Tools](#%EF%B8%8F-phase-4-post-processing--tools)
 
 ### 🇫🇷 [DOCUMENTATION FRANÇAISE](#-documentation-française)
-1. [Dernières Infos (Mise à jour Omega)](#-dernières-infos-omega-v35-mise-à-jour)
+1. [Dernières Infos (MagCache & T-1000)](#-dernières-infos-omega-v40-magcache--t-1000)
 2. [Phase 1 : Infiltration (Chargement)](#%EF%B8%8F-phase-1--infiltration-chargement)
 3. [Phase 2 : Cœur Neuronal (Samplers)](#-phase-2--cœur-neuronal-samplers-xt-404)
-4. [Phase 3 : Optimisation Matérielle (Moteur Omega)](#-phase-3--optimisation-matérielle-moteur-omega)
+4. [Phase 3 : Optimisation Matérielle (MagCache Omega)](#-phase-3--optimisation-matérielle-moteur-omega)
 5. [Phase 4 : Post-Production & Outils](#%EF%B8%8F-phase-4--post-production--outils)
 
 ---
 
 # 🇺🇸 ENGLISH DOCUMENTATION
 
-## 📡 Latest Intel (Omega v3.5 Changelog)
+## 📡 Latest Intel (Omega v4.0: MagCache & T-1000)
 
-XT-404 Skynet is an elite engineering suite for ComfyUI, specifically architected for the Wan 2.2 video generation model. The **v3.5 Omega** update introduces "Self-Healing" capabilities and Asynchronous pipelines.
+XT-404 Skynet is an elite engineering suite for ComfyUI, specifically architected for the Wan 2.2 video generation model. The **v4.0 Omega** update replaces the legacy TeaCache with the revolutionary **MagCache** and introduces the **T-1000 Sentinel** telemetry system.
 
-### 🆕 System Status Update (v3.5 Omega):
+### 🆕 System Status Update (v4.0 Omega):
 
-*   **TeaCache "Chronos Sentinel" (V5):**
-    *   **Step-Counter Hard Lock:** Forces the calculation of the first 2 steps regardless of similarity. Essential for Turbo workflows (6 steps) to prevent image collapse.
-    *   **Dual-Flow Engine:** Separates Positive and Negative prompt caching to prevent CFG collisions.
-    *   **Quantum Safe (FP8):** Automatically detects FP8 quantization conflicts and disables `Autocast` on the fly to prevent crashes.
-*   **VRAM Guard "Tesseract Engine" (V6):**
-    *   **Async Transfer:** Decodes the next frame chunk while the previous one is being copied to RAM. Eliminates UI lag.
-    *   **Zero-Lag GC:** Removed aggressive garbage collection from critical loops.
-*   **Samplers (Passive Mode):** The "Vector Amplification" has been decommissioned. The Sentinel now operates in Passive Monitoring Mode, fixing "burn" issues in Refined workflows.
+*   **MagCache "Omega Edition" (Replaces TeaCache):**
+    *   **Accumulated Error Logic:** Unlike TeaCache (instant delta), MagCache accumulates signal drift over time. It only triggers a recalculation when the total drift exceeds the threshold. This guarantees prompt fidelity over long sequences.
+    *   **Quantum Safe (FP8/BF16):** Includes a specific fix for "QuantizedTensor" crashes. It casts tensors to FP32 *only* for metric calculation, ensuring 100% stability with quantized models.
+    *   **Dual-Flow Engine:** Completely isolates Positive and Negative prompt caching via memory pointer analysis (`data_ptr`). Prevents signal cross-contamination.
+*   **T-1000 Sentinel (Active Telemetry):**
+    *   **Real-Time Console HUD:** Displays Step, Flow ID, Signal Drift, and Fidelity % in the ComfyUI console.
+    *   **Turbo Hard Lock:** Automatically detects aggressive samplers (Turbo/Lightning 6-steps) and **forces** calculation for the first few steps to prevent image collapse.
+*   **Samplers (XT-404):** Optimized for "Shift" parameter handling (default 5.0) for Wan 2.2.
 
 ---
 
@@ -88,43 +88,39 @@ The "Sentinel" engine powers three specialized sampling nodes designed for chain
 
 | Parameter | Description |
 | :--- | :--- |
-| `sampler_name` | Combo selection (e.g., `linear/euler`, `beta/dpmpp_2m`). |
-| `cfg` | Guidance Scale. Monitored by Sentinel. |
+| `shift_val` | **Critical for Wan 2.2**. Default **5.0**. Controls the noise schedule curve. |
 | `bongmath` | Texture Engine. `True` = Film/Analog look. `False` = Digital/Smooth. |
 | `sampler_mode` | Standard or Resample (injects fresh noise). |
 
 ### 🟡 XT-404 Skynet 2 (Chain)
-**The Relay node.** Designed for split-sampling (e.g., first 50% on Master, next 30% on Chain).
+**The Relay node.** Designed for split-sampling.
 *   **Logic:** Hides the Seed widget (uses internal deterministic inheritance).
-*   **VRAM:** Dynamic unloading based on model type.
 
 ### 🟢 XT-404 Skynet 3 (Refiner)
 **The Terminator node.** Finalizes the image structure.
-*   **Configuration:** `steps_to_run` defaults to `-1` (finish the schedule).
 
 ---
 
 ## ⚡ Phase 3: Hardware Optimization (Omega Engine)
 
+### 🔮 Wan MagCache (T-1000 Sentinel)
+**Class:** `Wan_MagCache_Patch`
+**The Evolution of Caching.** Replaces TeaCache. Analyzes signal magnitude to skip redundant steps.
+
+| Parameter | Description |
+| :--- | :--- |
+| `enable_mag_cache` | Toggle the system on/off. |
+| `mag_threshold` | **0.020** (Default). The accumulated error limit. Higher = Faster/Lower Quality. Lower = Slower/Higher Quality. |
+| `start_step_percent`| **0.3** (Default). Forces calculation for the first 30% of steps. Critical for structure. |
+| `verbose_t1000` | **TRUE**. Activates the T-1000 HUD in the console to monitor Signal Fidelity %. |
+
 ### 🚀 Wan Hardware Accelerator
 **Class:** `Wan_Hardware_Accelerator`
 Enables low-level PyTorch optimizations (**TF32**) for NVIDIA Ampere+ GPUs.
-*   **TF32:** Increases speed by ~20% on compatible GPUs with negligible precision loss.
 
-### 🧩 Wan Hybrid VRAM Guard (Omega V6)
+### 🧩 Wan Hybrid VRAM Guard (Native Pass)
 **Class:** `Wan_Hybrid_VRAM_Guard`
-**The Tesseract Engine.** Replaces standard VAE Decode for Wan 2.2.
-*   **Async Stream:** Pipeline architecture (Decode -> Transfer -> Save) happens simultaneously.
-*   **Pin Memory:** Uses pinned CPU RAM for DMA transfers (Direct Memory Access).
-*   **Tiling:** Forces spatial tiling (512px chunks) to fit 8K video in 12GB VRAM.
-
-### 🍵 Wan TeaCache (Omega V5)
-**Class:** `Wan_TeaCache_Patch`
-**The Chronos Sentinel.** Caches U-Net outputs to speed up generation (1.5x - 2x).
-*   **Quantum Safe:** Set `force_autocast` to `False` for GGUF/FP8 models to avoid "ScalarType" errors. The node will auto-correct if you forget.
-*   `rel_l1_threshold`:
-    *   **0.05 - 0.1**: Safe zone for high quality.
-    *   **0.02**: Required for Turbo/Lightning (6 steps) workflows.
+Maintained for workflow compatibility. Uses ComfyUI's native optimized decoder.
 
 ---
 
@@ -132,37 +128,34 @@ Enables low-level PyTorch optimizations (**TF32**) for NVIDIA Ampere+ GPUs.
 
 ### 💾 Wan Video Compressor (H.265)
 **Class:** `Wan_Video_Compressor`
-Encodes output to H.265 10-bit.
-*   **Modes:** Web/Discord (<5MB target), Master (High Fidelity), Archival.
+Encodes output to H.265 10-bit with CPU thread management (prevents system lag).
 
 ### 🧹 Wan Cycle Terminator
 **Class:** `Wan_Cycle_Terminator`
 Surgical memory cleaning using Windows API `EmptyWorkingSet`. Use only when switching heavy workflows.
 
-### 📐 Resolution Savant
+### 📐 Resolution Savant (FP32)
 **Class:** `Wan_Resolution_Savant`
-Resizes images ensuring dimensions are strictly divisible by 16 (Wan Requirement).
-*   **Modes:** `lanczos` (CPU/High Quality) or `bicubic/area` (GPU/Fast).
+Resizes images ensuring dimensions are strictly divisible by 16. Uses **FP32 interpolation** to prevent color banding.
 
 ---
 ---
 
 # 🇫🇷 DOCUMENTATION FRANÇAISE
 
-## 📡 Dernières Infos (Omega v3.5 Mise à jour)
+## 📡 Dernières Infos (Omega v4.0 : MagCache & T-1000)
 
-XT-404 Skynet est une suite d'ingénierie d'élite pour ComfyUI. La mise à jour **v3.5 Omega** introduit des capacités d'auto-réparation et des pipelines asynchrones.
+XT-404 Skynet est une suite d'ingénierie d'élite pour ComfyUI. La mise à jour **v4.0 Omega** remplace l'ancien TeaCache par le révolutionnaire **MagCache** et déploie le système de télémétrie **T-1000 Sentinel**.
 
-### 🆕 Mise à jour État Système (v3.5 Omega) :
+### 🆕 Mise à jour État Système (v4.0 Omega) :
 
-*   **TeaCache "Chronos Sentinel" (V5) :**
-    *   **Verrouillage Physique (Hard Lock) :** Force le calcul des 2 premières étapes quoi qu'il arrive. Vital pour les workflows Turbo (6 steps).
-    *   **Moteur Double Flux (Dual-Flow) :** Sépare le cache du prompt Positif et Négatif pour éviter les collisions de CFG.
-    *   **Sécurité Quantique (FP8) :** Détecte automatiquement les conflits de quantification FP8 et désactive `Autocast` à la volée pour éviter les crashs.
-*   **VRAM Guard "Moteur Tesseract" (V6) :**
-    *   **Transfert Asynchrone :** Décode le morceau (chunk) suivant pendant que le précédent est copié en RAM. Élimine le lag de l'interface.
-    *   **Zero-Lag GC :** Suppression du nettoyage mémoire agressif dans les boucles critiques.
-*   **Samplers (Mode Passif) :** L'amplification vectorielle a été désactivée pour éviter la sur-saturation.
+*   **MagCache "Omega Edition" (Remplace TeaCache) :**
+    *   **Logique d'Erreur Accumulée :** Contrairement au TeaCache (différence instantanée), le MagCache accumule la dérive du signal dans le temps. Il ne recalcule que lorsque la dérive totale dépasse le seuil. Cela garantit une fidélité parfaite au prompt sur les longues séquences.
+    *   **Sécurité Quantique (FP8/BF16) :** Intègre un correctif spécifique pour les crashs "QuantizedTensor". Il convertit les tenseurs en FP32 *uniquement* pour le calcul métrique, assurant une stabilité à 100% avec les modèles GGUF/Quantized.
+    *   **Moteur Double Flux (Dual-Flow) :** Isole totalement le cache des prompts Positifs et Négatifs via une analyse des pointeurs mémoire (`data_ptr`). Empêche la contamination du signal.
+*   **T-1000 Sentinel (Télémétrie Active) :**
+    *   **HUD Console Temps Réel :** Affiche l'étape, l'ID du flux, la dérive (Drift) et le % de Fidélité dans la console ComfyUI.
+    *   **Verrouillage Turbo (Hard Lock) :** Détecte automatiquement les samplers agressifs (Turbo/Lightning 6-steps) et **force** le calcul des premières étapes pour éviter l'effondrement de l'image (status `[LOCKED]`).
 
 ---
 
@@ -187,6 +180,7 @@ Un chargeur unifié qui gère l'exigence Wan 2.2 Dual-Model (High + Low Context)
 
 ### 🔴 XT-404 Skynet 1 (Master)
 **Le Commandant.** Initialise la génération.
+*   **Shift Val :** **5.0** (Défaut). Crucial pour Wan 2.2. Contrôle la courbe de bruit.
 *   **Bongmath :** Moteur de Texture. `True` = Grain Film. `False` = Lisse.
 
 ### 🟡 XT-404 Skynet 2 (Chain)
@@ -197,40 +191,39 @@ Un chargeur unifié qui gère l'exigence Wan 2.2 Dual-Model (High + Low Context)
 
 ---
 
-## ⚡ Phase 3 : Optimisation Matérielle (Moteur Omega)
+## ⚡ Phase 3 : Optimisation Matérielle (MagCache Omega)
+
+### 🔮 Wan MagCache (T-1000 Sentinel)
+**Classe :** `Wan_MagCache_Patch`
+**L'Évolution du Cache.** Remplace le TeaCache. Analyse la magnitude du signal pour sauter les étapes redondantes.
+
+| Paramètre | Description |
+| :--- | :--- |
+| `enable_mag_cache` | Active ou désactive le système. |
+| `mag_threshold` | **0.020** (Défaut). Seuil d'erreur accumulée. Plus haut = Plus rapide. Plus bas = Meilleure qualité. |
+| `start_step_percent`| **0.3** (Défaut). Force le calcul sur les premiers 30% des étapes. Vital pour la structure. |
+| `verbose_t1000` | **TRUE**. Active le HUD T-1000 dans la console pour surveiller le % de Fidélité. |
 
 ### 🚀 Wan Hardware Accelerator
 **Classe :** `Wan_Hardware_Accelerator`
 Active **TF32** sur les GPU NVIDIA Ampere+. Gain de vitesse ~20%.
 
-### 🧩 Wan Hybrid VRAM Guard (Omega V6)
+### 🧩 Wan Hybrid VRAM Guard (Native Pass)
 **Classe :** `Wan_Hybrid_VRAM_Guard`
-**Le Moteur Tesseract.** Remplace le Decode VAE standard.
-*   **Flux Asynchrone :** Architecture Pipeline (Décodage -> Transfert -> Sauvegarde) simultanée.
-*   **Pin Memory :** Utilise la RAM CPU verrouillée pour des transferts DMA ultra-rapides.
-*   **Tuilage :** Découpe l'image en blocs de 512px.
-
-### 🍵 Wan TeaCache (Omega V5)
-**Classe :** `Wan_TeaCache_Patch`
-**La Sentinelle Chronos.** Cache les sorties U-Net pour accélérer la génération.
-*   **Sécurité Quantique :** Mettre `force_autocast` sur `False` pour les modèles GGUF/FP8. Le nœud se corrige tout seul si vous oubliez.
-*   `rel_l1_threshold` :
-    *   **0.05 - 0.1** : Qualité standard.
-    *   **0.02** : Requis pour les workflows Turbo (6 steps).
+Maintenu pour la compatibilité des workflows. Utilise le décodeur natif optimisé de ComfyUI.
 
 ---
 
 ## 🛠️ Phase 4 : Post-Production & Outils
 
 ### 💾 Wan Video Compressor
-Encode la sortie en H.265 10-bits (Web, Master, Archival).
+Encode la sortie en H.265 10-bits avec gestion intelligente des cœurs CPU.
 
 ### 🧹 Wan Cycle Terminator
 Nettoyage chirurgical de la mémoire via API Windows.
 
-### 📐 Resolution Savant
-Redimensionne les images pour qu'elles soient divisibles par 16.
-*   **Modes :** `lanczos` (CPU/Qualité) ou `bicubic/area` (GPU/Vitesse).
+### 📐 Resolution Savant (FP32)
+Redimensionne les images pour qu'elles soient divisibles par 16. Utilise l'interpolation **FP32** pour éviter le banding des couleurs.
 
 ---
 
