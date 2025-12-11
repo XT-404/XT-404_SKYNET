@@ -52,14 +52,18 @@ XT-404 Skynet is an elite engineering suite for ComfyUI, specifically architecte
 
 ### 🆕 System Status Update (v4.0 Omega):
 
+*   **Mimetic Rendering Core (I2V Ultra):**
+    *   **"Paroxysm" Detail Engine:** A new GPU-accelerated sharpening matrix applied *before* VAE encoding to counteract natural blur.
+    *   **FP32 Fidelity Lock:** The entire image pipeline is now locked to 32-bit floating point precision to eliminate color banding.
+    *   **Reference Injection:** Forces the model to maintain subject identity by injecting the source image as a hard reference.
+    *   **Smart Duration:** New dropdown menu handling exact frame-to-second compression ratios (e.g., 5s = 114 frames).
 *   **MagCache "Omega Edition" (Replaces TeaCache):**
-    *   **Accumulated Error Logic:** Unlike TeaCache (instant delta), MagCache accumulates signal drift over time. It only triggers a recalculation when the total drift exceeds the threshold. This guarantees prompt fidelity over long sequences.
-    *   **Quantum Safe (FP8/BF16):** Includes a specific fix for "QuantizedTensor" crashes. It casts tensors to FP32 *only* for metric calculation, ensuring 100% stability with quantized models.
-    *   **Dual-Flow Engine:** Completely isolates Positive and Negative prompt caching via memory pointer analysis (`data_ptr`). Prevents signal cross-contamination.
+    *   **Accumulated Error Logic:** Unlike TeaCache (instant delta), MagCache accumulates signal drift over time. It only triggers a recalculation when the total drift exceeds the threshold.
+    *   **Quantum Safe (FP8/BF16):** Includes a specific fix for "QuantizedTensor" crashes. It casts tensors to FP32 *only* for metric calculation.
+    *   **Dual-Flow Engine:** Completely isolates Positive and Negative prompt caching via memory pointer analysis (`data_ptr`).
 *   **T-1000 Sentinel (Active Telemetry):**
     *   **Real-Time Console HUD:** Displays Step, Flow ID, Signal Drift, and Fidelity % in the ComfyUI console.
-    *   **Turbo Hard Lock:** Automatically detects aggressive samplers (Turbo/Lightning 6-steps) and **forces** calculation for the first few steps to prevent image collapse.
-*   **Samplers (XT-404):** Optimized for "Shift" parameter handling (default 5.0) for Wan 2.2.
+    *   **Turbo Hard Lock:** Automatically detects aggressive samplers (Turbo/Lightning 6-steps) and **forces** calculation for the first few steps.
 
 ---
 
@@ -174,13 +178,18 @@ XT-404 Skynet est une suite d'ingénierie d'élite pour ComfyUI. La mise à jour
 
 ### 🆕 Mise à jour État Système (v4.0 Omega) :
 
+*   **Cœur de Rendu Mimétique (I2V Ultra) :**
+    *   **Moteur de Détail "Paroxysme" :** Une nouvelle matrice de netteté GPU appliquée *avant* l'encodage VAE pour contrer le flou naturel.
+    *   **Verrouillage Fidélité FP32 :** Tout le pipeline d'image est verrouillé en précision flottante 32 bits pour éliminer les bandes de couleurs (banding).
+    *   **Injection de Référence :** Force le modèle à maintenir l'identité du sujet en injectant l'image source comme référence dure.
+    *   **Durée Intelligente :** Nouveau menu déroulant gérant les ratios exacts de compression frames/secondes (ex: 5s = 114 frames).
 *   **MagCache "Omega Edition" (Remplace TeaCache) :**
-    *   **Logique d'Erreur Accumulée :** Contrairement au TeaCache (différence instantanée), le MagCache accumule la dérive du signal dans le temps. Il ne recalcule que lorsque la dérive totale dépasse le seuil. Cela garantit une fidélité parfaite au prompt sur les longues séquences.
-    *   **Sécurité Quantique (FP8/BF16) :** Intègre un correctif spécifique pour les crashs "QuantizedTensor". Il convertit les tenseurs en FP32 *uniquement* pour le calcul métrique, assurant une stabilité à 100% avec les modèles GGUF/Quantized.
-    *   **Moteur Double Flux (Dual-Flow) :** Isole totalement le cache des prompts Positifs et Négatifs via une analyse des pointeurs mémoire (`data_ptr`). Empêche la contamination du signal.
+    *   **Logique d'Erreur Accumulée :** Contrairement au TeaCache (différence instantanée), le MagCache accumule la dérive du signal dans le temps. Il ne recalcule que lorsque la dérive totale dépasse le seuil.
+    *   **Sécurité Quantique (FP8/BF16) :** Intègre un correctif spécifique pour les crashs "QuantizedTensor". Il convertit les tenseurs en FP32 *uniquement* pour le calcul métrique.
+    *   **Moteur Double Flux (Dual-Flow) :** Isole totalement le cache des prompts Positifs et Négatifs via une analyse des pointeurs mémoire (`data_ptr`).
 *   **T-1000 Sentinel (Télémétrie Active) :**
     *   **HUD Console Temps Réel :** Affiche l'étape, l'ID du flux, la dérive (Drift) et le % de Fidélité dans la console ComfyUI.
-    *   **Verrouillage Turbo (Hard Lock) :** Détecte automatiquement les samplers agressifs (Turbo/Lightning 6-steps) et **force** le calcul des premières étapes pour éviter l'effondrement de l'image (status `[LOCKED]`).
+    *   **Verrouillage Turbo (Hard Lock) :** Détecte automatiquement les samplers agressifs (Turbo/Lightning 6-steps) et **force** le calcul des premières étapes.
 
 ---
 
