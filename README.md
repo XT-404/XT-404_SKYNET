@@ -32,6 +32,7 @@
 3. [Phase 2: Neural Net Core (Samplers)](#-phase-2-neural-net-core-samplers-xt-404)
 4. [Phase 3: Hardware Optimization (MagCache Omega)](#-phase-3-hardware-optimization-omega-engine)
 5. [Phase 4: Post-Processing & Tools](#%EF%B8%8F-phase-4-post-processing--tools)
+6. [Phase 6: Mimetic Generation (Fidelity & Ultra)](#-phase-6-mimetic-generation-fidelity--ultra)
 
 ### 🇫🇷 [DOCUMENTATION FRANÇAISE](#-documentation-française)
 1. [Dernières Infos (MagCache & T-1000)](#-dernières-infos-omega-v40-magcache--t-1000)
@@ -39,6 +40,7 @@
 3. [Phase 2 : Cœur Neuronal (Samplers)](#-phase-2--cœur-neuronal-samplers-xt-404)
 4. [Phase 3 : Optimisation Matérielle (MagCache Omega)](#-phase-3--optimisation-matérielle-moteur-omega)
 5. [Phase 4 : Post-Production & Outils](#%EF%B8%8F-phase-4--post-production--outils)
+6. [Phase 6 : Génération Mimétique (Fidelity & Ultra)](#-phase-6--génération-mimétique-fidelity--ultra)
 
 ---
 
@@ -139,6 +141,29 @@ Surgical memory cleaning using Windows API `EmptyWorkingSet`. Use only when swit
 Resizes images ensuring dimensions are strictly divisible by 16. Uses **FP32 interpolation** to prevent color banding.
 
 ---
+
+## 🎭 Phase 6: Mimetic Generation (Fidelity & Ultra)
+
+**Class:** `WanImageToVideoUltra` | `WanImageToVideoFidelity`
+
+The **"Ultra"** engine is a complete re-engineering of the standard I2V process, focusing on absolute FP32 precision and dynamic control.
+
+### 🌟 Key Features (Ultra Node)
+*   **FP32 Forced Pipeline:** All math runs in 32-bit floating point to eliminate color banding.
+*   **Bicubic AA:** High-end upscaling with anti-aliasing (better than bilinear).
+*   **Detail Boost (Paroxysm):** A GPU-sharpening matrix applied *before* encoding to counteract VAE blur.
+*   **Motion Amplification:** A mathematical dynamic booster that solves "static video" issues.
+*   **Reference Injection:** Forces the model to "remember" the source identity (Identity Lock).
+*   **Smart Duration:** Dropdown menu for exact time (5s, 10s...) and frame calculation.
+
+| Parameter | Description |
+| :--- | :--- |
+| `video_duration` | Dropdown (e.g., "5s (114 frames)"). Auto-calculates correct frame count. |
+| `detail_boost` | Sharpening factor. **0.5** is recommended for natural HD. |
+| `motion_amp` | Dynamic booster. **1.0** = Normal. **1.15** = Forced movement. |
+| `force_ref` | **True** = Injects source image as a hard reference (High Fidelity). |
+
+---
 ---
 
 # 🇫🇷 DOCUMENTATION FRANÇAISE
@@ -224,6 +249,29 @@ Nettoyage chirurgical de la mémoire via API Windows.
 
 ### 📐 Resolution Savant (FP32)
 Redimensionne les images pour qu'elles soient divisibles par 16. Utilise l'interpolation **FP32** pour éviter le banding des couleurs.
+
+---
+
+## 🎭 Phase 6 : Génération Mimétique (Fidelity & Ultra)
+
+**Classe :** `WanImageToVideoUltra` | `WanImageToVideoFidelity`
+
+Le moteur **"Ultra"** est une ré-ingénierie complète du processus I2V standard, axée sur la précision FP32 absolue et le contrôle dynamique.
+
+### 🌟 Fonctionnalités Clés (Nœud Ultra)
+*   **Pipeline FP32 Forcé :** Tous les calculs mathématiques se font en 32 bits pour éliminer les bandes de couleurs.
+*   **Bicubic AA :** Upscaling haut de gamme avec anti-aliasing (meilleur que le bilinéaire).
+*   **Detail Boost (Paroxysme) :** Une matrice de netteté GPU appliquée *avant* l'encodage pour contrer le flou du VAE.
+*   **Amplification de Mouvement :** Un booster dynamique mathématique qui résout les problèmes de "vidéo statique".
+*   **Injection de Référence :** Force le modèle à "se souvenir" de l'identité de la source (Identity Lock).
+*   **Durée Intelligente :** Menu déroulant pour le temps exact (5s, 10s...) et le calcul des frames.
+
+| Paramètre | Description |
+| :--- | :--- |
+| `video_duration` | Menu (ex: "5s (114 frames)"). Calcule auto le bon nombre de frames. |
+| `detail_boost` | Facteur de netteté. **0.5** recommandé pour un HD naturel. |
+| `motion_amp` | Booster dynamique. **1.0** = Normal. **1.15** = Mouvement forcé. |
+| `force_ref` | **True** = Injecte l'image source comme référence dure (Haute Fidélité). |
 
 ---
 
