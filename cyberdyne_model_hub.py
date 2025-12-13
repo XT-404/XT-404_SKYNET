@@ -72,24 +72,33 @@ def unsafe_torch_load_context():
 class CyberdyneModelHub:
     """
     Nœud universel pour le chargement optimisé des modèles de diffusion.
-    Version: 1.5 (Telemetry & Security Bypass Included)
+    Version: 1.6 (Subdirectory Support Included)
     """
     
     @classmethod
     def INPUT_TYPES(cls) -> Dict[str, Any]:
         safetensors_files: Set[str] = set()
+        # Recherche récursive pour safetensors/checkpoints
         for s_dir in get_model_dirs_by_type("safetensors"):
             if os.path.exists(s_dir):
-                for filename in os.listdir(s_dir):
-                    if filename.endswith((".safetensors", ".ckpt")):
-                        safetensors_files.add(filename)
+                for root, _, files in os.walk(s_dir):
+                    for filename in files:
+                        if filename.endswith((".safetensors", ".ckpt")):
+                            # On stocke le chemin relatif par rapport au dossier racine du modèle
+                            full_path = os.path.join(root, filename)
+                            rel_path = os.path.relpath(full_path, s_dir)
+                            safetensors_files.add(rel_path)
 
         gguf_files: Set[str] = set()
+        # Recherche récursive pour GGUF
         for g_dir in get_model_dirs_by_type("gguf"):
             if os.path.exists(g_dir):
-                for filename in os.listdir(g_dir):
-                    if filename.endswith(".gguf"):
-                        gguf_files.add(filename)
+                for root, _, files in os.walk(g_dir):
+                    for filename in files:
+                        if filename.endswith(".gguf"):
+                            full_path = os.path.join(root, filename)
+                            rel_path = os.path.relpath(full_path, g_dir)
+                            gguf_files.add(rel_path)
         
         all_model_files = sorted(list(safetensors_files.union(gguf_files)))
         supported_dtypes = ["default", "fp16", "bf16", "fp8_e4m3fn", "fp8_e4m3fn_fast", "fp8_e5m2"]
@@ -125,6 +134,7 @@ class CyberdyneModelHub:
         
         if model_type_hint:
             for model_dir in get_model_dirs_by_type(model_type_hint):
+                # model_filename contient maintenant le chemin relatif (ex: subfolder/model.safetensors)
                 full_path = os.path.join(model_dir, model_filename)
                 if os.path.exists(full_path): return full_path
         return None
@@ -203,8 +213,25 @@ class CyberdyneModelHub:
                 if gguf_loader_class is None:
                     raise RuntimeError("Support GGUF manquant.")
 
+                # Attention: Pour GGUF, le loader natif attend souvent juste le nom de fichier relatif
+                # On tente de passer le chemin complet si le loader le supporte, ou le relatif.
+                # Dans ComfyUI standard, UnetLoaderGGUF attend un nom relatif.
                 loader_instance = gguf_loader_class()
-                result = loader_instance.load_unet(unet_name=filename)
+                
+                # Récupération du nom relatif (déjà fait dans INPUT_TYPES mais on s'assure ici)
+                # Cependant, si model_path est absolu, on doit trouver le relatif attendu par le noeud GGUF
+                # Hack: On passe le nom de fichier ou le path relatif calculé
+                
+                # Pour maximiser la compatibilité, on essaie de retrouver le nom tel qu'il apparaîtrait dans la liste
+                # Si le node GGUF utilise folder_paths.get_full_path, il a besoin du nom relatif.
+                
+                relative_gguf_name = filename # Fallback
+                for g_dir in get_model_dirs_by_type("gguf"):
+                    if model_path.startswith(g_dir):
+                        relative_gguf_name = os.path.relpath(model_path, g_dir)
+                        break
+                
+                result = loader_instance.load_unet(unet_name=relative_gguf_name)
                 loaded_model = result[0]
 
                 if target_dtype is not None:
@@ -232,7 +259,7 @@ class CyberdyneModelHub:
         loaded_model_low = None
 
         print("\n" + "="*50)
-        log_system("CYBERDYNE MODEL HUB v1.5 - INITIALIZED")
+        log_system("CYBERDYNE MODEL HUB v1.6 - INITIALIZED")
         
         model_high_path = self._get_model_path(model_high_name, base_path)
         model_low_path = self._get_model_path(model_low_name, base_path)
