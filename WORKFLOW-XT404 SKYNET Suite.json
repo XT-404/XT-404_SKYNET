@@ -1,8 +1,8 @@
 {
-  "id": "46a50374-02a3-4ed4-ae3a-710fdfc15522",
+  "id": "273b72a9-9f55-4b71-a25b-178da3369f84",
   "revision": 0,
-  "last_node_id": 274,
-  "last_link_id": 686,
+  "last_node_id": 290,
+  "last_link_id": 837,
   "nodes": [
     {
       "id": 97,
@@ -27,7 +27,7 @@
           "type": "IMAGE",
           "slot_index": 0,
           "links": [
-            498
+            837
           ]
         },
         {
@@ -43,7 +43,7 @@
         "Node name for S&R": "LoadImage"
       },
       "widgets_values": [
-        "Generated Image September 22, 2025 - 7_38PM-redimensionne-taille-400x400.jpeg",
+        "2025-12-14 17_06_21-13_22-54-46_00001.mp4 - Lecteur multimédia VLC.png",
         "image"
       ]
     },
@@ -61,22 +61,20 @@
       "flags": {
         "pinned": true
       },
-      "order": 10,
+      "order": 1,
       "mode": 0,
       "inputs": [
         {
           "name": "image",
           "type": "IMAGE",
-          "link": 498
+          "link": null
         }
       ],
       "outputs": [
         {
           "name": "IMAGE",
           "type": "IMAGE",
-          "links": [
-            499
-          ]
+          "links": []
         }
       ],
       "properties": {
@@ -104,19 +102,35 @@
       "flags": {
         "pinned": true
       },
-      "order": 16,
+      "order": 18,
       "mode": 0,
       "inputs": [
         {
           "name": "image",
           "type": "IMAGE",
-          "link": 499
+          "link": 833
         },
         {
           "name": "mask",
           "shape": 7,
           "type": "MASK",
           "link": null
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 834
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 835
         }
       ],
       "outputs": [
@@ -131,14 +145,14 @@
           "name": "width",
           "type": "INT",
           "links": [
-            660
+            826
           ]
         },
         {
           "name": "height",
           "type": "INT",
           "links": [
-            659
+            825
           ]
         },
         {
@@ -153,15 +167,15 @@
         "Node name for S&R": "ImageResizeKJv2"
       },
       "widgets_values": [
-        640,
-        640,
+        720,
+        720,
         "lanczos",
         "crop",
         "0, 0, 0",
         "center",
         2,
         "cpu",
-        "<tr><td>Output: </td><td><b>1</b> x <b>640</b> x <b>640 | 4.69MB</b></td></tr>"
+        "<tr><td>Output: </td><td><b>1</b> x <b>1124</b> x <b>626 | 8.05MB</b></td></tr>"
       ]
     },
     {
@@ -178,7 +192,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 1,
+      "order": 2,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -213,7 +227,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 19,
+      "order": 21,
       "mode": 0,
       "inputs": [
         {
@@ -232,14 +246,14 @@
           "name": "vision_output",
           "type": "CLIP_VISION_OUTPUT",
           "links": [
-            664
+            828
           ]
         },
         {
           "name": "passthrough_image",
           "type": "IMAGE",
           "links": [
-            663
+            827
           ]
         }
       ],
@@ -266,7 +280,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 2,
+      "order": 3,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -276,7 +290,7 @@
           "slot_index": 0,
           "links": [
             176,
-            665
+            829
           ]
         }
       ],
@@ -310,7 +324,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 30,
+      "order": 32,
       "mode": 0,
       "inputs": [
         {
@@ -355,7 +369,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 32,
+      "order": 34,
       "mode": 0,
       "inputs": [
         {
@@ -398,7 +412,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 34,
+      "order": 36,
       "mode": 0,
       "inputs": [
         {
@@ -450,7 +464,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 3,
+      "order": 4,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -488,7 +502,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 4,
+      "order": 5,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -496,14 +510,14 @@
           "name": "model_high",
           "type": "MODEL",
           "links": [
-            685
+            642
           ]
         },
         {
           "name": "model_low",
           "type": "MODEL",
           "links": [
-            686
+            645
           ]
         }
       ],
@@ -536,13 +550,13 @@
       "flags": {
         "pinned": true
       },
-      "order": 13,
+      "order": 15,
       "mode": 0,
       "inputs": [
         {
           "name": "model",
           "type": "MODEL",
-          "link": 685
+          "link": 642
         }
       ],
       "outputs": [
@@ -578,7 +592,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 17,
+      "order": 19,
       "mode": 4,
       "inputs": [
         {
@@ -609,7 +623,7 @@
         ]
       },
       "widgets_values": [
-        "CRANKING_lora_v1_high_noise.safetensors",
+        "dance_hip_bump_i2v-high.safetensors",
         1
       ]
     },
@@ -628,8 +642,8 @@
         "collapsed": false,
         "pinned": true
       },
-      "order": 20,
-      "mode": 4,
+      "order": 22,
+      "mode": 0,
       "inputs": [
         {
           "name": "model",
@@ -671,7 +685,7 @@
         "collapsed": false,
         "pinned": true
       },
-      "order": 5,
+      "order": 6,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -708,7 +722,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 6,
+      "order": 7,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -745,13 +759,13 @@
         "collapsed": false,
         "pinned": true
       },
-      "order": 14,
+      "order": 16,
       "mode": 0,
       "inputs": [
         {
           "name": "model",
           "type": "MODEL",
-          "link": 686
+          "link": 645
         }
       ],
       "outputs": [
@@ -787,7 +801,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 18,
+      "order": 20,
       "mode": 4,
       "inputs": [
         {
@@ -818,7 +832,7 @@
         ]
       },
       "widgets_values": [
-        "CRANKING_lora_v1_low_noise.safetensors",
+        "dance_hip_bump_i2v-low.safetensors",
         1
       ]
     },
@@ -836,8 +850,8 @@
       "flags": {
         "pinned": true
       },
-      "order": 21,
-      "mode": 4,
+      "order": 23,
+      "mode": 0,
       "inputs": [
         {
           "name": "model",
@@ -878,8 +892,8 @@
       "flags": {
         "pinned": true
       },
-      "order": 26,
-      "mode": 4,
+      "order": 28,
+      "mode": 0,
       "inputs": [
         {
           "name": "model",
@@ -919,8 +933,8 @@
       "flags": {
         "pinned": true
       },
-      "order": 25,
-      "mode": 4,
+      "order": 27,
+      "mode": 0,
       "inputs": [
         {
           "name": "model",
@@ -960,7 +974,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 27,
+      "order": 29,
       "mode": 0,
       "inputs": [
         {
@@ -971,17 +985,17 @@
         {
           "name": "positive",
           "type": "CONDITIONING",
-          "link": 670
+          "link": 822
         },
         {
           "name": "negative",
           "type": "CONDITIONING",
-          "link": 667
+          "link": 819
         },
         {
           "name": "latent_image",
           "type": "LATENT",
-          "link": 666
+          "link": 818
         },
         {
           "name": "sigmas",
@@ -1045,7 +1059,7 @@
         1,
         1,
         2.5,
-        125454500166289,
+        15584460656452,
         "randomize",
         "standard",
         true,
@@ -1066,7 +1080,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 28,
+      "order": 30,
       "mode": 0,
       "inputs": [
         {
@@ -1077,12 +1091,12 @@
         {
           "name": "positive",
           "type": "CONDITIONING",
-          "link": 671
+          "link": 823
         },
         {
           "name": "negative",
           "type": "CONDITIONING",
-          "link": 668
+          "link": 820
         },
         {
           "name": "latent_image",
@@ -1164,7 +1178,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 29,
+      "order": 31,
       "mode": 0,
       "inputs": [
         {
@@ -1175,12 +1189,12 @@
         {
           "name": "positive",
           "type": "CONDITIONING",
-          "link": 672
+          "link": 824
         },
         {
           "name": "negative",
           "type": "CONDITIONING",
-          "link": 669
+          "link": 821
         },
         {
           "name": "latent_image",
@@ -1255,7 +1269,7 @@
         "collapsed": false,
         "pinned": true
       },
-      "order": 7,
+      "order": 8,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -1290,7 +1304,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 31,
+      "order": 33,
       "mode": 0,
       "inputs": [
         {
@@ -1330,12 +1344,12 @@
       ],
       "size": [
         299.56720173941767,
-        627.5672017394177
+        503.7588695405327
       ],
       "flags": {
         "pinned": true
       },
-      "order": 33,
+      "order": 35,
       "mode": 0,
       "inputs": [
         {
@@ -1375,7 +1389,7 @@
         "Node name for S&R": "VHS_VideoCombine"
       },
       "widgets_values": {
-        "frame_rate": 32.666748046875,
+        "frame_rate": 32,
         "loop_count": 4,
         "filename_prefix": "wan22",
         "format": "video/h264-mp4",
@@ -1389,13 +1403,13 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "wan22_00007.mp4",
+            "filename": "wan22_00003.mp4",
             "subfolder": "",
             "type": "output",
             "format": "video/h264-mp4",
-            "frame_rate": 32.666748046875,
-            "workflow": "wan22_00007.png",
-            "fullpath": "N:\\ComfyUI\\output\\wan22_00007.mp4"
+            "frame_rate": 32,
+            "workflow": "wan22_00003.png",
+            "fullpath": "N:\\ComfyUI\\output\\wan22_00003.mp4"
           }
         }
       }
@@ -1409,12 +1423,12 @@
       ],
       "size": [
         814.2842020124199,
-        1142.2842020124199
+        790.5297696926339
       ],
       "flags": {
         "pinned": true
       },
-      "order": 35,
+      "order": 37,
       "mode": 0,
       "inputs": [
         {
@@ -1470,13 +1484,13 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "wan22_rife_00007.mp4",
+            "filename": "wan22_rife_00003.mp4",
             "subfolder": "",
             "type": "output",
             "format": "video/h264-mp4",
             "frame_rate": 32,
-            "workflow": "wan22_rife_00007.png",
-            "fullpath": "N:\\ComfyUI\\output\\wan22_rife_00007.mp4"
+            "workflow": "wan22_rife_00003.png",
+            "fullpath": "N:\\ComfyUI\\output\\wan22_rife_00003.mp4"
           }
         }
       }
@@ -1495,7 +1509,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 36,
+      "order": 38,
       "mode": 0,
       "inputs": [
         {
@@ -1538,7 +1552,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 37,
+      "order": 39,
       "mode": 0,
       "inputs": [
         {
@@ -1578,7 +1592,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 8,
+      "order": 9,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -1603,7 +1617,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 9,
+      "order": 10,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -1628,7 +1642,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 15,
+      "order": 17,
       "mode": 0,
       "inputs": [
         {
@@ -1717,8 +1731,8 @@
       "flags": {
         "pinned": true
       },
-      "order": 24,
-      "mode": 4,
+      "order": 26,
+      "mode": 0,
       "inputs": [
         {
           "name": "model",
@@ -1761,8 +1775,8 @@
       "flags": {
         "pinned": true
       },
-      "order": 23,
-      "mode": 4,
+      "order": 25,
+      "mode": 0,
       "inputs": [
         {
           "name": "model",
@@ -1793,6 +1807,29 @@
       ]
     },
     {
+      "id": 282,
+      "type": "Note",
+      "pos": [
+        -3142.174962617522,
+        -1028.317085604653
+      ],
+      "size": [
+        366.28081268869346,
+        189.00385637586078
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "114 > 5s\n229 > 10s\n342 > 15s\n456 > 20s\n570 > 25s\n684 > 30s"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
       "id": 201,
       "type": "Wan_Text_OneShot_Cache",
       "pos": [
@@ -1806,7 +1843,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 12,
+      "order": 14,
       "mode": 0,
       "inputs": [
         {
@@ -1820,7 +1857,7 @@
           "name": "CONDITIONING",
           "type": "CONDITIONING",
           "links": [
-            661
+            830
           ]
         }
       ],
@@ -1831,7 +1868,110 @@
         "Node name for S&R": "Wan_Text_OneShot_Cache"
       },
       "widgets_values": [
-        "闪烁, 画面抖动, 屏幕震动, 故障艺术, 过曝, 模糊, JPEG压缩残留, 画面发灰, 低质量, 最差质量, 水印, 文字, 用户名, 签名, 字幕, 颗粒感\n卡通, 动漫, 3D渲染, CGI, 插画, 绘画, 艺术品, 电子游戏, 和平的, 平静的, 宁静的, 美丽的, 可爱的, 干净的, 无菌的, 全年龄段\n(糟糕的人体结构:1.3), 画得不好的手, 手指融合, 多余的手指, 多余的肢体, 缺少的肢体, 画得不好的脸, 扭曲的面部, 畸形的四肢, 悬浮的肢体, 断开的肢体\n(快速移动, 大幅度移动, 不稳定的动作, 卡顿的动作:1.4), 无法控制的颤抖, 瞬间移动, 滑动, 太空步, 倒着走, 跳舞, 奔跑, 跳跃, 大笑, 微笑, 平稳的呼吸, 流畅的动作, 静态图像, 画面静止, photorealistic, 3D render, cosplay, human skin, realistic hair, smooth gradient, cgi, movie, low energy, black hair, brown eyes.",
+        "闪烁, 画面抖动, 屏幕震动, 故障艺术, 过曝, 模糊, JPEG压缩残留, 画面发灰, 低质量, 最差质量, 水印, 文字, 用户名, 签名, 字幕, 颗粒感\n卡通, 动漫, 3D渲染, CGI, 插画, 绘画, 艺术品, 电子游戏, 和平的, 平静的, 宁静的, 美丽的, 可爱的, 干净的, 无菌的, 全年龄段\n(糟糕的人体结构:1.3), 画得不好的手, 手指融合, 多余的手指, 多余的肢体, 缺少的肢体, 画得不好的脸, 扭曲的面部, 畸形的四肢, 悬浮的肢体, 断开的肢体\n(快速移动, 大幅度移动, 不稳定的动作, 卡顿的动作:1.4), 无法控制的颤抖, 瞬间移动, 滑动, 太空步, 倒着走, 跳舞, 奔跑, 跳跃, 大笑, 微笑, 平稳的呼吸, 流畅的动作, 静态图像, 画面静止, (morphing, deformation, extra limbs, extra fingers, missing limbs, floating objects, dissolving objects, changing clothes, disappearing weapon, glitch, low quality, bad anatomy, cartoon, 3d render, sketch, bad physics, face distortion, asymmetrical eyes, watermark, text, signature, blurry, out of focus).",
+        true
+      ]
+    },
+    {
+      "id": 281,
+      "type": "WanImageToVideoUltra",
+      "pos": [
+        -3143.981503283327,
+        -1344.172431030519
+      ],
+      "size": [
+        366.6509765625,
+        282
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 24,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 831
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 830
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 829
+        },
+        {
+          "name": "clip_vision_output",
+          "shape": 7,
+          "type": "CLIP_VISION_OUTPUT",
+          "link": 828
+        },
+        {
+          "name": "start_image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 827
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 826
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 825
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [
+            822,
+            823,
+            824
+          ]
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [
+            819,
+            820,
+            821
+          ]
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "links": [
+            818
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "XT-404/XT-404_SKYNET",
+        "ver": "9b89dbadcd9f31220fbc89db56ca3ec655957d7e",
+        "Node name for S&R": "WanImageToVideoUltra"
+      },
+      "widgets_values": [
+        41,
+        480,
+        229,
+        1,
+        0.5,
+        1,
         true
       ]
     },
@@ -1849,7 +1989,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 11,
+      "order": 13,
       "mode": 0,
       "inputs": [
         {
@@ -1863,7 +2003,7 @@
           "name": "CONDITIONING",
           "type": "CONDITIONING",
           "links": [
-            662
+            831
           ]
         }
       ],
@@ -1874,110 +2014,60 @@
         "Node name for S&R": "Wan_Text_OneShot_Cache"
       },
       "widgets_values": [
-        "",
+        "A high-speed realistic 5-second video starting with the reference image. \n[0s-1s] The woman quickly removes her headphones and stands up. [1s-2s] She performs a lightning-fast 360-degree spin. During the spin, a magical transition occurs: her outfit morphs from a grey t-shirt into a tight, short sexy dress with a deep plunging neckline that highlights her large bust and curves. \n[3s-4s] She instantly sits back down, hair perfectly styled, and quickly swipes red lipstick across her lips. \n[4s-5s] She leans towards the camera, looks into the lens, and blows a seductive French kiss. 8k resolution, cinematic lighting, motion blur during spin, perfect facial consistency throughout.",
         true
       ]
     },
     {
-      "id": 265,
-      "type": "WanImageToVideoUltra",
+      "id": 290,
+      "type": "AutoHalfSizeImage",
       "pos": [
-        -3227.3520213103257,
-        -1008.6919056538206
+        -4362.290096486304,
+        -1499.2740548745046
       ],
       "size": [
-        426.6509765625,
-        282
+        204.085546875,
+        66
       ],
       "flags": {},
-      "order": 22,
+      "order": 12,
       "mode": 0,
       "inputs": [
         {
-          "name": "positive",
-          "type": "CONDITIONING",
-          "link": 662
-        },
-        {
-          "name": "negative",
-          "type": "CONDITIONING",
-          "link": 661
-        },
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": 665
-        },
-        {
-          "name": "clip_vision_output",
-          "shape": 7,
-          "type": "CLIP_VISION_OUTPUT",
-          "link": 664
-        },
-        {
-          "name": "start_image",
-          "shape": 7,
+          "name": "image",
           "type": "IMAGE",
-          "link": 663
-        },
-        {
-          "name": "width",
-          "type": "INT",
-          "widget": {
-            "name": "width"
-          },
-          "link": 660
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "widget": {
-            "name": "height"
-          },
-          "link": 659
+          "link": 837
         }
       ],
       "outputs": [
         {
-          "name": "positive",
-          "type": "CONDITIONING",
+          "name": "image",
+          "type": "IMAGE",
           "links": [
-            670,
-            671,
-            672
+            833
           ]
         },
         {
-          "name": "negative",
-          "type": "CONDITIONING",
+          "name": "width",
+          "type": "INT",
           "links": [
-            667,
-            668,
-            669
+            834
           ]
         },
         {
-          "name": "latent",
-          "type": "LATENT",
+          "name": "height",
+          "type": "INT",
           "links": [
-            666
+            835
           ]
         }
       ],
       "properties": {
         "aux_id": "XT-404/XT-404_SKYNET",
-        "ver": "f0c8aa78c79a63f6013f55384e30e0ccadea2757",
-        "Node name for S&R": "WanImageToVideoUltra"
+        "ver": "cb7b894afc8548644ef60d41ac25d0f3b5473fde",
+        "Node name for S&R": "AutoHalfSizeImage"
       },
-      "widgets_values": [
-        81,
-        832,
-        480,
-        1,
-        0.5,
-        1,
-        true
-      ]
+      "widgets_values": []
     }
   ],
   "links": [
@@ -2060,22 +2150,6 @@
       201,
       0,
       "CLIP"
-    ],
-    [
-      498,
-      97,
-      0,
-      209,
-      0,
-      "IMAGE"
-    ],
-    [
-      499,
-      209,
-      0,
-      125,
-      0,
-      "IMAGE"
     ],
     [
       500,
@@ -2198,6 +2272,22 @@
       "LATENT"
     ],
     [
+      642,
+      252,
+      0,
+      104,
+      0,
+      "MODEL"
+    ],
+    [
+      645,
+      252,
+      1,
+      103,
+      0,
+      "MODEL"
+    ],
+    [
       646,
       103,
       0,
@@ -2278,145 +2368,161 @@
       "MODEL"
     ],
     [
-      659,
-      125,
-      2,
-      265,
-      6,
-      "INT"
-    ],
-    [
-      660,
-      125,
-      1,
-      265,
-      5,
-      "INT"
-    ],
-    [
-      661,
-      201,
-      0,
-      265,
-      1,
-      "CONDITIONING"
-    ],
-    [
-      662,
-      200,
-      0,
-      265,
-      0,
-      "CONDITIONING"
-    ],
-    [
-      663,
-      208,
-      1,
-      265,
-      4,
-      "IMAGE"
-    ],
-    [
-      664,
-      208,
-      0,
-      265,
-      3,
-      "CLIP_VISION_OUTPUT"
-    ],
-    [
-      665,
-      90,
-      0,
-      265,
-      2,
-      "VAE"
-    ],
-    [
-      666,
-      265,
+      818,
+      281,
       2,
       250,
       3,
       "LATENT"
     ],
     [
-      667,
-      265,
+      819,
+      281,
       1,
       250,
       2,
       "CONDITIONING"
     ],
     [
-      668,
-      265,
+      820,
+      281,
       1,
       248,
       2,
       "CONDITIONING"
     ],
     [
-      669,
-      265,
+      821,
+      281,
       1,
       249,
       2,
       "CONDITIONING"
     ],
     [
-      670,
-      265,
+      822,
+      281,
       0,
       250,
       1,
       "CONDITIONING"
     ],
     [
-      671,
-      265,
+      823,
+      281,
       0,
       248,
       1,
       "CONDITIONING"
     ],
     [
-      672,
-      265,
+      824,
+      281,
       0,
       249,
       1,
       "CONDITIONING"
     ],
     [
-      685,
-      252,
-      0,
-      104,
-      0,
-      "MODEL"
+      825,
+      125,
+      2,
+      281,
+      6,
+      "INT"
     ],
     [
-      686,
-      252,
+      826,
+      125,
       1,
-      103,
+      281,
+      5,
+      "INT"
+    ],
+    [
+      827,
+      208,
+      1,
+      281,
+      4,
+      "IMAGE"
+    ],
+    [
+      828,
+      208,
       0,
-      "MODEL"
+      281,
+      3,
+      "CLIP_VISION_OUTPUT"
+    ],
+    [
+      829,
+      90,
+      0,
+      281,
+      2,
+      "VAE"
+    ],
+    [
+      830,
+      201,
+      0,
+      281,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      831,
+      200,
+      0,
+      281,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      833,
+      290,
+      0,
+      125,
+      0,
+      "IMAGE"
+    ],
+    [
+      834,
+      290,
+      1,
+      125,
+      2,
+      "INT"
+    ],
+    [
+      835,
+      290,
+      2,
+      125,
+      3,
+      "INT"
+    ],
+    [
+      837,
+      97,
+      0,
+      290,
+      0,
+      "IMAGE"
     ]
   ],
   "groups": [],
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.555991731349268,
+      "scale": 0.45949729863581,
       "offset": [
-        5140.8433207100825,
-        2006.1078711892198
+        4750.066858851908,
+        2165.079879721135
       ]
     },
-    "frontendVersion": "1.28.8",
+    "frontendVersion": "1.33.13",
     "VHS_latentpreview": false,
     "VHS_latentpreviewrate": 0,
     "VHS_MetadataImage": true,
