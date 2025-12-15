@@ -43,7 +43,7 @@ class Wan_Hardware_Accelerator:
                     prev_matmul = torch.backends.cuda.matmul.allow_tf32
                     prev_cudnn = torch.backends.cudnn.allow_tf32
                     
-                    # 2. ON COUPE TF32 (Pour avoir la qualité "Image 3/4")
+                    # 2. ON COUPE TF32 (Pour avoir la qualité parfaite)
                     torch.backends.cuda.matmul.allow_tf32 = False
                     torch.backends.cudnn.allow_tf32 = False
                     
