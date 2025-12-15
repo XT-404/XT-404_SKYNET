@@ -6,6 +6,7 @@ Architecture: Cyberdyne Systems Model T-800 / Wan 2.2 Integration
 import sys
 import re
 import io
+import subprocess
 from contextlib import redirect_stdout
 
 # --- HUD COLOR MATRIX (ANSI) ---
@@ -77,7 +78,7 @@ def t800_log(name, status, extra=""):
 # ==============================================================================
 
 render_top()
-render_line(f"{C_RED}CYBERDYNE SYSTEMS CORP. {C_GREY}|{C_RED} SERIES T-800 - MODEL 101 {C_GREY}|{C_RED} V3.5{C_RESET}", "center")
+render_line(f"{C_RED}CYBERDYNE SYSTEMS CORP. {C_GREY}|{C_RED} SERIES T-800 - MODEL 101 {C_GREY}|{C_RED} V3.6{C_RESET}", "center")
 render_sep()
 
 # ASCII ART "XT404 SKYNET"
@@ -122,7 +123,6 @@ except ImportError:
 
 # --- PHASE 3: T-3000 CORE (GENISYS) ---
 try:
-    # REMPLACEMENT: wan_optimizer -> wan_genisys
     from .wan_genisys import NODE_CLASS_MAPPINGS as GEN, NODE_DISPLAY_NAME_MAPPINGS as GEN_N
     NODE_CLASS_MAPPINGS.update(GEN)
     NODE_DISPLAY_NAME_MAPPINGS.update(GEN_N)
@@ -215,12 +215,10 @@ except ImportError:
 
 # --- PHASE 7: COMPRESSOR ---
 try:
-    # CAPTURE DU PRINT SAUVAGE
     f = io.StringIO()
     with redirect_stdout(f):
         from .wan_compressor import Wan_Video_Compressor
     
-    # On récupère la sortie ">> [Wan Architect]..." et on la rend proprement
     captured_output = f.getvalue().strip()
     if captured_output:
         for line in captured_output.split('\n'):
@@ -234,6 +232,27 @@ except ImportError:
     t800_log("DATA COMPRESSION", "MISSING DEP")
     SYSTEM_CHECKLIST["Wan Compressor"] = False
 
+# --- PHASE 8: CAMOUFLAGE (COLOR) ---
+try:
+    # Auto-Install de skimage si absent (T-1000 Self-Repair)
+    try:
+        import skimage
+    except ImportError:
+        render_line(f"{C_YELLOW}>> [CAMOUFLAGE] Installing scikit-image...{C_RESET}")
+        subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'scikit-image'])
+        render_line(f"{C_GREEN}>> [CAMOUFLAGE] Install Complete.{C_RESET}")
+
+    from .wan_chroma_mimic import Wan_Chroma_Mimic
+    
+    NODE_CLASS_MAPPINGS["Wan_Chroma_Mimic"] = Wan_Chroma_Mimic
+    NODE_DISPLAY_NAME_MAPPINGS["Wan_Chroma_Mimic"] = "Wan Chroma Mimic (Color Match)"
+    
+    t800_log("CAMOUFLAGE UNIT (COLOR)", "ONLINE")
+    SYSTEM_CHECKLIST["Wan Chroma Mimic"] = True
+except Exception as e:
+    t800_log("CAMOUFLAGE UNIT", "MALFUNCTION", f"{C_RED}{str(e)[:20]}...{C_RESET}")
+    SYSTEM_CHECKLIST["Wan Chroma Mimic"] = False
+
 # ==============================================================================
 # RAPPORT FINAL
 # ==============================================================================
@@ -241,7 +260,6 @@ render_sep()
 render_line("DIAGNOSTIC COMPLETE.")
 render_line(f"{C_GREEN}>> {len(NODE_CLASS_MAPPINGS)} COMBAT MODULES INITIALIZED.{C_RESET}")
 
-# Liste simple avec Check
 for name, status in SYSTEM_CHECKLIST.items():
     if status:
         check = f"{C_GREEN}[V]{C_RESET}"
@@ -250,7 +268,6 @@ for name, status in SYSTEM_CHECKLIST.items():
         check = f"{C_RED}[X]{C_RESET}"
         n_col = C_RED
     
-    # Affichage aligné dans le cadre
     line = f" Check : {check} {n_col}{name}{C_RESET}"
     render_line(line)
 
