@@ -9,10 +9,11 @@ import gc
 
 class WanImageToVideoUltra:
     """
-    WanImageToVideoUltra - OMEGA FIX V13 (Ultimate + Mouchard).
+    WanImageToVideoUltra - OMEGA FIX V13 (Ultimate + Mouchard + VRAM FIX).
     Combine :
     1. La stabilité absolue de la V12 (Nuclear Normalization + Soft Limiter).
     2. Le retour du "Mouchard" complet pour le monitoring VRAM/Temps.
+    3. CORRECTION VRAM : Retour à l'encodage référence simple (fix du repeat x9).
     """
 
     @classmethod
@@ -94,7 +95,7 @@ class WanImageToVideoUltra:
         enhanced = torch.nn.functional.conv2d(img_bchw.reshape(b*c, 1, h, w), kernel, padding=1).view(b, c, h, w)
         
         result_bchw = torch.lerp(img_bchw, enhanced, factor * 0.2)
-        # Clamping post-sharpening (Crucial pour éviter les points noirs)
+        # Clamping post-sharpening
         result_bchw = torch.clamp(result_bchw, 0.0, 1.0)
         
         return result_bchw.movedim(1, -1)
@@ -124,14 +125,20 @@ class WanImageToVideoUltra:
             
             self._log(f"Preparation Image HD (Nuclear Norm)")
 
-            # 3. Encodage Reference
+            # 3. Encodage Reference (CORRIGÉ - VRAM OPTIMIZED)
             ref_latent = None
             if force_ref:
                 try:
-                    pixel_input_video = img_final.repeat(9, 1, 1, 1)
-                    full_ref_latent = vae.encode(pixel_input_video)
-                    ref_latent = full_ref_latent[:, :, 0:1, :, :]
-                    self._log("Encodage Reference (Batch-Time Fix)")
+                    # CORRECTION: On encode l'image unique directement au lieu de la dupliquer 9 fois.
+                    # img_final a déjà la forme (1, H, W, 3) grace a _sanitize_tensor.
+                    # Le VAE WanVideo gère très bien l'encodage d'une frame unique pour la ref.
+                    ref_latent = vae.encode(img_final)
+                    
+                    # On s'assure qu'on a bien les dimensions attendues (par sécurité)
+                    if ref_latent.shape[2] > 1:
+                         ref_latent = ref_latent[:, :, 0:1, :, :]
+                         
+                    self._log("Encodage Reference (Optimized)")
                 except Exception as e:
                     print(f"!!! ERREUR REF ENCODE (Skip): {e}", flush=True)
                     ref_latent = None
