@@ -4,7 +4,7 @@ import torch.nn.functional as F
 # ==============================================================================
 # PROJECT: CYBERDYNE GENISYS [OMNISCIENT EDITION]
 # MODEL: T-3000 (Nanotech Phase Controller)
-# STATUS: GOLDEN MASTER (FINAL)
+# STATUS: GOLDEN MASTER (PATCHED V2 - ANTI-CRASH)
 # ==============================================================================
 
 class CYBER_HUD:
@@ -192,23 +192,38 @@ class Wan_Cyberdyne_Genisys:
             mag = 0.0
             drift = 0.0
             
-            # On ne peut calculer la différence que si on a une frame précédente
+            # [CRITICAL PATCH] Protection contre les changements de résolution
+            # Si la taille change (ex: batch size ou H/W), on force un reset pour éviter le crash.
+            if state.prev_latent is not None:
+                if state.prev_latent.shape != curr.shape:
+                    state.prev_latent = None
+                    state.accumulated_err = 0.0
+                    state.step_counter = 0
+                    state.momentum = 0
+            
+            # On ne peut calculer la différence que si on a une frame précédente VALIDE
             if state.prev_latent is not None:
                 prev = state.prev_latent
                 
                 # 1. Analyse Tao (Structurelle Vectorielle)
                 c_flat = curr.view(-1)
                 p_flat = prev.view(-1)
-                cos = F.cosine_similarity(c_flat.unsqueeze(0), p_flat.unsqueeze(0), eps=1e-6).item()
-                norm_r = torch.norm(c_flat, p=2).item() / (torch.norm(p_flat, p=2).item() + 1e-6)
-                tao = (1.0 - cos) + abs(1.0 - norm_r)
                 
-                # 2. Analyse Mag (Magnitude/Luminance)
-                diff = (curr - prev).abs().mean()
-                mag = (diff / (curr.abs().mean() + 1e-6)).item()
-                
-                # 3. Fusion Score (Poids: 70% Structure / 30% Lumière)
-                drift = (tao * 0.70) + (mag * 0.30)
+                # Safe compute
+                if c_flat.shape == p_flat.shape:
+                    cos = F.cosine_similarity(c_flat.unsqueeze(0), p_flat.unsqueeze(0), eps=1e-6).item()
+                    norm_r = torch.norm(c_flat, p=2).item() / (torch.norm(p_flat, p=2).item() + 1e-6)
+                    tao = (1.0 - cos) + abs(1.0 - norm_r)
+                    
+                    # 2. Analyse Mag (Magnitude/Luminance)
+                    diff = (curr - prev).abs().mean()
+                    mag = (diff / (curr.abs().mean() + 1e-6)).item()
+                    
+                    # 3. Fusion Score (Poids: 70% Structure / 30% Lumière)
+                    drift = (tao * 0.70) + (mag * 0.30)
+                else:
+                    # Double sécurité (ne devrait pas arriver grâce au patch ci-dessus)
+                    state.prev_latent = None
                 
             # --- B. MOTEUR D'EXECUTION ---
 
@@ -247,7 +262,8 @@ class Wan_Cyberdyne_Genisys:
 
             # 1. HARD LOCKS (Initialisation)
             if state.prev_latent is None:
-                return execute_cycle("LOCK", "INJECT", "BOOT SEQ", True)
+                # Si le patch de sécurité a trigger (changement de taille), on passe ici.
+                return execute_cycle("LOCK", "INJECT", "BOOT/RESET", True)
             
             # 2. PHASE 1: INJECTION (Warmup Forcé)
             if state.step_counter < warmup_steps:
