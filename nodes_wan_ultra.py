@@ -9,8 +9,10 @@ import gc
 
 class WanImageToVideoUltra:
     """
-    WanImageToVideoUltra - Version DEFINITIVE (Fidelity + Dynamics + Frame Control).
-    Avec système de monitoring 'Mouchard' pour analyse de performance.
+    WanImageToVideoUltra - OMEGA FIX V12 (Soft-Limiter Edition).
+    Remplace le clamping brutal par une compression douce (Tanh) pour éliminer
+    les derniers artefacts de saturation noire ("Burnt look").
+    Conserve la stabilité dimensionnelle de la V11.
     """
 
     @classmethod
@@ -20,11 +22,11 @@ class WanImageToVideoUltra:
                 "positive": ("CONDITIONING", ),
                 "negative": ("CONDITIONING", ),
                 "vae": ("VAE", ),
-                "video_frames": ("INT", {"default": 114, "min": 1, "max": 4096, "step": 1, "tooltip": "Nombre exact de frames."}),
+                "video_frames": ("INT", {"default": 114, "min": 1, "max": 4096, "step": 1}),
                 "width": ("INT", {"default": 832, "min": 16, "max": nodes.MAX_RESOLUTION, "step": 16}),
                 "height": ("INT", {"default": 480, "min": 16, "max": nodes.MAX_RESOLUTION, "step": 16}),
                 "batch_size": ("INT", {"default": 1, "min": 1, "max": 4096}),
-                "detail_boost": ("FLOAT", {"default": 0.5, "min": 0.0, "max": 2.0, "step": 0.1}),
+                "detail_boost": ("FLOAT", {"default": 0.0, "min": 0.0, "max": 2.0, "step": 0.1}),
                 "motion_amp": ("FLOAT", {"default": 1.0, "min": 1.0, "max": 2.0, "step": 0.05}),
                 "force_ref": ("BOOLEAN", {"default": True}),
             },
@@ -40,112 +42,134 @@ class WanImageToVideoUltra:
     CATEGORY = "WanVideo/Ultra"
 
     def _log(self, step_name):
-        """Mouchard Cafard: Affiche les stats mémoire et temps dans la CMD"""
-        # Si c'est l'étape d'initialisation
         if step_name == "Init":
             self.t0 = time.time()
             self.step_t0 = self.t0
-            # flush=True force l'écriture immédiate dans la console Windows
-            print(f"\n--- [WanUltra] DEMARRAGE DU TRAITEMENT ---", flush=True)
+            print(f"\n--- [WanUltra] DEMARRAGE ---", flush=True)
             return
-        
-        # Pour les autres étapes, on calcule le delta
         current_time = time.time()
         dt = current_time - self.step_t0
-        total_t = current_time - self.t0
-        
-        # Stats VRAM
-        mem_alloc = torch.cuda.memory_allocated() / (1024 ** 3) # GB
-        mem_reserved = torch.cuda.memory_reserved() / (1024 ** 3) # GB
-        
-        print(f"--- [WanUltra] {step_name} | Step: {dt:.2f}s | Total: {total_t:.2f}s | VRAM: {mem_alloc:.2f}GB (Res: {mem_reserved:.2f}GB)", flush=True)
+        mem_alloc = torch.cuda.memory_allocated() / (1024 ** 3)
+        print(f"--- [WanUltra] {step_name} | Step: {dt:.2f}s | VRAM: {mem_alloc:.2f}GB", flush=True)
         self.step_t0 = current_time
+
+    def _sanitize_tensor(self, tensor, target_w, target_h):
+        """Nettoyage nucléaire des dimensions + Clamping préventif"""
+        if tensor.dim() < 3: raise ValueError(f"Dim too low: {tensor.shape}")
+
+        # Correction BCHW / BHWC
+        if tensor.shape[-1] != 3:
+            if tensor.shape[1] == 3: tensor = tensor.movedim(1, -1)
+            elif tensor.shape[0] == 3: tensor = tensor.movedim(0, -1)
+                
+        if tensor.dim() == 3: tensor = tensor.unsqueeze(0)
+            
+        # Resize safe
+        tensor_bchw = tensor.movedim(-1, 1)
+        tensor_resized = torch.nn.functional.interpolate(
+            tensor_bchw, size=(target_h, target_w), mode="bicubic", align_corners=False, antialias=True
+        )
+        
+        # OVERSHOOT FIX : Bicubic peut créer des valeurs < 0 (noir saturé). On coupe ici.
+        tensor_resized = torch.clamp(tensor_resized, 0.0, 1.0)
+        
+        return tensor_resized.movedim(1, -1)
 
     def _enhance_details(self, image_tensor, factor=0.5):
         if factor <= 0: return image_tensor
+        device = image_tensor.device
+        img_bchw = image_tensor.movedim(-1, 1)
+        
         kernel = torch.tensor([[0, -1, 0], [-1, 5, -1], [0, -1, 0]], 
-                            dtype=image_tensor.dtype, device=image_tensor.device).view(1, 1, 3, 3)
-        b, c, h, w = image_tensor.shape
-        enhanced = torch.nn.functional.conv2d(image_tensor.reshape(b*c, 1, h, w), kernel, padding=1).view(b, c, h, w)
-        return torch.lerp(image_tensor, enhanced, factor * 0.3).clamp(0.0, 1.0)
+                            dtype=image_tensor.dtype, device=device).view(1, 1, 3, 3)
+        
+        b, c, h, w = img_bchw.shape
+        enhanced = torch.nn.functional.conv2d(img_bchw.reshape(b*c, 1, h, w), kernel, padding=1).view(b, c, h, w)
+        
+        result_bchw = torch.lerp(img_bchw, enhanced, factor * 0.2)
+        # Clamping post-sharpening (Crucial pour éviter les points noirs)
+        result_bchw = torch.clamp(result_bchw, 0.0, 1.0)
+        
+        return result_bchw.movedim(1, -1)
 
     def execute(self, positive, negative, vae, video_frames, width, height, batch_size, detail_boost, motion_amp, force_ref, start_image=None, clip_vision_output=None):
-        # 0. Initialisation Mouchard
         self._log("Init")
-        
         device = comfy.model_management.intermediate_device()
-        
-        # Nettoyage préventif
         gc.collect()
         comfy.model_management.soft_empty_cache()
-        self._log("Nettoyage Cache Initial")
 
         length = video_frames
         latent_t = ((length - 1) // 4) + 1
-        
-        # Allocation Latent vide (faible coût)
         latent = torch.zeros([batch_size, 16, latent_t, height // 8, width // 8], device=device, dtype=torch.float32)
 
         if start_image is not None:
-            # 1. Préparation Image
-            img_tensor = start_image.movedim(-1, 1).to(device=device, dtype=torch.float32)
+            # 1. NUCLEAR SANITIZATION
+            img_final = self._sanitize_tensor(start_image, width, height).to(device, dtype=torch.float32)
             
-            if img_tensor.shape[2] != height or img_tensor.shape[3] != width:
-                img_tensor = torch.nn.functional.interpolate(img_tensor, size=(height, width), mode="bicubic", antialias=True)
-            
+            # 2. Detail Boost
             if detail_boost > 0:
-                img_tensor = self._enhance_details(img_tensor, detail_boost)
+                img_final = self._enhance_details(img_final, detail_boost)
             
-            img_tensor = torch.clamp(img_tensor, 0.0, 1.0)
-            self._log("Preparation Image HD")
+            self._log(f"Image Normalized: {img_final.shape}")
 
-            # 2. Reference Encoding
+            # 3. Encodage Reference
             ref_latent = None
             if force_ref:
-                # Encodage Image Seule (Léger)
-                ref_latent = vae.encode(img_tensor.movedim(1, -1))
-                self._log("Encodage Reference (force_ref)")
+                try:
+                    pixel_input_video = img_final.repeat(9, 1, 1, 1)
+                    full_ref_latent = vae.encode(pixel_input_video)
+                    ref_latent = full_ref_latent[:, :, 0:1, :, :]
+                except Exception as e:
+                    print(f"!!! ERREUR REF ENCODE (Skip): {e}", flush=True)
+                    ref_latent = None
             
-            # 3. Préparation Volume Vidéo
-            img_tensor = img_tensor.movedim(1, -1)
-            valid_frames = min(img_tensor.shape[0], length)
-            
-            # Création du tenseur vidéo complet
+            # 4. Préparation Volume Vidéo
+            valid_frames = min(img_final.shape[0], length)
             video_input = torch.full((length, height, width, 3), 0.5, dtype=torch.float32, device=device)
-            video_input[:valid_frames] = img_tensor[:valid_frames]
+            video_input[:valid_frames] = img_final[:valid_frames]
             
-            # Nettoyage immédiat des tenseurs inutiles avant la grosse charge VAE
-            del img_tensor, start_image
-            self._log("Creation Volume Video")
+            del start_image
 
-            # 4. Encodage VAE (LE POINT CRITIQUE)
+            # 5. Encodage VAE Principal
             comfy.model_management.soft_empty_cache()
-            
             try:
                 concat_latent_image = vae.encode(video_input)
             except Exception as e:
-                print(f"!!! ERREUR VAE ENCODE !!! Manque de VRAM probable. {e}", flush=True)
+                print(f"!!! ERREUR VAE PRINCIPAL: {e}", flush=True)
                 raise e
-                
-            del video_input
-            comfy.model_management.soft_empty_cache() 
-            self._log("Encodage VAE Video (Grosse Charge)")
+            
+            del video_input, img_final
+            self._log("Encodage VAE")
 
-            # 5. Motion Amplification
+            # 6. MOTION AMPLIFICATION (SOFT LIMITER UPGRADE)
             if motion_amp > 1.0:
                 base_latent = concat_latent_image[:, :, 0:1]
                 gray_latent = concat_latent_image[:, :, 1:]
                 
                 diff = gray_latent - base_latent
-                diff_mean = diff.mean(dim=(1, 3, 4), keepdim=True)
-                diff_centered = diff - diff_mean
-                scaled_latent = base_latent + diff_centered * motion_amp + diff_mean
                 
-                scaled_latent = torch.clamp(scaled_latent, -6.0, 6.0)
+                # Normalisation Standard Deviation
+                std = diff.std()
+                if std > 1.0: diff = diff / std
+                
+                # --- SOFT LIMITER (Tanh) ---
+                # Au lieu de couper net, on compresse la dynamique doucement.
+                # Cela préserve les dégradés dans les zones très sombres/claires.
+                
+                # Facteur d'amortissement
+                limit = 2.5 
+                
+                # Formule : Soft_Diff = Tanh(Diff * Amp / Limit) * Limit
+                # Cela garantit que la valeur ne dépasse jamais +/- Limit, mais sans "cassure".
+                boosted = diff * motion_amp
+                soft_diff = torch.tanh(boosted / limit) * limit
+                
+                scaled_latent = base_latent + soft_diff
+                
                 concat_latent_image = torch.cat([base_latent, scaled_latent], dim=2)
-                self._log("Application Motion Amp")
+                self._log("Motion Amp (Soft Limiter)")
 
-            # 6. Masquage et Conditioning
+            # 7. Conditioning
             mask = torch.ones((1, 1, latent.shape[2], concat_latent_image.shape[-2], concat_latent_image.shape[-1]), device=device, dtype=torch.float32)
             start_latent_end_index = ((valid_frames - 1) // 4) + 1
             mask[:, :, :start_latent_end_index] = 0.0
@@ -158,18 +182,13 @@ class WanImageToVideoUltra:
                 negative = node_helpers.conditioning_set_values(negative, {"reference_latents": [torch.zeros_like(ref_latent)]}, append=True)
             
             del mask, concat_latent_image, ref_latent
-            self._log("Finalisation Conditioning")
 
         if clip_vision_output is not None:
             positive = node_helpers.conditioning_set_values(positive, {"clip_vision_output": clip_vision_output})
             negative = node_helpers.conditioning_set_values(negative, {"clip_vision_output": clip_vision_output})
 
-        out_latent = {}
-        out_latent["samples"] = latent
-        
-        # Nettoyage Final et rapport
+        out_latent = {"samples": latent}
         gc.collect()
         comfy.model_management.soft_empty_cache()
-        self._log("Fin & Nettoyage Final")
         
         return (positive, negative, out_latent)
