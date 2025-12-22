@@ -2,10 +2,10 @@
 ### Cyberdyne Systems Corp. | Series T-800 | Model 101
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Version-v30.0_PLATINUM-e6e6e6?style=for-the-badge" alt="Version">
+  <img src="https://img.shields.io/badge/Version-v31.0_PLATINUM-e6e6e6?style=for-the-badge" alt="Version">
   <img src="https://img.shields.io/badge/Architecture-Wan_2.2-00bfff?style=for-the-badge" alt="Architecture">
   <img src="https://img.shields.io/badge/Engine-T_3000_Genisys-ff0000?style=for-the-badge" alt="Engine">
-  <img src="https://img.shields.io/badge/Accelerated-GPU_Native-76b900?style=for-the-badge" alt="GPU">
+  <img src="https://img.shields.io/badge/Module-T_X_Polymetric-purple?style=for-the-badge" alt="New Module">
 </p>
 
 > *"The future is not set. There is no fate but what we make for ourselves."*
@@ -31,24 +31,25 @@ Standard nodes rely on generic implementations. **XT-404 Skynet** is a custom-en
 | Feature | Standard Nodes / Competition | 🤖 XT-404 Skynet Architecture |
 | :--- | :--- | :--- |
 | **Precision** | Standard FP16/BF16 (Prone to Banding) | **Hybrid FP32/TF32 Contextual Switching** (Zero Banding) |
+| **Interpolation** | Basic Linear Fades (Static/Frozen) | **T-X Dual-Phase Wrapper** (Native VAE Injection) |
 | **Color Science** | RGB Clipping | **LAB Space Transfer & OLED Dynamics** (Cinema Grade) |
 | **Caching** | Basic TeaCache (Motion Freeze Risk) | **T-3000 Genisys** w/ Kinetic Momentum & Nano-Repair |
 | **Scaling** | Bilinear (Blurry) | **Lanczos/Bicubic FP32** (Pixel Perfect) |
 | **Memory** | High VRAM Usage (OOM Risk) | **Surgical Pinned Memory (DMA)** & Aggressive Purge |
-| **Speed** | Standard Torch | **Contextual TF32 Acceleration** (+30% Speed, No Burn) |
 
 ---
 
 ## 🌍 NEURAL NET NAVIGATION
 
 ### 🇺🇸 [ENGLISH DOCUMENTATION](#-english-documentation)
-1.  **[Visual Engineering (Wan Chroma Mimic)](#-phase-0-visual-engineering-wan-chroma-mimic-new)** 🆕
+1.  **[Visual Engineering (Wan Chroma Mimic)](#-phase-0-visual-engineering-wan-chroma-mimic-new)**
 2.  **[Infiltration (Model Loader)](#-phase-1-infiltration-cyberdyne-model-hub)**
 3.  **[Neural Net Core (XT-404 Samplers)](#-phase-2-neural-net-core-xt-404-samplers)**
 4.  **[T-3000 Genisys (Omniscient Cache)](#-phase-3-t-3000-genisys-omniscient-cache)**
 5.  **[Mimetic Rendering (I2V Ultra & Fidelity)](#-phase-4-mimetic-rendering-i2v-ultra--fidelity)**
-6.  **[Sensors & Accelerators (Omega Tools)](#-phase-5-sensors--accelerators-omega-tools)**
-7.  **[Post-Processing & Automation](#-phase-6-post-processing--automation)**
+6.  **[Polymetric Alloy (T-X Dual-Phase)](#-phase-65-polymetric-alloy-t-x-dual-phase-new)** 🆕
+7.  **[Sensors & Accelerators (Omega Tools)](#-phase-5-sensors--accelerators-omega-tools)**
+8.  **[Post-Processing & Automation](#-phase-6-post-processing--automation)**
 
 ### 🇫🇷 [DOCUMENTATION FRANÇAISE](#-documentation-française)
 *Consultez la version française pour les détails techniques complets.*
@@ -57,7 +58,7 @@ Standard nodes rely on generic implementations. **XT-404 Skynet** is a custom-en
 
 # 🇺🇸 ENGLISH DOCUMENTATION
 
-## 🎨 Phase 0: Visual Engineering (Wan Chroma Mimic) [NEW]
+## 🎨 Phase 0: Visual Engineering (Wan Chroma Mimic)
 
 **File:** `wan_chroma_mimic.py`
 
@@ -137,6 +138,25 @@ The "Sentinel" engine. Unlike standard samplers, these are hard-coded with the *
 
 ---
 
+## 🧪 Phase 6.5: Polymetric Alloy (T-X Dual-Phase) [NEW]
+
+**File:** `wan_tx_node.py`
+
+**The Interpolation Singularity.** Standard I2V models struggle to reach a specific end frame (often freezing or losing style). The **T-X Engine** uses a **Native VAE Injection Wrapper** to bridge the timeline perfectly.
+
+*   **Keyframe Injection:** Temporarily overrides the VAE's internal logic to encode [Start Frame -> Empty Void -> End Frame] without corrupting the latent space.
+*   **Fluid Morphing:** Forces the Wan 2.2 model to solve the physics equation between Point A and Point B, preventing "slideshow" effects.
+*   **Smart VRAM Scanner:** Automatically detects GPU capacity to switch between "Safe" (512px tiling) and "Ultra" (1280px tiling) modes.
+
+| Parameter | Description |
+| :--- | :--- |
+| `start_image` | The origin frame (Frame 0). |
+| `end_image` | The target frame (Frame N). The T-X engine forces convergence to this image. |
+| `motion_amp` | Amplifies the latent motion vectors between keyframes. |
+| `detail_boost` | Pre-processing sharpening to retain texture during VAE compression. |
+
+---
+
 ## ⚡ Phase 5: Sensors & Accelerators (Omega Tools)
 
 ### 🚀 Wan Hardware Accelerator (Anti-Burn V4)
@@ -164,7 +184,7 @@ The "Sentinel" engine. Unlike standard samplers, these are hard-coded with the *
 
 # 🇫🇷 DOCUMENTATION FRANÇAISE
 
-## 🎨 Phase 0 : Ingénierie Visuelle (Wan Chroma Mimic) [NOUVEAU]
+## 🎨 Phase 0 : Ingénierie Visuelle (Wan Chroma Mimic)
 
 **Fichier :** `wan_chroma_mimic.py`
 
@@ -241,6 +261,25 @@ Le moteur "Sentinel". Contrairement aux samplers standards, ceux-ci intègrent e
 ### ⚡ Wan Fidelity (Le Roi de la Vitesse)
 *   **Optimisation :** Utilise `torch.full` au lieu de concaténations lourdes pour l'efficacité mémoire.
 *   **Logique :** Restaure la logique de fenêtre contextuelle originale de Wan 2.1 pour une cohérence temporelle parfaite.
+
+---
+
+## 🧪 Phase 6.5 : Alliage Polymimétique (T-X Dual-Phase) [NOUVEAU]
+
+**Fichier :** `wan_tx_node.py`
+
+**La Singularité de l'Interpolation.** Les modèles I2V standards peinent à atteindre une image de fin précise (souvent floue ou figée). Le moteur **T-X** utilise un **Wrapper VAE à Injection Native** pour relier la timeline.
+
+*   **Injection Keyframe :** Surcharge temporairement la logique interne du VAE pour encoder [Début -> Vide -> Fin] sans corrompre l'espace latent.
+*   **Morphing Fluide :** Force le modèle Wan 2.2 à résoudre l'équation physique entre le point A et le point B, éliminant l'effet "diaporama".
+*   **Smart VRAM Scanner :** Détecte automatiquement la capacité GPU pour basculer entre les modes "Safe" (Tiling 512px) et "Ultra" (Tiling 1280px).
+
+| Paramètre | Description |
+| :--- | :--- |
+| `start_image` | L'image d'origine (Frame 0). |
+| `end_image` | L'image cible (Frame N). Le moteur T-X force la convergence vers celle-ci. |
+| `motion_amp` | Amplifie les vecteurs de mouvement latents entre les keyframes. |
+| `detail_boost` | Netteté pré-processus pour conserver le grain lors de la compression VAE. |
 
 ---
 
