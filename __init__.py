@@ -40,7 +40,6 @@ def render_line(content, align="left"):
     """Affiche une ligne avec calcul de padding absolu."""
     visible_len = get_clean_len(content)
     padding = INNER_WIDTH - visible_len
-    
     if padding < 0: padding = 0 
     
     if align == "center":
@@ -63,13 +62,10 @@ def t800_log(name, status, extra=""):
     """Formatage standardisé des logs."""
     is_valid = any(x in status for x in ["ONLINE", "ACTIVE", "OPTIMIZED", "DETECTED", "CALIBRATED", "LOCKED"])
     is_missing = "MISSING" in status
-    
     s_col = C_GREEN if is_valid else (C_YELLOW if is_missing else C_RED)
-    
     dots_len = 38 - len(name)
     if dots_len < 2: dots_len = 2
     dots = f"{C_GREY}{'.' * dots_len}{C_RESET}"
-    
     line = f"{name} {dots} [{s_col}{status}{C_RESET}] {extra}"
     render_line(line)
 
@@ -78,10 +74,9 @@ def t800_log(name, status, extra=""):
 # ==============================================================================
 
 render_top()
-render_line(f"{C_RED}CYBERDYNE SYSTEMS CORP. {C_GREY}|{C_RED} SERIES T-800 - MODEL 101 {C_GREY}|{C_RED} V3.6{C_RESET}", "center")
+render_line(f"{C_RED}CYBERDYNE SYSTEMS CORP. {C_GREY}|{C_RED} SERIES T-800 - MODEL 101 {C_GREY}|{C_RED} V3.7{C_RESET}", "center")
 render_sep()
 
-# ASCII ART "XT404 SKYNET"
 ascii_art = [
     r"█ █ ▀█▀ █ █ █▀█ █ █   █▀▀ █ █ █ █ █▄ █ █▀▀ ▀█▀",
     r"▄▀▄  █  ▀▀█ █ █ ▀▀█   ▀▀█ █▀▄  █  █ ▀█ █▀▀  █ ",
@@ -113,9 +108,6 @@ try:
     NODE_CLASS_MAPPINGS["CyberdyneModelHub"] = CyberdyneModelHub
     NODE_DISPLAY_NAME_MAPPINGS["CyberdyneModelHub"] = "Cyberdyne Model Hub"
     t800_log("INFILTRATION UNIT (GGUF)", "DETECTED")
-    
-    msg = f"   └─ {C_RED}Requires Engine: city96/ComfyUI-GGUF{C_RESET}"
-    render_line(msg)
     SYSTEM_CHECKLIST["Cyberdyne Hub"] = True
 except ImportError:
     t800_log("INFILTRATION UNIT", "MISSING DEP")
@@ -154,7 +146,7 @@ except ImportError:
     SYSTEM_CHECKLIST["Wan Resolution"] = False
     SYSTEM_CHECKLIST["Wan Text Cache"] = False
 
-# --- PHASE 4.5: AUTOMATION (PRE-PROCESS) ---
+# --- PHASE 4.5: AUTOMATION ---
 try:
     from .auto_wan_node import AutoWanImageOptimizer
     from .auto_half_node import AutoHalfSizeImage
@@ -213,17 +205,23 @@ except ImportError:
     SYSTEM_CHECKLIST["Wan Fidelity Gen"] = False
     SYSTEM_CHECKLIST["Wan Ultra Gen"] = False
 
+# --- PHASE 6.5: POLYMETRIC ALLOY (T-X) ---
+try:
+    from .wan_tx_node import Wan_TX_Interpolator
+    NODE_CLASS_MAPPINGS["Wan_TX_Interpolator"] = Wan_TX_Interpolator
+    NODE_DISPLAY_NAME_MAPPINGS["Wan_TX_Interpolator"] = "Wan T-X Interpolator (Dual-Phase)"
+    
+    t800_log("POLYMETRIC ALLOY (T-X)", "ONLINE", f"{C_MAGENTA}Start/End Engine: READY")
+    SYSTEM_CHECKLIST["T-X Interpolator"] = True
+except ImportError:
+    t800_log("POLYMETRIC ALLOY (T-X)", "NOT FOUND")
+    SYSTEM_CHECKLIST["T-X Interpolator"] = False
+
 # --- PHASE 7: COMPRESSOR ---
 try:
     f = io.StringIO()
     with redirect_stdout(f):
         from .wan_compressor import Wan_Video_Compressor
-    
-    captured_output = f.getvalue().strip()
-    if captured_output:
-        for line in captured_output.split('\n'):
-            render_line(f"{C_GREY}{line}{C_RESET}")
-
     NODE_CLASS_MAPPINGS["Wan_Video_Compressor"] = Wan_Video_Compressor
     NODE_DISPLAY_NAME_MAPPINGS["Wan_Video_Compressor"] = "Wan Video Compressor (H.265)"
     t800_log("DATA COMPRESSION (H.265)", "ACTIVE")
@@ -234,7 +232,6 @@ except ImportError:
 
 # --- PHASE 8: CAMOUFLAGE (COLOR) ---
 try:
-    # Auto-Install de skimage si absent (T-1000 Self-Repair)
     try:
         import skimage
     except ImportError:
@@ -243,14 +240,13 @@ try:
         render_line(f"{C_GREEN}>> [CAMOUFLAGE] Install Complete.{C_RESET}")
 
     from .wan_chroma_mimic import Wan_Chroma_Mimic
-    
     NODE_CLASS_MAPPINGS["Wan_Chroma_Mimic"] = Wan_Chroma_Mimic
     NODE_DISPLAY_NAME_MAPPINGS["Wan_Chroma_Mimic"] = "Wan Chroma Mimic (Color Match)"
     
     t800_log("CAMOUFLAGE UNIT (COLOR)", "ONLINE")
     SYSTEM_CHECKLIST["Wan Chroma Mimic"] = True
 except Exception as e:
-    t800_log("CAMOUFLAGE UNIT", "MALFUNCTION", f"{C_RED}{str(e)[:20]}...{C_RESET}")
+    t800_log("CAMOUFLAGE UNIT", "MALFUNCTION")
     SYSTEM_CHECKLIST["Wan Chroma Mimic"] = False
 
 # ==============================================================================
@@ -261,14 +257,8 @@ render_line("DIAGNOSTIC COMPLETE.")
 render_line(f"{C_GREEN}>> {len(NODE_CLASS_MAPPINGS)} COMBAT MODULES INITIALIZED.{C_RESET}")
 
 for name, status in SYSTEM_CHECKLIST.items():
-    if status:
-        check = f"{C_GREEN}[V]{C_RESET}"
-        n_col = C_GREY
-    else:
-        check = f"{C_RED}[X]{C_RESET}"
-        n_col = C_RED
-    
-    line = f" Check : {check} {n_col}{name}{C_RESET}"
+    check = f"{C_GREEN}[V]{C_RESET}" if status else f"{C_RED}[X]{C_RESET}"
+    line = f" Check : {check} {C_GREY if status else C_RED}{name}{C_RESET}"
     render_line(line)
 
 render_bottom()
