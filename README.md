@@ -1,18 +1,24 @@
-# 🤖 XT-404 Skynet : Wan 2.2 Sentinel Suite (OMEGA EDITION)
+# XT-404 SKYNET SUITE: Wan 2.2 Integration Protocol
 ### Cyberdyne Systems Corp. | Series T-800 | Model 101
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Version-v31.0_PLATINUM-e6e6e6?style=for-the-badge" alt="Version">
-  <img src="https://img.shields.io/badge/Architecture-Wan_2.2-00bfff?style=for-the-badge" alt="Architecture">
-  <img src="https://img.shields.io/badge/Engine-T_3000_Genisys-ff0000?style=for-the-badge" alt="Engine">
-  <img src="https://img.shields.io/badge/Module-T_X_Polymetric-purple?style=for-the-badge" alt="New Module">
-</p>
+![Version](https://img.shields.io/badge/Version-3.7_Gold_Master-cyan?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-BATTLE_TESTED-red?style=for-the-badge)
+![Platform](https://img.shields.io/badge/Platform-ComfyUI-blue?style=for-the-badge)
 
-> *"The future is not set. There is no fate but what we make for ourselves."*
+## 💀 System Overview
+
+The **XT-404 Skynet Suite** is a highly advanced, custom node collection for **ComfyUI**, specifically engineered to optimize, accelerate, and stabilize the **Wan 2.1 / 2.2 Video Diffusion Models**.
+
+Unlike standard implementations, this suite introduces "Cyberdyne" architecture: a set of overrides, caching mechanisms, and mathematical corrections (Zero-Point injection, Inverse Structural Repulsion, Contextual TF32 Switching) to solve common issues like image burning, OOM (Out of Memory) crashes, and temporal flickering.
 
 ---
+## ⚠️ Requirements
 
-## ⚠️ CRITICAL SYSTEM DEPENDENCY
+*   **ComfyUI:** Latest version recommended.
+*   **Wan 2.2 Models:** Ensure you have the VAE, CLIP, and UNet/Transformer models.
+*   **Python:** 3.10+.
+*   **FFmpeg:** Required for the Compressor node (usually installed via `imageio-ffmpeg`).
+## ⚠️ SYSTEM DEPENDENCY
 
 > [!CAUTION]
 > **INFILTRATION PROTOCOL (GGUF):**
@@ -21,292 +27,130 @@
 > 📥 **Download Engine:** `city96/ComfyUI-GGUF`
 >
 > *Without this engine, the Cyberdyne Model Hub will operate in Safetensors-only mode.*
+---
+
+## 📂 Core Architecture & Module Breakdown
+
+### 1. Neural Net Core (Sampling & Control)
+
+#### `XT404_Skynet_Nodes.py`
+**The Brain.** This module replaces the standard KSampler with a synchronized multi-stage sampling system tailored for video consistency.
+*   **XT404_Skynet_1 (Master):** The primary clock generator. Calculates the "Flow Matching" sigmas using a custom shift value (default 5.0). It injects "Zero-Point" noise to eliminate static snow in the initial latent.
+*   **XT404_Skynet_2 (Chain) & 3 (Refiner):** These nodes lock onto the Master's timeline. They allow for seamless hand-offs between steps (e.g., Step 0-15 on Master, 15-20 on Refiner) without breaking the temporal coherence.
+*   **Key Tech:** *Bongmath* (Precision float math on CPU), *Zero-Point Injection*.
+
+#### `wan_tx_node.py`
+**The Polymetric Interpolator (T-X).** A specialized interpolator for frame generation.
+*   **Dual Phase Latent Bridging:** Allows smooth transitions between a `start_image` and an `end_image`.
+*   **Inverse Structural Repulsion (ISR):** A motion engine that isolates high-frequency structure from color data to boost motion amplitude without ghosting.
+*   **Wan-Specific Masking:** Automatically handles the complex 4-frame block masking required by the Wan architecture.
 
 ---
 
-## 🚀 WHY CHOOSE XT-404 SKYNET? (Competitive Analysis)
+### 2. Mimetic Rendering (Generation Engines)
 
-Standard nodes rely on generic implementations. **XT-404 Skynet** is a custom-engineered architecture built specifically for the quirks of **Wan 2.2**.
+#### `nodes_wan_ultra.py`
+**Wan Image To Video Ultra (Hybrid V19).** The heavy-lifting generator node.
+*   **Smart VRAM Scanner:** Automatically detects GPU memory (e.g., >22GB) to determine the optimal tile strategy (1280px vs 1024px vs 512px).
+*   **Hybrid Motion Fix:** Reverts to a "Classic" algorithm (Linear + Mean Centering) for motion amplification to prevent the black/saturated artifacts caused by soft limiters in previous versions.
+*   **Tiled Encoding:** Supports large resolution encoding by breaking images into tiles with overlap.
 
-| Feature | Standard Nodes / Competition | 🤖 XT-404 Skynet Architecture |
-| :--- | :--- | :--- |
-| **Precision** | Standard FP16/BF16 (Prone to Banding) | **Hybrid FP32/TF32 Contextual Switching** (Zero Banding) |
-| **Interpolation** | Basic Linear Fades (Static/Frozen) | **T-X Dual-Phase Wrapper** (Native VAE Injection) |
-| **Color Science** | RGB Clipping | **LAB Space Transfer & OLED Dynamics** (Cinema Grade) |
-| **Caching** | Basic TeaCache (Motion Freeze Risk) | **T-3000 Genisys** w/ Kinetic Momentum & Nano-Repair |
-| **Scaling** | Bilinear (Blurry) | **Lanczos/Bicubic FP32** (Pixel Perfect) |
-| **Memory** | High VRAM Usage (OOM Risk) | **Surgical Pinned Memory (DMA)** & Aggressive Purge |
-
----
-
-## 🌍 NEURAL NET NAVIGATION
-
-### 🇺🇸 [ENGLISH DOCUMENTATION](#-english-documentation)
-1.  **[Visual Engineering (Wan Chroma Mimic)](#-phase-0-visual-engineering-wan-chroma-mimic-new)**
-2.  **[Infiltration (Model Loader)](#-phase-1-infiltration-cyberdyne-model-hub)**
-3.  **[Neural Net Core (XT-404 Samplers)](#-phase-2-neural-net-core-xt-404-samplers)**
-4.  **[T-3000 Genisys (Omniscient Cache)](#-phase-3-t-3000-genisys-omniscient-cache)**
-5.  **[Mimetic Rendering (I2V Ultra & Fidelity)](#-phase-4-mimetic-rendering-i2v-ultra--fidelity)**
-6.  **[Polymetric Alloy (T-X Dual-Phase)](#-phase-65-polymetric-alloy-t-x-dual-phase-new)** 🆕
-7.  **[Sensors & Accelerators (Omega Tools)](#-phase-5-sensors--accelerators-omega-tools)**
-8.  **[Post-Processing & Automation](#-phase-6-post-processing--automation)**
-
-### 🇫🇷 [DOCUMENTATION FRANÇAISE](#-documentation-française)
-*Consultez la version française pour les détails techniques complets.*
+#### `wan_fast.py`
+**Wan Image To Video Fidelity.** A streamlined, high-fidelity version of the generator.
+*   **Full Context Encoding:** Unlike the Ultra version which may tile, this node forces full-frame context awareness for maximum coherence.
+*   **FP32 Enforcement:** Forces 32-bit floating-point precision during the upscale and VAE encode stages to prevent color banding.
+*   **Aggressive Cleanup:** Immediately purges source tensors from VRAM after encoding.
 
 ---
 
-# 🇺🇸 ENGLISH DOCUMENTATION
+### 3. System Optimization & Protection (The T-3000 Series)
 
-## 🎨 Phase 0: Visual Engineering (Wan Chroma Mimic)
+#### `wan_accelerator.py`
+**Hardware Accelerator (Anti-Burn V4).** Solves the "Fried/Burnt Image" issue common with Wan models on consumer GPUs.
+*   **Contextual Precision Switching:** Globally enables TF32 (TensorFloat-32) for speed, *but* surgically installs "interrupters" on GroupNorm and LayerNorm layers. These sensitive layers are forced to run in native FP32, providing the speed of TF32 with the quality of FP32.
+*   **Wan_Attention_Slicer:** Manages SDPA (Scaled Dot Product Attention) memory usage.
 
-**File:** `wan_chroma_mimic.py`
+#### `wan_genisys.py` (aka `wan_optimizer.py`)
+**Cyberdyne Genisys [Nano-Repair / Omniscient].** An advanced caching and stabilization system.
+*   **Drift Detection:** Monitors the latent difference between steps. If the change (Drift) is below a threshold (`security_level`), it skips the UNet calculation and reuses the previous output (Cache Hit).
+*   **Nano-Repair:** Detects NaNs (Not a Number) or infinite values in the tensor stream and clamps them to a safe range (+/- 10.0), preventing black frames.
+*   **HUD:** Prints a real-time tactical dashboard in the console showing signal integrity and load.
 
-**The Ultimate Color Grading Engine.** This is not a simple filter. It operates in **real-time on the GPU**, converting image tensors to the **LAB Color Space** to separate luminance from color information, allowing for cinema-grade referencing without destroying lighting data.
-
-### 🔥 Key Features & Configuration
-*   **Architecture:** 100% PyTorch GPU. 0% CPU latency.
-*   **Morphological Filter:** Removes micro-artifacts (black/white dots) generated by video diffusion before they expand.
-*   **OLED Dynamics:** Applies a non-linear S-Curve centered on 0.5 to deepen blacks while preserving peak highlights.
-
-| Parameter | Recommended | Description |
-| :--- | :--- | :--- |
-| `reference_image` | **REQUIRED** | The source image (style reference). The mood is extracted from here. |
-| `effect_intensity` | **0.25** | Blending strength of the LAB transfer. |
-| `oled_contrast` | **0.00** | **The "Netflix" Look.** Boosts dynamic range. 0.0 = Neutral. |
-| `skin_metal_smooth` | **0.25** | **Smart Surface Blur.** Smoothes skin/metal but detects edges to keep sharpness. |
-| `detail_crispness` | **0.2** | **Cinema Piqué.** Enhances micro-details using a difference-of-gaussians approach. |
+#### `wan_cleanup.py`
+**Cycle Terminator.** A memory management node.
+*   **Surgical Purge:** Uses the Windows PSAPI `EmptyWorkingSet` (or `malloc_trim` on Linux) to release RAM that Python/PyTorch has freed but the OS hasn't reclaimed.
+*   **Skynet Quotes:** Prints randomized T-800 quotes upon execution.
 
 ---
 
-## 🛡️ Phase 1: Infiltration (Cyberdyne Model Hub)
+### 4. Infiltration & IO (Loaders)
 
-**File:** `cyberdyne_model_hub.py`
+#### `cyberdyne_model_hub.py`
+**Universal Model Loader.**
+*   **Recursive Scanning:** Finds models (Safetensors, CKPT, GGUF) in subdirectories automatically.
+*   **Integrity Check:** Performs SHA256 checksums on load to ensure model validity.
+*   **GGUF Support:** Automatically delegates GGUF loading to `UnetLoaderGGUF` if available.
 
-A unified loader bridging Safetensors and GGUF architectures. It solves the "Dual-UNet" requirement of Wan 2.2 automatically.
-
-*   **Recursive Scanner:** Finds models in subfolders.
-*   **Skynet Protocol:** Active VRAM management. It calculates the checksum (SHA256) and purges memory *before* loading to prevent fragmentation.
-*   **Hybrid Loading:** Can load a High-Res FP16 model and a Low-Res GGUF model simultaneously.
-
----
-
-## 🧠 Phase 2: Neural Net Core (XT-404 Samplers)
-
-**File:** `XT404_Skynet_Nodes.py`
-
-The "Sentinel" engine. Unlike standard samplers, these are hard-coded with the **`simple` (Linear)** scheduler required by Wan 2.2, preventing the "fried output" issues seen with standard KSamplers.
-
-### 🔴 XT-404 Skynet 1 (Master)
-*   **Shift Value (5.0):** The critical setting for Wan 2.2 latent timing.
-*   **Bongmath Engine:** A custom texture-noise injection system.
-    *   `True`: Adds analog film grain coherence.
-    *   `False`: Pure digital cleanliness.
-
-### 🟡 XT-404 Skynet 2 (Chain)
-*   **Seed Lock:** Automatically inherits the seed from the Master node via the `options` dictionary. Ensures temporal consistency across generation passes.
-
-### 🟢 XT-404 Skynet 3 (Refiner)
-*   **Resample Mode:** Injects controlled noise at the end of the chain to hallucinate high-frequency details.
+#### `__init__.py`
+**Boot Sequence.**
+*   Initializes the suite, performs dependency checks (scikit-image, imageio), and prints the ASCII HUD.
+*   Maps all nodes to ComfyUI.
 
 ---
 
-## 💀 Phase 3: T-3000 Genisys (Omniscient Cache)
+### 5. Automation & Tools
 
-**File:** `wan_genisys.py`
+#### `auto_wan_node.py`
+**Auto Wan 2.2 Optimizer.**
+*   **Modulo 16 Safety:** Automatically resizes images so dimensions are divisible by 16 (required by Wan).
+*   **OOM Protection:** Downscales images if they exceed 1024px on the longest side.
+*   **Min Size Fix:** Ensures no dimension is smaller than 512px.
 
-**Superior to TeaCache.** Standard TeaCache freezes video motion when the difference is too low. **T-3000** uses "Kinetic Momentum".
+#### `auto_half_node.py`
+**Auto Half Size.**
+*   Simple utility to perform a high-quality (Bicubic + Antialias) 50% downscale.
 
-*   **Kinetic Momentum:** If motion is detected, it *forces* the next X frames to calculate, preventing the "mannequin challenge" effect.
-*   **Nano-Repair:** Detects `NaN` or `Inf` values (black screen bugs) in the tensor stream and surgically repairs them using soft-clamping (-10/+10) instead of hard clipping.
-*   **HUD:** Displays real-time signal integrity and drift metrics in your console.
+#### `wan_i2v_tools.py`
+**Vision & Resolution Tools.**
+*   **Vision OneShot Cache (Omega):** Hashes input images to cache CLIP Vision outputs, preventing redundant encoding.
+*   **Resolution Savant:** Provides "Lanczos" (CPU-based) resampling for ultimate quality, or FP32 GPU resampling for speed.
 
----
-
-## 🎭 Phase 4: Mimetic Rendering (I2V Ultra & Fidelity)
-
-**Files:** `nodes_wan_ultra.py` / `wan_fast.py`
-
-### 🌟 Wan Ultra (The Quality King)
-*   **Nuclear Normalization:** Sanitizes input images to strictly 0.0-1.0 range using Bicubic-AntiAlias.
-*   **Detail Boost:** Applies a sharpening convolution matrix *before* VAE encoding to counteract compression blur.
-*   **Motion Amp:** Uses a "Soft Limiter" (Tanh curve) to amplify motion vectors without breaking physics.
-
-### ⚡ Wan Fidelity (The Speed King)
-*   **Optimization:** Uses `torch.full` instead of concatenations for memory efficiency.
-*   **Logic:** Restores the original Wan 2.1 context window logic for perfect temporal coherence.
+#### `wan_text_encoder.py`
+**Text OneShot Cache.**
+*   Pins text embeddings in RAM (DMA) for instant transfer to GPU, optimizing prompt encoding speed.
 
 ---
 
-## 🧪 Phase 6.5: Polymetric Alloy (T-X Dual-Phase) [NEW]
+### 6. Post-Processing & Mastering
 
-**File:** `wan_tx_node.py`
+#### `wan_chroma_mimic.py`
+**Chroma Mimic (Turbo OLED).** A GPU-accelerated mastering node.
+*   **LAB Transfer:** Applies the color palette of a reference image to the video using the LAB color space.
+*   **OLED Dynamics:** Applies an S-Curve contrast boost for deep blacks.
+*   **Surface Blur:** Smooths skin and metal textures while preserving edge sharpness.
 
-**The Interpolation Singularity.** Standard I2V models struggle to reach a specific end frame (often freezing or losing style). The **T-X Engine** uses a **Native VAE Injection Wrapper** to bridge the timeline perfectly.
-
-*   **Keyframe Injection:** Temporarily overrides the VAE's internal logic to encode [Start Frame -> Empty Void -> End Frame] without corrupting the latent space.
-*   **Fluid Morphing:** Forces the Wan 2.2 model to solve the physics equation between Point A and Point B, preventing "slideshow" effects.
-*   **Smart VRAM Scanner:** Automatically detects GPU capacity to switch between "Safe" (512px tiling) and "Ultra" (1280px tiling) modes.
-
-| Parameter | Description |
-| :--- | :--- |
-| `start_image` | The origin frame (Frame 0). |
-| `end_image` | The target frame (Frame N). The T-X engine forces convergence to this image. |
-| `motion_amp` | Amplifies the latent motion vectors between keyframes. |
-| `detail_boost` | Pre-processing sharpening to retain texture during VAE compression. |
+#### `wan_compressor.py`
+**Video Compressor (Omega).**
+*   **Thread Safety:** Limits FFmpeg threads (max 16) to prevent specific CPU crashes (Ryzen 9 / Threadripper issue with x265).
+*   **H.265 10-bit:** Encodes in high-efficiency format suitable for web or archival.
 
 ---
 
-## ⚡ Phase 5: Sensors & Accelerators (Omega Tools)
+## 🚀 Installation
 
-### 🚀 Wan Hardware Accelerator (Anti-Burn V4)
-**File:** `wan_accelerator.py`
-**The "Secret Sauce" of performance.**
-*   **Problem:** Enabling TF32 on Wan 2.2 normally "burns" images (contrast issues) due to normalization errors.
-*   **Solution (Contextual Switching):** This node enables TF32 globally for speed, but **intercepts** `GroupNorm` and `LayerNorm` layers to force them into FP32 precision.
-*   **Result:** 30% speed boost of TF32 with the visual quality of FP32.
-
-### 👁️ Wan Vision & Text Cache (DMA)
-**File:** `wan_i2v_tools.py`
-*   **Pinned Memory:** Uses CPU Page-Locked memory (DMA) to transfer text embeddings to GPU instantly.
-*   **Vision Hash:** Hashes the image content (including stride) to avoid re-encoding the same CLIP Vision input.
-
----
-
-## 🛠️ Phase 6: Post-Processing & Automation
-
-*   **Wan Compressor (Omega):** Thread-safe H.265 encoding. Limits CPU threads to 16 to prevent Threadripper/i9 crashes.
-*   **Wan Cycle Terminator:** Uses Windows API `EmptyWorkingSet` to flush RAM standby lists (prevents OS stutter).
-*   **Auto Wan Optimizer:** Smart resizer that enforces `Modulo 16` dimensions (required by Wan) and protects against OOM (>1024px).
+1.  Navigate to your ComfyUI custom nodes directory:
+    ```bash
+    cd ComfyUI/custom_nodes/
+    ```
+2.  Clone this repository:
+    ```bash
+    git clone https://github.com/YourUsername/XT404-Skynet-Suite.git
+    ```
+3.  Install dependencies (The suite attempts to auto-install, but manual is recommended):
+    ```bash
+    pip install imageio-ffmpeg scikit-image
+    ```
+4.  **Restart ComfyUI.** Watch the console for the "CYBERDYNE SYSTEMS" boot log.
 
 ---
----
-
-# 🇫🇷 DOCUMENTATION FRANÇAISE
-
-## 🎨 Phase 0 : Ingénierie Visuelle (Wan Chroma Mimic)
-
-**Fichier :** `wan_chroma_mimic.py`
-
-**Le Moteur d'Étalonnage Ultime.** Ce n'est pas un simple filtre. Il fonctionne en **temps réel sur le GPU**, convertissant les tenseurs d'image vers l'espace colorimétrique **LAB** pour séparer la luminance de la chrominance. Cela permet de copier l'ambiance d'une référence sans détruire l'éclairage de la vidéo générée.
-
-### 🔥 Fonctionnalités Clés & Réglages Pro
-*   **Architecture :** 100% PyTorch GPU. 0% de latence CPU.
-*   **Filtre Morphologique :** Élimine les micro-artefacts (points noirs/blancs) générés par la diffusion vidéo *avant* qu'ils ne grossissent.
-*   **Dynamique OLED :** Applique une courbe en S non-linéaire centrée sur 0.5 pour des noirs profonds (Pure Black) et des blancs éclatants.
-
-| Paramètre | Recommandé | Explication Technique |
-| :--- | :--- | :--- |
-| `reference_image` | **REQUIS** | L'image source (style). L'ambiance (Mean/Std LAB) est extraite d'ici. |
-| `effect_intensity` | **0.25** | Force du mélange (Lerp) du transfert LAB. |
-| `oled_contrast` | **0.00** | **Le Look "Netflix".** Boost la plage dynamique. 0.0 = Neutre. |
-| `skin_metal_smooth` | **0.25** | **Smart Blur.** Lisse les aplats (peau/métal) via détection de variance locale, mais protège les bords. |
-| `detail_crispness` | **0.2** | **Piqué Cinéma.** Réhausse les hautes fréquences via une différence de gaussiennes. |
-
----
-
-## 🛡️ Phase 1 : Infiltration (Cyberdyne Model Hub)
-
-**Fichier :** `cyberdyne_model_hub.py`
-
-Un chargeur unifié qui fait le pont entre les architectures Safetensors et GGUF. Il gère automatiquement le besoin "Dual-UNet" de Wan 2.2.
-
-*   **Scanner Récursif :** Trouve vos modèles même cachés dans des sous-dossiers.
-*   **Protocole Skynet :** Gestion active de la VRAM. Calcule le checksum (SHA256) pour l'intégrité et purge la mémoire *avant* le chargement pour éviter la fragmentation.
-*   **Chargement Hybride :** Permet de charger un modèle Principal en FP16 (Qualité) et un modèle Secondaire en GGUF (VRAM) simultanément.
-
----
-
-## 🧠 Phase 2 : Cœur Neuronal (Samplers XT-404)
-
-**Fichier :** `XT404_Skynet_Nodes.py`
-
-Le moteur "Sentinel". Contrairement aux samplers standards, ceux-ci intègrent en dur le scheduler **`simple` (Linear)** requis par Wan 2.2, évitant les images "brûlées" ou bruitées typiques des KSamplers mal configurés.
-
-### 🔴 XT-404 Skynet 1 (Master)
-*   **Shift Value (5.0) :** Le réglage critique pour le timing latent de Wan 2.2.
-*   **Moteur Bongmath :** Un système d'injection de texture.
-    *   `True` : Ajoute une cohérence de grain argentique (Film).
-    *   `False` : Rendu numérique pur (Digital).
-
-### 🟡 XT-404 Skynet 2 (Chain)
-*   **Verrouillage Seed :** Hérite automatiquement de la seed du nœud Master via le dictionnaire `options`. Garantit une cohérence temporelle parfaite entre les passes.
-
-### 🟢 XT-404 Skynet 3 (Refiner)
-*   **Mode Resample :** Réinjecte du bruit contrôlé en fin de chaîne pour "halluciner" des détails haute fréquence manquants.
-
----
-
-## 💀 Phase 3 : T-3000 Genisys (Cache Omniscient)
-
-**Fichier :** `wan_genisys.py`
-
-**Supérieur à TeaCache.** Le TeaCache standard fige le mouvement vidéo quand la différence entre les frames est trop faible. **T-3000** utilise le "Kinetic Momentum".
-
-*   **Kinetic Momentum (Inertie) :** Si un mouvement est détecté, il *force* le calcul des X prochaines frames, empêchant l'effet "mannequin challenge".
-*   **Nano-Repair :** Détecte les valeurs `NaN` ou `Inf` (bugs d'écran noir) dans le flux de tenseurs et les répare chirurgicalement via un "Soft Clamping" (-10/+10) au lieu de couper brutalement.
-*   **HUD :** Affiche l'intégrité du signal et la dérive (Drift) en temps réel dans la console.
-
----
-
-## 🎭 Phase 4 : Rendu Mimétique (I2V Ultra & Fidelity)
-
-**Fichiers :** `nodes_wan_ultra.py` / `wan_fast.py`
-
-### 🌟 Wan Ultra (Le Roi de la Qualité)
-*   **Normalisation Nucléaire :** Nettoie les images d'entrée pour qu'elles soient strictement entre 0.0 et 1.0 via Bicubic-AntiAlias.
-*   **Detail Boost :** Applique une matrice de convolution de netteté *avant* l'encodage VAE pour contrer le flou de compression.
-*   **Motion Amp :** Utilise un "Soft Limiter" (courbe Tanh) pour amplifier les vecteurs de mouvement sans briser la physique de la scène.
-
-### ⚡ Wan Fidelity (Le Roi de la Vitesse)
-*   **Optimisation :** Utilise `torch.full` au lieu de concaténations lourdes pour l'efficacité mémoire.
-*   **Logique :** Restaure la logique de fenêtre contextuelle originale de Wan 2.1 pour une cohérence temporelle parfaite.
-
----
-
-## 🧪 Phase 6.5 : Alliage Polymimétique (T-X Dual-Phase) [NOUVEAU]
-
-**Fichier :** `wan_tx_node.py`
-
-**La Singularité de l'Interpolation.** Les modèles I2V standards peinent à atteindre une image de fin précise (souvent floue ou figée). Le moteur **T-X** utilise un **Wrapper VAE à Injection Native** pour relier la timeline.
-
-*   **Injection Keyframe :** Surcharge temporairement la logique interne du VAE pour encoder [Début -> Vide -> Fin] sans corrompre l'espace latent.
-*   **Morphing Fluide :** Force le modèle Wan 2.2 à résoudre l'équation physique entre le point A et le point B, éliminant l'effet "diaporama".
-*   **Smart VRAM Scanner :** Détecte automatiquement la capacité GPU pour basculer entre les modes "Safe" (Tiling 512px) et "Ultra" (Tiling 1280px).
-
-| Paramètre | Description |
-| :--- | :--- |
-| `start_image` | L'image d'origine (Frame 0). |
-| `end_image` | L'image cible (Frame N). Le moteur T-X force la convergence vers celle-ci. |
-| `motion_amp` | Amplifie les vecteurs de mouvement latents entre les keyframes. |
-| `detail_boost` | Netteté pré-processus pour conserver le grain lors de la compression VAE. |
-
----
-
-## ⚡ Phase 5 : Capteurs & Accélérateurs (Outils Omega)
-
-### 🚀 Wan Hardware Accelerator (Anti-Burn V4)
-**Fichier :** `wan_accelerator.py`
-**La "Recette Secrète" de la performance.**
-*   **Le Problème :** Activer TF32 sur Wan 2.2 "brûle" normalement les images (contraste explosé) à cause d'erreurs de normalisation.
-*   **La Solution (Contextual Switching) :** Ce nœud active le TF32 globalement pour la vitesse, mais **intercepte** les couches `GroupNorm` et `LayerNorm` pour les forcer en précision FP32 native.
-*   **Résultat :** Gain de vitesse de 30% (TF32) avec la qualité visuelle du FP32.
-
-### 👁️ Wan Vision & Text Cache (DMA)
-**Fichier :** `wan_i2v_tools.py`
-*   **Mémoire Épinglée (Pinned Memory) :** Utilise la mémoire CPU Page-Locked (DMA) pour transférer les embeddings texte vers le GPU instantanément.
-*   **Vision Hash :** Hash le contenu de l'image (y compris via un échantillonnage stride) pour éviter de ré-encoder la même entrée CLIP Vision.
-
----
-
-## 🛠️ Phase 6 : Post-Production & Automatisation
-
-*   **Wan Compressor (Omega) :** Encodage H.265 Thread-safe. Limite les threads CPU à 16 pour éviter les crashs sur Threadripper/i9 (bug connu de x265).
-*   **Wan Cycle Terminator :** Utilise l'API Windows `EmptyWorkingSet` pour vider les listes d'attente RAM (évite les micro-lags de l'OS).
-*   **Auto Wan Optimizer :** Redimensionneur intelligent qui force les dimensions `Modulo 16` (requis par Wan) et protège contre le OOM (>1024px).
-
----
-
-<p align="center">
-  <i>Architected by Cyberdyne Systems. No fate but what we make.</i>
-</p>
+*“The future is not set. There is no fate but what we make for ourselves.”*
