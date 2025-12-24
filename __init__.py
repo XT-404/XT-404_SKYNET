@@ -74,7 +74,7 @@ def t800_log(name, status, extra=""):
 # ==============================================================================
 
 render_top()
-render_line(f"{C_RED}CYBERDYNE SYSTEMS CORP. {C_GREY}|{C_RED} SERIES T-800 - MODEL 101 {C_GREY}|{C_RED} V3.7{C_RESET}", "center")
+render_line(f"{C_RED}CYBERDYNE SYSTEMS CORP. {C_GREY}|{C_RED} SERIES T-800 - MODEL 101 {C_GREY}|{C_RED} V3.8{C_RESET}", "center")
 render_sep()
 
 ascii_art = [
@@ -248,6 +248,18 @@ try:
 except Exception as e:
     t800_log("CAMOUFLAGE UNIT", "MALFUNCTION")
     SYSTEM_CHECKLIST["Wan Chroma Mimic"] = False
+
+# --- PHASE 9: VISUAL SUPREMACY (OMEGA) ---
+try:
+    from .wan_visual_supremacy import NODE_CLASS_MAPPINGS as VIS, NODE_DISPLAY_NAME_MAPPINGS as VIS_N
+    NODE_CLASS_MAPPINGS.update(VIS)
+    NODE_DISPLAY_NAME_MAPPINGS.update(VIS_N)
+    
+    t800_log("VISUAL SUPREMACY (OMEGA)", "ONLINE", f"{C_CYAN}OLED/8K: READY")
+    SYSTEM_CHECKLIST["Wan Visual Supremacy"] = True
+except ImportError:
+    t800_log("VISUAL SUPREMACY", "NOT FOUND")
+    SYSTEM_CHECKLIST["Wan Visual Supremacy"] = False
 
 # ==============================================================================
 # RAPPORT FINAL
