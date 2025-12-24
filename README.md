@@ -1,14 +1,16 @@
 # XT-404 SKYNET SUITE: Wan 2.2 Integration Protocol
 ### Cyberdyne Systems Corp. | Series T-800 | Model 101
 
-<!-- STANDARD STATUS BADGES -->
-![Version](https://img.shields.io/badge/Version-3.7_Gold_Master-00e5ff?style=for-the-badge&logo=python&logoColor=white)
-![Status](https://img.shields.io/badge/Status-BATTLE_TESTED-ff0033?style=for-the-badge&logo=shield&logoColor=white)
-![Platform](https://img.shields.io/badge/Platform-ComfyUI-0051ff?style=for-the-badge&logo=github&logoColor=white)
-![Cyberdyne](https://img.shields.io/badge/CYBERDYNE-SYSTEMS_ONLINE-333333?style=for-the-badge&labelColor=000000&color=white)
-![Skynet](https://img.shields.io/badge/SKYNET-NEURAL_NET_ACTIVE-b91c1c?style=for-the-badge&labelColor=000000)
-![Genisys](https://img.shields.io/badge/GENISYS-NANO--REPAIR-8b5cf6?style=for-the-badge&labelColor=000000)
-![Terminator](https://img.shields.io/badge/UNIT-T--800_MODEL_101-64748b?style=for-the-badge&labelColor=000000)
+<!-- TECH SPECS ROW -->
+![Version](https://img.shields.io/badge/XT--404-v3.7_GOLD_MASTER-00e5ff?style=for-the-badge&logo=python&logoColor=white&labelColor=000000)
+![Platform](https://img.shields.io/badge/HOST-COMFYUI-0051ff?style=for-the-badge&logo=github&logoColor=white&labelColor=000000)
+![Status](https://img.shields.io/badge/STATUS-BATTLE_TESTED-ff0033?style=for-the-badge&logo=shield&logoColor=white&labelColor=000000)
+
+<!-- LORE SPECS ROW -->
+![Cyberdyne](https://img.shields.io/badge/CYBERDYNE-SYSTEMS_ONLINE-333333?style=for-the-badge&logo=linux&logoColor=white&labelColor=000000)
+![Skynet](https://img.shields.io/badge/SKYNET-NEURAL_NET_ACTIVE-b91c1c?style=for-the-badge&logo=tensorflow&logoColor=white&labelColor=000000)
+![Genisys](https://img.shields.io/badge/GENISYS-NANO--REPAIR-8b5cf6?style=for-the-badge&logo=cpu&logoColor=white&labelColor=000000)
+![Terminator](https://img.shields.io/badge/UNIT-T--800_MODEL_101-64748b?style=for-the-badge&logo=probot&logoColor=white&labelColor=000000)
 
 ## 💀 System Overview
 
