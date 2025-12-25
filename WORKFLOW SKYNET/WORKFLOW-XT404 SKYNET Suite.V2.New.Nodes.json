@@ -2,7 +2,7 @@
   "id": "4f978db9-13b1-43da-85cb-6f543ced60e8",
   "revision": 0,
   "last_node_id": 322,
-  "last_link_id": 965,
+  "last_link_id": 967,
   "nodes": [
     {
       "id": 97,
@@ -44,7 +44,7 @@
         "Node name for S&R": "LoadImage"
       },
       "widgets_values": [
-        "dkza77r-d496176f-3590-49b9-935a-436e9ae25fac.jpg",
+        "videoframe_857.png",
         "image"
       ]
     },
@@ -937,7 +937,7 @@
         1,
         1,
         2.5,
-        82847630764484,
+        476834281892753,
         "randomize",
         "standard",
         true,
@@ -1102,8 +1102,7 @@
           "name": "output",
           "type": "LATENT",
           "links": [
-            951,
-            958
+            951
           ]
         },
         {
@@ -1252,7 +1251,8 @@
         "0, 0, 0",
         "center",
         1,
-        "cpu"
+        "cpu",
+        "<tr><td>Output: </td><td><b>1</b> x <b>424</b> x <b>616 | 2.99MB</b></td></tr>"
       ]
     },
     {
@@ -1525,50 +1525,6 @@
       ]
     },
     {
-      "id": 318,
-      "type": "Wan_Latent_Detailer_X",
-      "pos": [
-        -4167.539184730509,
-        -2139.4676268896023
-      ],
-      "size": [
-        302.4556640625,
-        130
-      ],
-      "flags": {
-        "pinned": true
-      },
-      "order": 29,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "latent",
-          "type": "LATENT",
-          "link": 958
-        }
-      ],
-      "outputs": [
-        {
-          "name": "detailed_latent",
-          "type": "LATENT",
-          "links": [
-            959
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "XT-404/XT-404_SKYNET",
-        "ver": "5986d3e1e2eb0b07be113eb5cc5ccc0d0bed645a",
-        "Node name for S&R": "Wan_Latent_Detailer_X"
-      },
-      "widgets_values": [
-        0.1,
-        true,
-        1,
-        true
-      ]
-    },
-    {
       "id": 87,
       "type": "VAEDecode",
       "pos": [
@@ -1582,13 +1538,13 @@
       "flags": {
         "pinned": true
       },
-      "order": 31,
+      "order": 30,
       "mode": 0,
       "inputs": [
         {
           "name": "samples",
           "type": "LATENT",
-          "link": 959
+          "link": 967
         },
         {
           "name": "vae",
@@ -1627,7 +1583,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 33,
+      "order": 32,
       "mode": 0,
       "inputs": [
         {
@@ -1670,7 +1626,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 35,
+      "order": 34,
       "mode": 0,
       "inputs": [
         {
@@ -1712,7 +1668,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 37,
+      "order": 36,
       "mode": 0,
       "inputs": [
         {
@@ -1756,7 +1712,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 39,
+      "order": 38,
       "mode": 0,
       "inputs": [
         {
@@ -1800,7 +1756,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 40,
+      "order": 39,
       "mode": 0,
       "inputs": [
         {
@@ -1852,7 +1808,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 41,
+      "order": 40,
       "mode": 0,
       "inputs": [
         {
@@ -1897,12 +1853,12 @@
       ],
       "size": [
         888.1391039162609,
-        1436.413204909939
+        1609.2586981424922
       ],
       "flags": {
         "pinned": true
       },
-      "order": 42,
+      "order": 41,
       "mode": 0,
       "inputs": [
         {
@@ -1958,13 +1914,13 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "wan22_rife_00008.mp4",
+            "filename": "wan22_rife_00012.mp4",
             "subfolder": "",
             "type": "output",
             "format": "video/h264-mp4",
             "frame_rate": 42,
-            "workflow": "wan22_rife_00008.png",
-            "fullpath": "N:\\ComfyUI\\output\\wan22_rife_00008.mp4"
+            "workflow": "wan22_rife_00012.png",
+            "fullpath": "N:\\ComfyUI\\output\\wan22_rife_00012.mp4"
           }
         }
       }
@@ -1983,7 +1939,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 43,
+      "order": 42,
       "mode": 0,
       "inputs": [
         {
@@ -2026,7 +1982,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 44,
+      "order": 43,
       "mode": 0,
       "inputs": [
         {
@@ -2080,7 +2036,8 @@
           "name": "detailed_latent",
           "type": "LATENT",
           "links": [
-            952
+            952,
+            967
           ]
         }
       ],
@@ -2110,7 +2067,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 30,
+      "order": 29,
       "mode": 0,
       "inputs": [
         {
@@ -2155,7 +2112,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 32,
+      "order": 31,
       "mode": 0,
       "inputs": [
         {
@@ -2197,7 +2154,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 34,
+      "order": 33,
       "mode": 0,
       "inputs": [
         {
@@ -2241,7 +2198,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 36,
+      "order": 35,
       "mode": 0,
       "inputs": [
         {
@@ -2280,12 +2237,12 @@
       ],
       "size": [
         698.9698297327269,
-        1199.2457566798366
+        1334.4278658381127
       ],
       "flags": {
         "pinned": true
       },
-      "order": 38,
+      "order": 37,
       "mode": 0,
       "inputs": [
         {
@@ -2339,13 +2296,13 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "wan22_00010.mp4",
+            "filename": "wan22_00014.mp4",
             "subfolder": "",
             "type": "output",
             "format": "video/h264-mp4",
             "frame_rate": 32,
-            "workflow": "wan22_00010.png",
-            "fullpath": "N:\\ComfyUI\\output\\wan22_00010.mp4"
+            "workflow": "wan22_00014.png",
+            "fullpath": "N:\\ComfyUI\\output\\wan22_00014.mp4"
           }
         }
       }
@@ -2817,22 +2774,6 @@
       "IMAGE"
     ],
     [
-      958,
-      249,
-      0,
-      318,
-      0,
-      "LATENT"
-    ],
-    [
-      959,
-      318,
-      0,
-      87,
-      0,
-      "LATENT"
-    ],
-    [
       960,
       319,
       0,
@@ -2871,16 +2812,24 @@
       136,
       0,
       "IMAGE"
+    ],
+    [
+      967,
+      314,
+      0,
+      87,
+      0,
+      "LATENT"
     ]
   ],
   "groups": [],
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.7400249944258691,
+      "scale": 0.34522712143933765,
       "offset": [
-        4550.746951905405,
-        2392.4776068357287
+        6505.340812073523,
+        3106.349641576178
       ]
     },
     "frontendVersion": "1.33.13",
