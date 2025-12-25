@@ -1,163 +1,126 @@
-# XT-404 SKYNET SUITE: Wan 2.2 Integration Protocol
-### Cyberdyne Systems Corp. | Series T-800 | Model 101
+# 🤖 XT-404 Skynet Suite: Wan 2.2 Integration
+### *The "Omega Edition" for ComfyUI*
 
-<!-- TECH SPECS ROW -->
-![Version](https://img.shields.io/badge/XT--404-v3.7_GOLD_MASTER-00e5ff?style=for-the-badge&logo=python&logoColor=white&labelColor=000000)
-![Platform](https://img.shields.io/badge/HOST-COMFYUI-0051ff?style=for-the-badge&logo=github&logoColor=white&labelColor=000000)
-![Status](https://img.shields.io/badge/STATUS-BATTLE_TESTED-ff0033?style=for-the-badge&logo=shield&logoColor=white&labelColor=000000)
+![Skynet Banner](https://img.shields.io/badge/SYSTEM-ONLINE-green?style=for-the-badge) 
+![Version](https://img.shields.io/badge/VERSION-3.8%20GOLD-blue?style=for-the-badge) 
+![Architecture](https://img.shields.io/badge/ARCH-XT--404-red?style=for-the-badge)
+![License](https://img.shields.io/badge/LICENSE-MIT-black?style=for-the-badge)
 
-<!-- LORE SPECS ROW -->
-![Cyberdyne](https://img.shields.io/badge/CYBERDYNE-SYSTEMS_ONLINE-333333?style=for-the-badge&logo=linux&logoColor=white&labelColor=000000)
-![Skynet](https://img.shields.io/badge/SKYNET-NEURAL_NET_ACTIVE-b91c1c?style=for-the-badge&logo=tensorflow&logoColor=white&labelColor=000000)
-![Genisys](https://img.shields.io/badge/GENISYS-NANO--REPAIR-8b5cf6?style=for-the-badge&logo=cpu&logoColor=white&labelColor=000000)
-![Terminator](https://img.shields.io/badge/UNIT-T--800_MODEL_101-64748b?style=for-the-badge&logo=probot&logoColor=white&labelColor=000000)
+La **XT-404 Skynet Suite** est une collection de nœuds personnalisés pour ComfyUI, conçue avec une précision chirurgicale pour les modèles de diffusion vidéo **Wan 2.1 et 2.2**. 
 
-## 💀 System Overview
-
-The **XT-404 Skynet Suite** is a highly advanced, custom node collection for **ComfyUI**, specifically engineered to optimize, accelerate, and stabilize the **Wan 2.1 / 2.2 Video Diffusion Models**.
-
-Unlike standard implementations, this suite introduces "Cyberdyne" architecture: a set of overrides, caching mechanisms, and mathematical corrections (Zero-Point injection, Inverse Structural Repulsion, Contextual TF32 Switching) to solve common issues like image burning, OOM (Out of Memory) crashes, and temporal flickering.
+Contrairement aux solutions génériques, cette suite privilégie la "Suprématie Visuelle" : atteindre une qualité 8K de grade OLED grâce à des algorithmes heuristiques qui protègent l'intégrité du signal et optimisent la VRAM.
 
 ---
-## ⚠️ Requirements
 
-*   **ComfyUI:** Latest version recommended.
-*   **Wan 2.2 Models:** Ensure you have the VAE, CLIP, and UNet/Transformer models.
-*   **Python:** 3.10+.
-*   **FFmpeg:** Required for the Compressor node (usually installed via `imageio-ffmpeg`).
-## ⚠️ SYSTEM DEPENDENCY
+## ⚡ Caractéristiques Clés
+
+*   **Zero-Point Noise Injection :** Élimine le "bruit de neige" statique dès le premier échantillonnage.
+*   **ARRI Rolloff Tone Mapping :** Gestion cinématographique des hautes lumières pour éviter le clipping.
+*   **Nano-Repair (Genisys) :** Surveillance des tenseurs en temps réel pour prévenir les écrans noirs (NaNs).
+*   **Sentinel Telemetry :** Monitoring console ("Le Mouchard") analysant la saturation et la VRAM à chaque étape.
+
+---
+
+## 🛠️ Prérequis & Dépendances
+
+### Système
+* **ComfyUI :** Dernière version recommandée.
+* **Python :** 3.10 ou supérieur.
+* **FFmpeg :** Requis pour le nœud Compressor (via `imageio-ffmpeg`).
+
+### Modèles Wan 2.2
+Assurez-vous de posséder les fichiers suivants :
+* VAE, CLIP, et UNet/Transformer (Safetensors ou GGUF).
 
 > [!CAUTION]
-> **INFILTRATION PROTOCOL (GGUF):**
-> To utilize GGUF Quantized Models with the **Cyberdyne Model Hub**, the **ComfyUI-GGUF** engine is **REQUIRED**.
->
-> 📥 **Download Engine:** `city96/ComfyUI-GGUF`
->
-> *Without this engine, the Cyberdyne Model Hub will operate in Safetensors-only mode.*
----
-
-## 📂 Core Architecture & Module Breakdown
-
-### 1. Neural Net Core (Sampling & Control)
-
-#### `XT404_Skynet_Nodes.py`
-**The Brain.** This module replaces the standard KSampler with a synchronized multi-stage sampling system tailored for video consistency.
-*   **XT404_Skynet_1 (Master):** The primary clock generator. Calculates the "Flow Matching" sigmas using a custom shift value (default 5.0). It injects "Zero-Point" noise to eliminate static snow in the initial latent.
-*   **XT404_Skynet_2 (Chain) & 3 (Refiner):** These nodes lock onto the Master's timeline. They allow for seamless hand-offs between steps (e.g., Step 0-15 on Master, 15-20 on Refiner) without breaking the temporal coherence.
-*   **Key Tech:** *Bongmath* (Precision float math on CPU), *Zero-Point Injection*.
-
-#### `wan_tx_node.py`
-**The Polymetric Interpolator (T-X).** A specialized interpolator for frame generation.
-*   **Dual Phase Latent Bridging:** Allows smooth transitions between a `start_image` and an `end_image`.
-*   **Inverse Structural Repulsion (ISR):** A motion engine that isolates high-frequency structure from color data to boost motion amplitude without ghosting.
-*   **Wan-Specific Masking:** Automatically handles the complex 4-frame block masking required by the Wan architecture.
+> **PROTOCOLE D'INFILTRATION (GGUF) :**
+> Pour utiliser les modèles quantifiés GGUF via le **Cyberdyne Model Hub**, l'extension **ComfyUI-GGUF** est **OBLIGATOIRE**.
+> 📥 **Source :** `city96/ComfyUI-GGUF`
+> *Sans cela, le Hub fonctionnera uniquement en mode Safetensors.*
 
 ---
 
-### 2. Mimetic Rendering (Generation Engines)
+## 📦 Installation
 
-#### `nodes_wan_ultra.py`
-**Wan Image To Video Ultra (Hybrid V19).** The heavy-lifting generator node.
-*   **Smart VRAM Scanner:** Automatically detects GPU memory (e.g., >22GB) to determine the optimal tile strategy (1280px vs 1024px vs 512px).
-*   **Hybrid Motion Fix:** Reverts to a "Classic" algorithm (Linear + Mean Centering) for motion amplification to prevent the black/saturated artifacts caused by soft limiters in previous versions.
-*   **Tiled Encoding:** Supports large resolution encoding by breaking images into tiles with overlap.
-
-#### `wan_fast.py`
-**Wan Image To Video Fidelity.** A streamlined, high-fidelity version of the generator.
-*   **Full Context Encoding:** Unlike the Ultra version which may tile, this node forces full-frame context awareness for maximum coherence.
-*   **FP32 Enforcement:** Forces 32-bit floating-point precision during the upscale and VAE encode stages to prevent color banding.
-*   **Aggressive Cleanup:** Immediately purges source tensors from VRAM after encoding.
-
----
-
-### 3. System Optimization & Protection (The T-3000 Series)
-
-#### `wan_accelerator.py`
-**Hardware Accelerator (Anti-Burn V4).** Solves the "Fried/Burnt Image" issue common with Wan models on consumer GPUs.
-*   **Contextual Precision Switching:** Globally enables TF32 (TensorFloat-32) for speed, *but* surgically installs "interrupters" on GroupNorm and LayerNorm layers. These sensitive layers are forced to run in native FP32, providing the speed of TF32 with the quality of FP32.
-*   **Wan_Attention_Slicer:** Manages SDPA (Scaled Dot Product Attention) memory usage.
-
-#### `wan_genisys.py` (aka `wan_optimizer.py`)
-**Cyberdyne Genisys [Nano-Repair / Omniscient].** An advanced caching and stabilization system.
-*   **Drift Detection:** Monitors the latent difference between steps. If the change (Drift) is below a threshold (`security_level`), it skips the UNet calculation and reuses the previous output (Cache Hit).
-*   **Nano-Repair:** Detects NaNs (Not a Number) or infinite values in the tensor stream and clamps them to a safe range (+/- 10.0), preventing black frames.
-*   **HUD:** Prints a real-time tactical dashboard in the console showing signal integrity and load.
-
-#### `wan_cleanup.py`
-**Cycle Terminator.** A memory management node.
-*   **Surgical Purge:** Uses the Windows PSAPI `EmptyWorkingSet` (or `malloc_trim` on Linux) to release RAM that Python/PyTorch has freed but the OS hasn't reclaimed.
-*   **Skynet Quotes:** Prints randomized T-800 quotes upon execution.
+1. Accédez à votre dossier `custom_nodes` :
+   ```bash
+   cd ComfyUI/custom_nodes/
+   ```
+2. Clonez le dépôt :
+   ```bash
+   git clone https://github.com/YourUsername/XT-404-Skynet-Suite.git
+   ```
+3. Installez les dépendances :
+   ```bash
+   pip install imageio-ffmpeg scikit-image
+   ```
 
 ---
 
-### 4. Infiltration & IO (Loaders)
+## 🏗️ Architecture de la Suite
 
-#### `cyberdyne_model_hub.py`
-**Universal Model Loader.**
-*   **Recursive Scanning:** Finds models (Safetensors, CKPT, GGUF) in subdirectories automatically.
-*   **Integrity Check:** Performs SHA256 checksums on load to ensure model validity.
-*   **GGUF Support:** Automatically delegates GGUF loading to `UnetLoaderGGUF` if available.
+### 1. The Core Engine (`XT404_Skynet_Nodes.py`)
+Remplace le KSampler standard par un moteur hybride optimisé pour le *Flow Matching* de Wan.
+* **Nodes :** Master, Chain, Refiner.
+* **Innovation :** Calculateur de Sigma spécifique aux formules de Wan 2.1/2.2.
 
-#### `__init__.py`
-**Boot Sequence.**
-*   Initializes the suite, performs dependency checks (scikit-image, imageio), and prints the ASCII HUD.
-*   Maps all nodes to ComfyUI.
+### 2. Universal Loader (`cyberdyne_model_hub.py`)
+Un chargeur unifié intelligent pour Checkpoints, SafeTensors et GGUF.
+* **Smart Offload :** Décharge agressive des modèles inutilisés vers la RAM système pour libérer la VRAM.
+* **Checksum Verification :** Vérification SHA256 pour garantir l'intégrité des modèles lourds (30GB+).
 
----
+### 3. Visual Supremacy Suite (`wan_visual_supremacy.py`)
+Le pipeline post-traitement pour éliminer le "look plastique" de l'IA.
+* **Temporal Lock Pro :** Stabilisateur post-décodage qui réduit le scintillement (flicker).
+* **OLED Dynamix :** Mappage de ton logarithmique pour des noirs profonds et des textures organiques.
 
-### 5. Automation & Tools
+### 4. Nano-Repair System (`wan_genisys.py`)
+* **Node :** `Cyberdyne Genisys [OMNISCIENT]`
+* **Fonction :** Enveloppe l'UNET pour détecter la dérive des tenseurs. Si une valeur tend vers l'infini, elle est clampée immédiatement pour éviter le crash du rendu.
 
-#### `auto_wan_node.py`
-**Auto Wan 2.2 Optimizer.**
-*   **Modulo 16 Safety:** Automatically resizes images so dimensions are divisible by 16 (required by Wan).
-*   **OOM Protection:** Downscales images if they exceed 1024px on the longest side.
-*   **Min Size Fix:** Ensures no dimension is smaller than 512px.
-
-#### `auto_half_node.py`
-**Auto Half Size.**
-*   Simple utility to perform a high-quality (Bicubic + Antialias) 50% downscale.
-
-#### `wan_i2v_tools.py`
-**Vision & Resolution Tools.**
-*   **Vision OneShot Cache (Omega):** Hashes input images to cache CLIP Vision outputs, preventing redundant encoding.
-*   **Resolution Savant:** Provides "Lanczos" (CPU-based) resampling for ultimate quality, or FP32 GPU resampling for speed.
-
-#### `wan_text_encoder.py`
-**Text OneShot Cache.**
-*   Pins text embeddings in RAM (DMA) for instant transfer to GPU, optimizing prompt encoding speed.
+### 5. T-X Interpolator (`wan_tx_node.py`)
+Génère une transition entre une image de début et de fin.
+* **Inverse Structural Repulsion :** Injecte du bruit haute fréquence dérivé des différences latentes pour forcer le modèle à "halluciner" une transformation fluide.
 
 ---
 
-### 6. Post-Processing & Mastering
+## 🎛️ Stratégie de Workflow Recommandée
 
-#### `wan_chroma_mimic.py`
-**Chroma Mimic (Turbo OLED).** A GPU-accelerated mastering node.
-*   **LAB Transfer:** Applies the color palette of a reference image to the video using the LAB color space.
-*   **OLED Dynamics:** Applies an S-Curve contrast boost for deep blacks.
-*   **Surface Blur:** Smooths skin and metal textures while preserving edge sharpness.
+Pour obtenir le rendu "8K OLED" ultime, connectez les nœuds dans cet ordre :
 
-#### `wan_compressor.py`
-**Video Compressor (Omega).**
-*   **Thread Safety:** Limits FFmpeg threads (max 16) to prevent specific CPU crashes (Ryzen 9 / Threadripper issue with x265).
-*   **H.265 10-bit:** Encodes in high-efficiency format suitable for web or archival.
+1.  **Input :** `Cyberdyne Model Hub` → `Wan Text/Vision Cache`.
+2.  **Génération :** `WanImageToVideoUltra` → `XT-404 Skynet 1 (Master)`.
+3.  **Décodage :** `VAE Decode`.
+4.  **Traitement Skynet :**
+    *   `Temporal Lock Pro` (Stabilisation).
+    *   `OLED Dynamix` (Sculpture de la lumière).
+    *   `Organic Skin` (Grain pellicule).
+5.  **Finalisation :** `Wan Chroma Mimic` (Validation du signal) → `Wan Compressor`.
+
+---
+
+## 📟 Console HUD (XT-Mouchard)
+
+Surveillez votre console durant le rendu :
+* 🟢 **VERT :** Signal sain.
+* 🟡 **JAUNE :** Signal fort détecté (Rolloff actif).
+* 🔴 **ROUGE :** Saturation critique / Clipping (Réduisez le `specular_pop`).
+
+**Exemple de log :**
+```text
+[XT-MIMIC] 🎨 FINAL VALIDATION | DynRange: [0.000, 0.982]
+   └── Signal Integrity: OK (Clip: 0.00%)
+```
 
 ---
 
-## 🚀 Installation
+## 📜 Crédits & Vision
 
-1.  Navigate to your ComfyUI custom nodes directory:
-    ```bash
-    cd ComfyUI/custom_nodes/
-    ```
-2.  Clone this repository:
-    ```bash
-    git clone https://github.com/YourUsername/XT404-Skynet-Suite.git
-    ```
-3.  Install dependencies (The suite attempts to auto-install, but manual is recommended):
-    ```bash
-    pip install imageio-ffmpeg scikit-image
-    ```
-4.  **Restart ComfyUI.** Watch the console for the "CYBERDYNE SYSTEMS" boot log.
+*   **Architecte :** XT-404 Omega
+*   **Organisation :** Cyberdyne Systems
+*   **Statut :** GOLD MASTER (V3.8)
+
+> *"There is no fate but what we make."*
 
 ---
-*“The future is not set. There is no fate but what we make for ourselves.”*
+*Dépôt maintenu par l'unité de recherche Cyberdyne. Pour tout bug, ouvrez une "Infiltration Report" (Issue).*
