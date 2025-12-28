@@ -6,8 +6,10 @@ import sys
 
 class Wan_Infiltration_Upscaler:
     """
-    MODULE C : INFILTRATION VAE UPSCALER (OMEGA V4)
-    Architecture : Spatio-Temporal Super-Resolution Reconstruction
+    MODULE C : INFILTRATION VAE UPSCALER (V5.1 AUTO-LEVELS)
+    - Force FP32 pour éviter le "White Cast".
+    - Auto-Levels : Recale dynamiquement le contraste si l'image est délavée.
+    - Noise Masking amélioré.
     """
     
     @classmethod
@@ -17,103 +19,69 @@ class Wan_Infiltration_Upscaler:
                 "latent": ("LATENT",),
                 "vae": ("VAE",),
                 "upscale_by": ("FLOAT", {"default": 1.5, "min": 1.0, "max": 4.0, "step": 0.1}),
-                "tile_size": ("INT", {"default": 512, "min": 256, "max": 1024, "step": 64}),
-                "temporal_window": ("INT", {"default": 16, "min": 8, "max": 64, "step": 4}),
-                "temporal_overlap": ("INT", {"default": 4, "min": 4, "max": 12, "step": 4}),
-                "resampling_mode": (["bicubic", "bilinear", "nearest-exact"], {"default": "bicubic"}),
+                "texture_noise": ("FLOAT", {"default": 0.01, "min": 0.0, "max": 0.1, "step": 0.005}),
+                "fix_milky_black": ("BOOLEAN", {"default": True, "tooltip": "Force le recalage des noirs (Anti-Voile)."}),
+                "fix_hot_white": ("BOOLEAN", {"default": True, "tooltip": "Empêche les blancs de brûler."}),
             }
         }
 
-    RETURN_TYPES = ("IMAGE", "INT", "INT")
-    RETURN_NAMES = ("IMAGE", "width", "height")
+    RETURN_TYPES = ("IMAGE",)
     FUNCTION = "infiltrate_upscale"
     CATEGORY = "XT-404/V2_Omega"
 
-    def infiltrate_upscale(self, latent, vae, upscale_by, tile_size, temporal_window, temporal_overlap, resampling_mode):
+    def infiltrate_upscale(self, latent, vae, upscale_by, texture_noise, fix_milky_black, fix_hot_white):
         samples = latent["samples"]
         device = mm.get_torch_device()
         
-        # B, C, T, H, W (Latent Space)
-        B, C, T, H, W = samples.shape
-        
-        # Calcul de la résolution cible (Upscale)
-        native_h, native_w = H * 8, W * 8
-        target_height = int(native_h * upscale_by)
-        target_width = int(native_w * upscale_by)
-        
-        # On force un modulo 8 pour la compatibilité vidéo
-        target_height = (target_height // 8) * 8
-        target_width = (target_width // 8) * 8
-        
-        out_frames = (T - 1) * 4 + 1
-        
-        print(f"\n\033[35m╔══════════════════════════════════════════════════════════════╗\033[0m")
-        print(f"\033[35m║ [XT-INFILTRATION] MISSION: TRUE SUPER-RESOLUTION           ║\033[0m")
-        print(f"\033[35m╚══════════════════════════════════════════════════════════════╝\033[0m")
-        print(f"   👉 Native: {native_w}x{native_h} -> \033[1mTarget: {target_width}x{target_height}\033[0m (x{upscale_by})")
-        print(f"   👉 Processing {out_frames} frames via Spatio-Temporal Infiltration...")
-
-        # Buffer de sortie en RAM système (Plus grand car Upscalé)
-        output_buffer = torch.zeros((B, out_frames, target_height, target_width, 3), device="cpu")
-        count_buffer = torch.zeros((B, out_frames, target_height, target_width, 1), device="cpu")
-
-        pbar = comfy.utils.ProgressBar((T + (temporal_window - temporal_overlap) - 1) // (temporal_window - temporal_overlap))
+        # 1. DECODAGE
         vae.patcher.model.to(device)
+        decoded = vae.decode(samples.to(device))
         
-        t_step = max(1, temporal_window - temporal_overlap)
-        chunk_idx = 0
+        # 2. FP32 FORCE & FLATTEN
+        if decoded.ndim == 5:
+            B, T, H, W, C = decoded.shape
+            flat = decoded.view(-1, H, W, C).permute(0, 3, 1, 2).float()
+        else:
+            flat = decoded.permute(0, 3, 1, 2).float()
+
+        # 3. INTERPOLATION
+        up = F.interpolate(flat, scale_factor=upscale_by, mode="bicubic", align_corners=False, antialias=True)
         
-        for t in range(0, T, t_step):
-            t_end = min(t + temporal_window, T)
-            sys.stdout.write(f"\r\033[90m   [INFILTRATION] Upscaling Chunk {chunk_idx+1} | Latent T: {t}->{t_end}\033[0m")
-            sys.stdout.flush()
+        # 4. AUTO-LEVELS (LE SAUVEUR)
+        # On analyse l'histogramme de l'image upscalée
+        if fix_milky_black:
+            # On cherche le point noir actuel (le 1er percentile)
+            # Si l'image est délavée, min_val sera > 0.0 (ex: 0.1)
+            b, c, h, w = up.shape
+            pixels = up.view(b, c, -1)
+            min_val = torch.kthvalue(pixels, int(h*w*0.01), dim=2).values.view(b, c, 1, 1)
+            
+            # On recale : (pixel - min) / (1 - min)
+            # Cela remet le point le plus sombre à 0.0
+            scale = 1.0 / (1.0 - min_val + 1e-6)
+            up = (up - min_val).clamp(min=0.0) * scale
 
-            latent_chunk = samples[:, :, t:t_end, :, :].to(device)
+        if fix_hot_white:
+            # On cherche le point blanc (99ème percentile)
+            b, c, h, w = up.shape
+            pixels = up.view(b, c, -1)
+            max_val = torch.kthvalue(pixels, int(h*w*0.99), dim=2).values.view(b, c, 1, 1)
             
-            # 1. DÉCODAGE NATIF
-            decoded_chunk = vae.decode(latent_chunk) # [B, T, H, W, 3]
-            
-            # 2. UPSCALING DU CHUNK (Espace Pixel)
-            # On permute pour F.interpolate : [B*T, C, H, W]
-            B_c, T_c, H_c, W_c, C_c = decoded_chunk.shape
-            chunk_reshaped = decoded_chunk.view(-1, H_c, W_c, C_c).permute(0, 3, 1, 2)
-            
-            # Upscale haute qualité avec antialiasing
-            upscaled_chunk = F.interpolate(
-                chunk_reshaped, 
-                size=(target_height, target_width), 
-                mode=resampling_mode, 
-                align_corners=False,
-                antialias=True if resampling_mode == "bicubic" else False
-            )
-            
-            # Retour au format [B, T, H, W, 3]
-            upscaled_chunk = upscaled_chunk.permute(0, 2, 3, 1).view(B_c, T_c, target_height, target_width, 3).cpu()
+            # Si le blanc est trop bas (gris), on l'étend. S'il est > 1.0, on le ramène.
+            # Ici on s'assure surtout qu'il ne dépasse pas 1.0 bêtement
+            up = torch.clamp(up, max=1.0) # Simple clamp suffisant après le black fix
 
-            # 3. BLENDING TEMPOREL (Feathering)
-            out_t_start = t * 4
-            out_t_end = out_t_start + T_c
-            
-            mask_t = torch.ones((T_c, 1, 1, 1))
-            fade_len = temporal_overlap * 4
-            if t > 0 and T_c > fade_len:
-                mask_t[:fade_len] = torch.linspace(0, 1, fade_len).view(-1, 1, 1, 1)
-            if t_end < T and T_c > fade_len:
-                mask_t[-fade_len:] = torch.linspace(1, 0, fade_len).view(-1, 1, 1, 1)
+        # 5. NOISE
+        if texture_noise > 0:
+            noise = torch.randn_like(up) * texture_noise
+            # Masque luma (Pas de bruit dans le noir pur qu'on vient de fixer)
+            noise_mask = up * (1.0 - up) * 4.0
+            up = up + (noise * noise_mask)
 
-            output_buffer[:, out_t_start:out_t_end] += (upscaled_chunk * mask_t)
-            count_buffer[:, out_t_start:out_t_end] += mask_t
-            
-            chunk_idx += 1
-            pbar.update(1)
-            del latent_chunk, decoded_chunk, upscaled_chunk
-
-        # Finalisation
-        final_video = output_buffer / count_buffer.clamp(min=1e-5)
-        final_video = final_video.view(-1, target_height, target_width, 3)
+        # 6. SORTIE
+        up = torch.clamp(up, 0.0, 1.0)
+        out = up.permute(0, 2, 3, 1) # [N, H, W, C]
         
-        print(f"\n   👉 \033[92mSuper-Resolution Complete.\033[0m Final Output: {target_width}x{target_height}\n")
-        
-        return (final_video.nan_to_num(0.0), target_width, target_height)
+        return (out.cpu(),)
 
 NODE_CLASS_MAPPINGS = {"Wan_Infiltration_Upscaler": Wan_Infiltration_Upscaler}
