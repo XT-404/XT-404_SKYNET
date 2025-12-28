@@ -74,7 +74,7 @@ def t800_log(name, status, extra=""):
 # ==============================================================================
 
 render_top()
-render_line(f"{C_RED}CYBERDYNE SYSTEMS CORP. {C_GREY}|{C_RED} SERIES T-800 - MODEL 101 {C_GREY}|{C_RED} V3.9 OMEGA{C_RESET}", "center")
+render_line(f"{C_RED}CYBERDYNE SYSTEMS CORP. {C_GREY}|{C_RED} SERIES T-800 - MODEL 101 {C_GREY}|{C_RED} V4.0 OMEGA{C_RESET}", "center")
 render_sep()
 
 ascii_art = [
@@ -118,7 +118,7 @@ try:
     from .wan_genisys import NODE_CLASS_MAPPINGS as GEN, NODE_DISPLAY_NAME_MAPPINGS as GEN_N
     NODE_CLASS_MAPPINGS.update(GEN)
     NODE_DISPLAY_NAME_MAPPINGS.update(GEN_N)
-    t800_log("T-3000 PHASE CONTROLLER", "ONLINE", f"{C_RED}Omniscient HUD: ACTIVE")
+    t800_log("T-3000 PHASE CONTROLLER", "ONLINE", f"{C_RED}Nano-Repair: ACTIVE")
     SYSTEM_CHECKLIST["Cyberdyne Genisys (T-3000)"] = True
 except ImportError:
     t800_log("T-3000 PHASE CONTROLLER", "OFFLINE")
@@ -177,7 +177,7 @@ try:
     NODE_CLASS_MAPPINGS["Wan_Cycle_Terminator"] = Wan_Cycle_Terminator
     NODE_DISPLAY_NAME_MAPPINGS["Wan_Cycle_Terminator"] = "Wan Cycle Terminator (System Purge)"
     
-    t800_log("TARGETING SYSTEMS (ACCEL)", "LOCKED", f"{C_RED}SDPA: READY")
+    t800_log("TARGETING SYSTEMS (ACCEL)", "LOCKED", f"{C_RED}FP32-Norm: READY")
     SYSTEM_CHECKLIST["Wan Accelerator"] = True
     SYSTEM_CHECKLIST["Wan Terminator"] = True
 except ImportError:
@@ -211,7 +211,7 @@ try:
     NODE_CLASS_MAPPINGS["Wan_TX_Interpolator"] = Wan_TX_Interpolator
     NODE_DISPLAY_NAME_MAPPINGS["Wan_TX_Interpolator"] = "Wan T-X Interpolator (Dual-Phase)"
     
-    t800_log("POLYMETRIC ALLOY (T-X)", "ONLINE", f"{C_MAGENTA}Start/End Engine: READY")
+    t800_log("POLYMETRIC ALLOY (T-X)", "ONLINE", f"{C_MAGENTA}Safe-Mode: READY")
     SYSTEM_CHECKLIST["T-X Interpolator"] = True
 except ImportError:
     t800_log("POLYMETRIC ALLOY (T-X)", "NOT FOUND")
@@ -255,11 +255,22 @@ try:
     NODE_CLASS_MAPPINGS.update(VIS)
     NODE_DISPLAY_NAME_MAPPINGS.update(VIS_N)
     
-    t800_log("VISUAL SUPREMACY (OMEGA)", "ONLINE", f"{C_CYAN}OLED/8K: READY")
+    t800_log("VISUAL SUPREMACY (OMEGA)", "ONLINE", f"{C_CYAN}Anime-Tuned: READY")
     SYSTEM_CHECKLIST["Wan Visual Supremacy"] = True
 except ImportError:
     t800_log("VISUAL SUPREMACY", "NOT FOUND")
     SYSTEM_CHECKLIST["Wan Visual Supremacy"] = False
+
+# --- PHASE 9.5: COLOR LOCK (ANTI-DRIFT) ---
+try:
+    from .wan_latent_interposer import NODE_CLASS_MAPPINGS as LAT, NODE_DISPLAY_NAME_MAPPINGS as LAT_N
+    NODE_CLASS_MAPPINGS.update(LAT)
+    NODE_DISPLAY_NAME_MAPPINGS.update(LAT_N)
+    t800_log("LATENT COLOR LOCK", "ONLINE", f"{C_YELLOW}Skin-Preservation: ACTIVE")
+    SYSTEM_CHECKLIST["Wan Latent Color Lock"] = True
+except ImportError:
+    t800_log("LATENT COLOR LOCK", "NOT FOUND")
+    SYSTEM_CHECKLIST["Wan Latent Color Lock"] = False
 
 # ==============================================================================
 # PHASE 10: EXPERIMENTAL PROTOCOLS (OMEGA)
@@ -273,7 +284,7 @@ try:
     from .XT404_Skynet_V2 import NODE_CLASS_MAPPINGS as SKY_V2, NODE_DISPLAY_NAME_MAPPINGS as SKY_V2_N
     NODE_CLASS_MAPPINGS.update(SKY_V2)
     NODE_DISPLAY_NAME_MAPPINGS.update(SKY_V2_N)
-    t800_log("SKYNET CORE V2 (OMEGA)", "ONLINE", f"{C_MAGENTA}Temporal-Shield: ACTIVE")
+    t800_log("SKYNET CORE V2 (OMEGA)", "ONLINE", f"{C_MAGENTA}Sliding-Shield: ACTIVE")
     SYSTEM_CHECKLIST["XT-404 Skynet V2"] = True
 except ImportError:
     t800_log("SKYNET CORE V2", "NOT FOUND")
@@ -295,22 +306,22 @@ try:
     from .wan_spectre_chroma import Wan_Spectre_Chroma_Filter
     NODE_CLASS_MAPPINGS["Wan_Spectre_Chroma_Filter"] = Wan_Spectre_Chroma_Filter
     NODE_DISPLAY_NAME_MAPPINGS["Wan_Spectre_Chroma_Filter"] = "Wan Spectre Chroma (Anti-Rainbow)"
-    t800_log("SPECTRE CHROMA (FILTER)", "ACTIVE", f"{C_BLUE}FFT-Lock: ON")
+    t800_log("SPECTRE CHROMA (FILTER)", "ACTIVE", f"{C_BLUE}Skin-Safe: ON")
     SYSTEM_CHECKLIST["Wan Spectre Chroma"] = True
 except ImportError:
     t800_log("SPECTRE CHROMA", "MISSING")
     SYSTEM_CHECKLIST["Wan Spectre Chroma"] = False
 
-# 4. Infiltration Upscaler (V4)
+# 4. Infiltration Upscaler (V5)
 try:
     from .wan_infiltration_upscaler import NODE_CLASS_MAPPINGS as UPSCALER
     NODE_CLASS_MAPPINGS.update(UPSCALER)
-    NODE_DISPLAY_NAME_MAPPINGS["Wan_Infiltration_Upscaler"] = "Wan Infiltration Upscaler (V4 Omega)"
-    t800_log("INFILTRATION UPSCALER", "READY", f"{C_CYAN}High-Res: LOCKED")
-    SYSTEM_CHECKLIST["Wan Infiltration V4"] = True
+    NODE_DISPLAY_NAME_MAPPINGS["Wan_Infiltration_Upscaler"] = "Wan Infiltration Upscaler (V5 Omega)"
+    t800_log("INFILTRATION UPSCALER", "READY", f"{C_CYAN}Auto-Levels: LOCKED")
+    SYSTEM_CHECKLIST["Wan Infiltration V5"] = True
 except ImportError:
     t800_log("INFILTRATION UPSCALER", "OFFLINE")
-    SYSTEM_CHECKLIST["Wan Infiltration V4"] = False
+    SYSTEM_CHECKLIST["Wan Infiltration V5"] = False
 
 # ==============================================================================
 # RAPPORT FINAL
