@@ -10,6 +10,7 @@ from contextlib import contextmanager
 
 import comfy.sd
 import comfy.model_management
+import folder_paths  # Add this import at the top
 
 # Cache global pour les modèles chargés
 _cyberdyne_model_cache: Dict[Tuple[str, str], Tuple[Any, str]] = {}
@@ -37,23 +38,24 @@ def find_comfyui_base_path() -> str:
     return os.getcwd() 
 
 def get_model_dirs_by_type(model_type_hint: str) -> List[str]:
-    base_path = find_comfyui_base_path()
     model_dirs = []
-
-    if model_type_hint == "safetensors":
-        path = os.path.join(base_path, "models", "diffusion_models")
-        if os.path.exists(path) and os.path.isdir(path):
-            model_dirs.append(path)
-        path_fallback = os.path.join(base_path, "models", "checkpoints")
-        if os.path.exists(path_fallback) and os.path.isdir(path_fallback):
-             model_dirs.append(path_fallback)
-
-    elif model_type_hint == "gguf":
-        path = os.path.join(base_path, "models", "unet")
-        if os.path.exists(path) and os.path.isdir(path):
-            model_dirs.append(path)
     
-    return model_dirs
+    # Use ComfyUI's internal path registry
+    if model_type_hint == "safetensors":
+        # This gets ALL folders registered under 'checkpoints' or 'diffusion_models'
+        model_dirs.extend(folder_paths.get_folder_paths("checkpoints"))
+        model_dirs.extend(folder_paths.get_folder_paths("diffusion_models"))
+    
+    elif model_type_hint == "gguf":
+        model_dirs.extend(folder_paths.get_folder_paths("unet"))
+        
+    # Keep the original hard-coded fallbacks just in case
+    base_path = find_comfyui_base_path()
+    fallback = os.path.join(base_path, "models", "checkpoints")
+    if fallback not in model_dirs and os.path.exists(fallback):
+        model_dirs.append(fallback)
+
+    return list(set(model_dirs)) # Remove duplicates
 
 # --- CONTEXT MANAGER DE SECURITE ---
 @contextmanager
