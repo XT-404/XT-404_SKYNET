@@ -11,6 +11,11 @@ The **XT-404 Skynet Suite** is a highly specialized, battle-tested collection of
 Unlike generic implementations, this suite focuses on **"Visual Supremacy"**—achieving 8K, OLED-grade quality with mathematical precision. It abandons standard processing for heuristic, context-aware algorithms that protect signal integrity, manage VRAM surgically, and eliminate digital artifacts.
 
 ---
+UPDATED : 
+
+T-X update thanks to: **hiroaki1010** for his participation and point of view which allowed me to improve the code and modify quite a few small things to strengthen its reliability and performance!
+
+---
 
 ## ⚡ Key Features (Omega Edition)
 
