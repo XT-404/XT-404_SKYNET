@@ -207,11 +207,13 @@ except ImportError:
 
 # --- PHASE 6.5: POLYMETRIC ALLOY (T-X) ---
 try:
-    from .wan_tx_node import Wan_TX_Interpolator
-    NODE_CLASS_MAPPINGS["Wan_TX_Interpolator"] = Wan_TX_Interpolator
-    NODE_DISPLAY_NAME_MAPPINGS["Wan_TX_Interpolator"] = "Wan T-X Interpolator (Dual-Phase)"
+    # CORRECTION ICI: Import de la nouvelle classe Wan_TX_Fusion depuis wan_tx_node
+    from .wan_tx_node import Wan_TX_Fusion
     
-    t800_log("POLYMETRIC ALLOY (T-X)", "ONLINE", f"{C_MAGENTA}Safe-Mode: READY")
+    NODE_CLASS_MAPPINGS["Wan_TX_Fusion"] = Wan_TX_Fusion
+    NODE_DISPLAY_NAME_MAPPINGS["Wan_TX_Fusion"] = "T-X Fusion (Wan2.1 Ultimate)"
+    
+    t800_log("POLYMETRIC ALLOY (T-X)", "ONLINE", f"{C_MAGENTA}Fusion Core: READY")
     SYSTEM_CHECKLIST["T-X Interpolator"] = True
 except ImportError:
     t800_log("POLYMETRIC ALLOY (T-X)", "NOT FOUND")
