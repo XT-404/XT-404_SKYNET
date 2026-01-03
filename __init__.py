@@ -74,7 +74,7 @@ def t800_log(name, status, extra=""):
 # ==============================================================================
 
 render_top()
-render_line(f"{C_RED}CYBERDYNE SYSTEMS CORP. {C_GREY}|{C_RED} SERIES T-800 - MODEL 101 {C_GREY}|{C_RED} V4.0 OMEGA{C_RESET}", "center")
+render_line(f"{C_RED}CYBERDYNE SYSTEMS CORP. {C_GREY}|{C_RED} SERIES T-800 - MODEL 101 {C_GREY}|{C_RED} V4.1 OMEGA{C_RESET}", "center")
 render_sep()
 
 ascii_art = [
@@ -207,13 +207,14 @@ except ImportError:
 
 # --- PHASE 6.5: POLYMETRIC ALLOY (T-X) ---
 try:
-    # CORRECTION ICI: Import de la nouvelle classe Wan_TX_Fusion depuis wan_tx_node
-    from .wan_tx_node import Wan_TX_Fusion
+    # MISE A JOUR T-800: Importation dynamique de TOUT le fichier wan_tx_node
+    # Cela permet de charger à la fois "Fusion" et "PixelPerfect"
+    from .wan_tx_node import NODE_CLASS_MAPPINGS as TX_NODES, NODE_DISPLAY_NAME_MAPPINGS as TX_NAMES
     
-    NODE_CLASS_MAPPINGS["Wan_TX_Fusion"] = Wan_TX_Fusion
-    NODE_DISPLAY_NAME_MAPPINGS["Wan_TX_Fusion"] = "T-X Fusion (Wan2.1 Ultimate)"
+    NODE_CLASS_MAPPINGS.update(TX_NODES)
+    NODE_DISPLAY_NAME_MAPPINGS.update(TX_NAMES)
     
-    t800_log("POLYMETRIC ALLOY (T-X)", "ONLINE", f"{C_MAGENTA}Fusion Core: READY")
+    t800_log("POLYMETRIC ALLOY (T-X)", "ONLINE", f"{C_MAGENTA}Fusion + PixelFix: READY")
     SYSTEM_CHECKLIST["T-X Interpolator"] = True
 except ImportError:
     t800_log("POLYMETRIC ALLOY (T-X)", "NOT FOUND")
