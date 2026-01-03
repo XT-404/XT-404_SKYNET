@@ -196,15 +196,27 @@ class Wan_TX_Fusion:
             mask[:, 0] = 0.0
             if valid_end:
                 mask[:, -1] = 0.0
-
+            
             # Expansion manuelle pour matcher le Latent (4 frames par bloc)
-            # C'est cette étape qui permet la fluidité de fin
             m_start = torch.repeat_interleave(mask[:, 0:1], 4, dim=1)
             
             if valid_end:
-                m_end = torch.repeat_interleave(mask[:, -1:], 4, dim=1)
+                # --- CORRECTION DEBUT ---
+                # ANCIEN CODE QUI CAUSAIT LE FREEZE :
+                # m_end = torch.repeat_interleave(mask[:, -1:], 4, dim=1)
+                
+                # NOUVEAU CODE (Anti-Freeze) :
+                # On crée un bloc de 4 frames "libres" (1.0) et on ne force 
+                # l'image fixe (0.0) que sur la toute dernière fraction.
+                m_end = torch.ones((1, 4, height // 8, width // 8), device=device, dtype=target_dtype)
+                # Optionnel : On force seulement l'ultime frame latente si nécessaire, 
+                # mais pour une transition fluide, on laisse souvent tout à 1.0 car 
+                # le 'volume' contient déjà l'image de fin encodée.
+                m_end[:, -1] = 0.0 
+                
                 m_mid = mask[:, 1:-1]
                 mask_final = torch.cat([m_start, m_mid, m_end], dim=1)
+                # --- CORRECTION FIN ---
             else:
                 mask_final = torch.cat([m_start, mask[:, 1:]], dim=1)
 
