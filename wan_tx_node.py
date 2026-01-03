@@ -8,9 +8,9 @@ import time
 
 class Wan_TX_Fusion:
     """
-    CYBERDYNE SYSTEMS: T-X FUSION (v3.2 Stable)
+    CYBERDYNE SYSTEMS: T-X FUSION (v3.3 Stable)
     HYBRID CORE: Safety Architecture + Advanced Motion Engine (ISR)
-    Code updated for CPU/GPU mixed context stability.
+    Code updated for CPU/GPU mixed context stability & VAE Tiling fix.
     """
 
     @classmethod
@@ -109,15 +109,20 @@ class Wan_TX_Fusion:
         self._log("Volume Build", f"{video_frames} frames ({width}x{height})")
 
         # 2. Encodage VAE (Méthode Safe + Gestion VRAM)
+        # Fix: tile_size_xy n'existe pas, on utilise tile_x et tile_y
+        tile_args = {"tile_x": 512, "tile_y": 512}
+        
         try:
             if "Tiled" in tile_strategy:
-                latent = vae.encode_tiled(volume[:, :, :, :3], tile_size_xy=512) 
+                # Utilisation des bons arguments pour l'encodage par tuiles
+                latent = vae.encode_tiled(volume[:, :, :, :3], **tile_args)
             else:
                 latent = vae.encode(volume[:, :, :, :3])
         except Exception as e:
             print(f"[T-X WARNING] VAE Encode error: {e}. Switching to CPU fallback/Tiling.")
             mm.soft_empty_cache()
-            latent = vae.encode_tiled(volume[:, :, :, :3])
+            # Le fallback doit aussi avoir les arguments pour éviter l'erreur NoneType
+            latent = vae.encode_tiled(volume[:, :, :, :3], **tile_args)
 
         self._log("Encoding", f"Latent Shape: {list(latent.shape)}")
 
@@ -128,10 +133,10 @@ class Wan_TX_Fusion:
             start_l = latent[:, :, 0:1]
             end_l = latent[:, :, -1:]
             
-            # --- CORRECTIF APPLIQUÉ ICI ---
-            # Utilisation de latent.device pour s'assurer que t_steps est sur le même device que le latent (CPU ou GPU)
+            # --- CORRECTIF APPLIQUÉ ICI (CPU/GPU Fix) ---
+            # Utilisation de latent.device pour s'assurer que t_steps est sur le même device que le latent
             t_steps = torch.linspace(0.0, 1.0, latent.shape[2], device=latent.device, dtype=latent.dtype).view(1, 1, -1, 1, 1)
-            # -----------------------------
+            # --------------------------------------------
             
             linear_latent = start_l * (1 - t_steps) + end_l * t_steps
 
@@ -154,7 +159,6 @@ class Wan_TX_Fusion:
         
         # Création du masque en 4D d'abord [1, T, H, W]
         # --- CORRECTIF APPLIQUÉ ICI AUSSI ---
-        # Utilisation de final_latent.device pour garantir que le masque est compatible
         mask = torch.ones((1, target_t, height // 8, width // 8), device=final_latent.device, dtype=target_dtype)
         # -----------------------------------
         
