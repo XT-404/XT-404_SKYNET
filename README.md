@@ -13,7 +13,9 @@ Unlike generic implementations, this suite focuses on **"Visual Supremacy"**—a
 ---
 UPDATED : 
 
-T-X update thanks to: **hiroaki1010** for his participation and point of view which allowed me to improve the code and modify quite a few small things to strengthen its reliability and performance!
+> **T-X** update thanks to: **hiroaki1010** for his participation and point of view which allowed me to improve the code and modify quite a few small things to strengthen its reliability and performance!
+> 
+> **Chroma Mimic** update: complete overhaul of its color management, lighting, and visual rendering system!
 
 ---
 
