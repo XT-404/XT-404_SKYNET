@@ -8,9 +8,9 @@ import time
 
 class Wan_TX_Fusion:
     """
-    CYBERDYNE SYSTEMS: T-X FUSION (v3.1 Fix)
+    CYBERDYNE SYSTEMS: T-X FUSION (v3.2 Stable)
     HYBRID CORE: Safety Architecture + Advanced Motion Engine (ISR)
-    Code updated into wan_tx_node.py for compatibility.
+    Code updated for CPU/GPU mixed context stability.
     """
 
     @classmethod
@@ -127,7 +127,12 @@ class Wan_TX_Fusion:
             # Trajectoire linéaire
             start_l = latent[:, :, 0:1]
             end_l = latent[:, :, -1:]
-            t_steps = torch.linspace(0.0, 1.0, latent.shape[2], device=device, dtype=latent.dtype).view(1, 1, -1, 1, 1)
+            
+            # --- CORRECTIF APPLIQUÉ ICI ---
+            # Utilisation de latent.device pour s'assurer que t_steps est sur le même device que le latent (CPU ou GPU)
+            t_steps = torch.linspace(0.0, 1.0, latent.shape[2], device=latent.device, dtype=latent.dtype).view(1, 1, -1, 1, 1)
+            # -----------------------------
+            
             linear_latent = start_l * (1 - t_steps) + end_l * t_steps
 
             # Différence
@@ -148,7 +153,10 @@ class Wan_TX_Fusion:
         target_t = final_latent.shape[2]
         
         # Création du masque en 4D d'abord [1, T, H, W]
-        mask = torch.ones((1, target_t, height // 8, width // 8), device=device, dtype=target_dtype)
+        # --- CORRECTIF APPLIQUÉ ICI AUSSI ---
+        # Utilisation de final_latent.device pour garantir que le masque est compatible
+        mask = torch.ones((1, target_t, height // 8, width // 8), device=final_latent.device, dtype=target_dtype)
+        # -----------------------------------
         
         # Verrouillage Frame 0
         mask[:, 0] = 0.0 
@@ -157,7 +165,7 @@ class Wan_TX_Fusion:
         if valid_end:
             mask[:, -1] = 0.0
 
-        # CORRECTION MAJEURE ICI : Passage en 5D [Batch, Channel, Time, Height, Width]
+        # CORRECTION MAJEURE : Passage en 5D [Batch, Channel, Time, Height, Width]
         # Wan Latent est 5D, le masque doit avoir 5 dimensions pour être concaténé.
         mask_final = mask.unsqueeze(1) 
         
@@ -190,6 +198,5 @@ class Wan_TX_Fusion:
         return (pos_final, neg_final, {"samples": torch.zeros_like(final_latent)})
 
 # Mappings pour ComfyUI
-# Le fichier s'appelle wan_tx_node.py pour compatibilité __init__, mais la classe est la nouvelle Fusion.
 NODE_CLASS_MAPPINGS = {"Wan_TX_Fusion": Wan_TX_Fusion}
 NODE_DISPLAY_NAME_MAPPINGS = {"Wan_TX_Fusion": "T-X Fusion (Wan2.1 Ultimate)"}
