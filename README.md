@@ -16,6 +16,11 @@ UPDATED :
 > **T-X** update thanks to: **hiroaki1010** for his participation and point of view which allowed me to improve the code and modify quite a few small things to strengthen its reliability and performance!
 > 
 > **Chroma Mimic** update: complete overhaul of its color management, lighting, and visual rendering system!
+>
+> Massive code update: T-X + creation of pixel-perfect T-X code.
+>The T-X code has been corrected, reviewed, optimized, and stabilized.
+>The new pixel-perfect T-X code helps create a clean transition for the START and ENDING frames.
+>The SKYNET suite is complete; adding anything else to this code suite would not only be productive but also detrimental.
 
 ---
 
