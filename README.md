@@ -23,7 +23,11 @@ UPDATED :
 >The SKYNET suite is complete; adding anything else to this code suite would not only be productive but also detrimental.
 
 ---
-
+* >The SKYNET suite is officially finalized and therefore complete.
+* >Other projects will surely come in the future ;)
+* >I'll keep an eye out for any necessary fixes or updates through potential future modifications to the internal workings of COMFYUI.
+* >This was XT-404. Best regards.
+---
 ## ⚡ Key Features (Omega Edition)
 
 *   **🛡️ Temporal Shield (T-1000):** A polymetric structural anchor that prevents the model from hallucinating or drifting too far from the reference during long generations.
